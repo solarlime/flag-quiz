@@ -7,6 +7,7 @@ import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 import jsxa11y from 'eslint-plugin-jsx-a11y';
 import pluginImport from 'eslint-plugin-import';
+import pluginMobx from 'eslint-plugin-mobx';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -15,6 +16,7 @@ export default tseslint.config(
       pluginImport.flatConfigs.recommended,
       js.configs.recommended,
       ...tseslint.configs.recommended,
+      pluginMobx.flatConfigs.recommended,
       prettier,
     ],
     files: ['**/*.{ts,tsx}'],

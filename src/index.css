@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'DINish';
+  src: url(./assets/fonts/DINish[slnt,wdth,wght].woff2)
+    format('woff2-variations');
+}
+
+:root {
+  --font-size-xl: 28px;
+  --font-size-l: 24px;
+  --font-size-m: 20px;
+  --font-size-s: 16px;
+
+  --font-size: var(--font-size-m);
+
+  --padding-xl: 1rem;
+  --padding-l: 0.8rem;
+  --padding-m: 0.6rem;
+  --padding-s: 0.4rem;
+
+  --radius-xl: var(--padding-xl);
+  --radius-l: var(--padding-l);
+  --radius-m: var(--padding-m);
+  --radius-s: var(--padding-s);
+
+  --border-width: 1px;
+}
