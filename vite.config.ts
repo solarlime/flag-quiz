@@ -1,10 +1,19 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import reactSwc from '@vitejs/plugin-react-swc';
 
 // https://vite.dev/config/
 export default defineConfig({
   build: {
     target: ['ios12'],
   },
-  plugins: [react()],
+  plugins: [
+    reactSwc({
+      useAtYourOwnRisk_mutateSwcOptions(options) {
+        if (options.jsc && options.jsc.parser && options.jsc.transform) {
+          options.jsc.parser.decorators = true;
+          options.jsc.transform.decoratorVersion = '2022-03';
+        }
+      },
+    }),
+  ],
 });

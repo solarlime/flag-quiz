@@ -2,6 +2,8 @@ import Button from './Button.tsx';
 import { useStore } from './store/StoreProvider.tsx';
 import { Switch } from 'radix-ui';
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 
 const StyledSwitchRoot = styled(Switch.Root)`
   width: calc((var(--font-size) + var(--border-width) * 2) * 2);
@@ -36,10 +38,23 @@ const StyledH1 = styled.h1`
   }
 `;
 
-const StyledH2 = styled.h2`
-  display: block;
+const TopInformation = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: var(--padding-l);
-  text-align: center;
+
+  & > span {
+    flex-basis: 5%;
+    flex-grow: 1;
+    text-align: center;
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
 `;
 
 const StyledHeader = styled.header`
@@ -82,8 +97,12 @@ const Buttons = styled.div`
   margin-top: var(--padding-l);
 `;
 
-function App() {
-  const { themeStore } = useStore();
+const App = observer(() => {
+  const { themeStore, quizStore } = useStore();
+
+  useEffect(() => {
+    quizStore.fetchCountries();
+  }, []);
 
   return (
     <>
@@ -103,19 +122,28 @@ function App() {
       </StyledHeader>
       <Main>
         <Card>
-          <StyledH2>Score: 0</StyledH2>
+          <TopInformation>
+            <span>Question: 1/10</span>
+            {quizStore.fetchStatus === 'done' && (
+              <span>{quizStore.data![0]}</span>
+            )}
+            <span>Score: 0</span>
+          </TopInformation>
           <picture>
             <source
               type="image/webp"
-              srcSet="https://flagcdn.com/w640/es.webp,
-      https://flagcdn.com/w1280/es.webp 2x"
+              srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.webp,
+      https://flagcdn.com/w1280/${quizStore.data?.[0]?.[0]}.webp 2x`}
             />
             <source
               type="image/png"
-              srcSet="https://flagcdn.com/w640/es.png,
-      https://flagcdn.com/w1280/es.png 2x"
+              srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png,
+      https://flagcdn.com/w1280/${quizStore.data?.[0]?.[0]}.png 2x`}
             />
-            <Img src="https://flagcdn.com/w640/es.png" alt="Spain" />
+            <Img
+              src={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png`}
+              alt={quizStore.data?.[0]?.[1]}
+            />
           </picture>
           <Buttons>
             <Button>Карл</Button>
@@ -127,6 +155,6 @@ function App() {
       </Main>
     </>
   );
-}
+});
 
 export default App;

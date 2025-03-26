@@ -10,7 +10,6 @@ export default createGlobalStyle`
   body * {
       all: unset;
       font-family: "DINish", Arial, sans-serif;
-      font-variant-numeric: diagonal-fractions;
       font-stretch: normal;
       font-style: oblique 8deg;
       font-size: var(--font-size);
