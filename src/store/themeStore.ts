@@ -17,9 +17,15 @@ const toUncolored = (palette: { [key: string]: string }) =>
 class ThemeStore {
   constructor() {
     makeAutoObservable(this);
+    const savedThemeName = localStorage.getItem('themeName') as
+      | ITheme['name']
+      | null;
+    this._theme = savedThemeName
+      ? this._themes[savedThemeName]
+      : this._themes.light;
   }
 
-  private _themes: { [key in 'light' | 'dark']: ITheme } = {
+  private _themes: { [key in ITheme['name']]: ITheme } = {
     light: {
       name: 'light',
       colors: {
@@ -34,7 +40,7 @@ class ThemeStore {
     },
   };
 
-  private _theme: DefaultTheme = this._themes.light;
+  private _theme: DefaultTheme;
 
   get theme() {
     return this._theme;

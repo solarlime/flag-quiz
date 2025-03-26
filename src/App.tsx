@@ -93,7 +93,11 @@ function App() {
             Flag quiz
           </a>
         </StyledH1>
-        <StyledSwitchRoot onClick={() => themeStore.toggleTheme()}>
+        <StyledSwitchRoot
+          checked={themeStore.theme.name === 'dark'}
+          onCheckedChange={() => themeStore.toggleTheme()}
+          value={themeStore.theme.name}
+        >
           <StyledSwitchThumb />
         </StyledSwitchRoot>
       </StyledHeader>

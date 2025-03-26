@@ -7,6 +7,7 @@ import Store from './store/store.ts';
 import { StoreProvider, useStore } from './store/StoreProvider.tsx';
 import { observer } from 'mobx-react-lite';
 import GlobalStyles from './globalStyles.ts';
+import { autorun } from 'mobx';
 
 const ThemedApp = observer(() => {
   const { themeStore } = useStore();
@@ -19,9 +20,15 @@ const ThemedApp = observer(() => {
   );
 });
 
+const store = new Store();
+
+autorun(() => {
+  localStorage.setItem('themeName', store.themeStore.theme.name);
+});
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <StoreProvider value={new Store()}>
+    <StoreProvider value={store}>
       <ThemedApp />
     </StoreProvider>
   </StrictMode>,
