@@ -1,7 +1,6 @@
 import { observable, action, computed, runInAction } from 'mobx';
 
 export const shuffleArray = (array: Array<any>) => {
-  console.log('shuffle');
   const newArray = array.slice();
   for (let i = newArray.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -18,14 +17,17 @@ class QuizStore {
     return this._fetchStatus;
   }
 
-  data: Array<[string, string]> | null = null;
+  @observable accessor data: Array<[string, string]> | null = null;
 
   @action async fetchCountries() {
     try {
       const res = await fetch('https://flagcdn.com/en/codes.json');
       const result: { [key: string]: string } = await res.json();
       runInAction(() => {
-        this.data = shuffleArray(Object.entries(result));
+        this.data = shuffleArray(
+          Object.entries(result).filter((pair) => !pair[0].includes('us-')),
+        );
+        this.newQuestion();
         this._fetchStatus = 'done';
       });
     } catch (e) {
@@ -33,6 +35,20 @@ class QuizStore {
         this._fetchStatus = 'error';
         console.log(e);
       });
+    }
+  }
+
+  @observable accessor answer: string[] = [];
+
+  @observable accessor variants: Array<string[]> = [];
+
+  @action newQuestion() {
+    if (this.data && this.data.length) {
+      const variants = [1, 1, 1, 1].map(
+        (_item) => this.data![Math.floor(Math.random() * this.data!.length)],
+      );
+      this.answer = variants[0];
+      this.variants = shuffleArray(variants);
     }
   }
 }

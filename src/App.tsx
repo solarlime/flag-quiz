@@ -4,6 +4,7 @@ import { Switch } from 'radix-ui';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import { v4 as uuidv4 } from 'uuid';
 
 const StyledSwitchRoot = styled(Switch.Root)`
   width: calc((var(--font-size) + var(--border-width) * 2) * 2);
@@ -124,32 +125,29 @@ const App = observer(() => {
         <Card>
           <TopInformation>
             <span>Question: 1/10</span>
-            {quizStore.fetchStatus === 'done' && (
-              <span>{quizStore.data![0]}</span>
-            )}
+            {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
             <span>Score: 0</span>
           </TopInformation>
           <picture>
             <source
               type="image/webp"
-              srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.webp,
-      https://flagcdn.com/w1280/${quizStore.data?.[0]?.[0]}.webp 2x`}
+              srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.webp,
+      https://flagcdn.com/w1280/${quizStore.answer?.[0]}.webp 2x`}
             />
             <source
               type="image/png"
               srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png,
-      https://flagcdn.com/w1280/${quizStore.data?.[0]?.[0]}.png 2x`}
+      https://flagcdn.com/w1280/${quizStore.answer?.[0]}.png 2x`}
             />
             <Img
-              src={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png`}
-              alt={quizStore.data?.[0]?.[1]}
+              src={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.png`}
+              alt="Guess it!"
             />
           </picture>
           <Buttons>
-            <Button>Карл</Button>
-            <Button>У Клары</Button>
-            <Button>Украл</Button>
-            <Button>Кораллы</Button>
+            {quizStore.variants.map((variant) => (
+              <Button key={uuidv4()}>{variant?.[1]}</Button>
+            ))}
           </Buttons>
         </Card>
       </Main>
