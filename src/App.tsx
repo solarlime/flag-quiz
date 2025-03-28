@@ -166,7 +166,7 @@ const App = observer(() => {
                 />
                 <source
                   type="image/png"
-                  srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png,
+                  srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]?.[0]}.png,
       https://flagcdn.com/w1280/${quizStore.answer?.[0]}.png 2x`}
                 />
                 <Img

@@ -17,14 +17,14 @@ class QuizStore {
     return this._fetchStatus;
   }
 
-  @observable accessor data: Array<[string, string]> | null = null;
+  private _data: Array<[string, string]> | null = null;
 
   @action async fetchCountries() {
     try {
       const res = await fetch('https://flagcdn.com/en/codes.json');
       const result: { [key: string]: string } = await res.json();
       runInAction(() => {
-        this.data = shuffleArray(
+        this._data = shuffleArray(
           Object.entries(result).filter((pair) => !pair[0].includes('us-')),
         );
         this.newQuestion();
@@ -38,17 +38,28 @@ class QuizStore {
     }
   }
 
-  @observable accessor answer: string[] = [];
+  @observable private accessor _answer: [string, string] | null = null;
 
-  @observable accessor variants: Array<string[]> = [];
+  @computed get answer() {
+    return this._answer;
+  }
+
+  @observable private accessor _variants: Array<string[]> = [];
+
+  @computed get variants() {
+    return this._variants;
+  }
 
   @action newQuestion() {
-    if (this.data && this.data.length) {
+    if (this._data && this._data.length) {
+      if (this.answer) {
+        this._data.splice(this._data.indexOf(this.answer), 1);
+      }
       const variants = [1, 1, 1, 1].map(
-        (_item) => this.data![Math.floor(Math.random() * this.data!.length)],
+        (_item) => this._data![Math.floor(Math.random() * this._data!.length)],
       );
-      this.answer = variants[0];
-      this.variants = shuffleArray(variants);
+      this._answer = variants[0];
+      this._variants = shuffleArray(variants);
     }
   }
 
