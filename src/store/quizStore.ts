@@ -51,6 +51,31 @@ class QuizStore {
       this.variants = shuffleArray(variants);
     }
   }
+
+  @observable private accessor _score: number = 0;
+
+  @computed get score() {
+    return this._score;
+  }
+
+  @action increaseScore() {
+    this._score += 1;
+  }
+
+  @observable private accessor _questionNumber: number = 1;
+  private accessor _maxQuestions: number = 10;
+
+  get maxQuestions() {
+    return this._maxQuestions;
+  }
+
+  @computed get questionNumber() {
+    return this._questionNumber;
+  }
+
+  @action increaseQuestionNumber() {
+    this._questionNumber += 1;
+  }
 }
 
 export default QuizStore;

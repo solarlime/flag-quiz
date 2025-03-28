@@ -1,7 +1,7 @@
 import Button from './Button.tsx';
 import { useStore } from './store/StoreProvider.tsx';
 import { Switch } from 'radix-ui';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
@@ -43,6 +43,10 @@ const TopInformation = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: var(--padding-l);
+
+  &:only-child {
+    margin-bottom: 0;
+  }
 
   & > span {
     flex-basis: 5%;
@@ -88,6 +92,12 @@ const Img = styled.img`
   border-radius: var(--radius-m);
   border: var(--border-width) solid ${(props) => props.theme.colors.color3};
   box-sizing: border-box;
+
+  ${(props) =>
+    props.theme.name === 'dark' &&
+    css`
+      filter: opacity(0.9);
+    `}
 `;
 
 const Buttons = styled.div`
@@ -104,6 +114,14 @@ const App = observer(() => {
   useEffect(() => {
     quizStore.fetchCountries();
   }, []);
+
+  const handleClick = (countryCode: string) => {
+    if (countryCode === quizStore.answer?.[0]) {
+      quizStore.increaseScore();
+    }
+    quizStore.increaseQuestionNumber();
+    quizStore.newQuestion();
+  };
 
   return (
     <>
@@ -123,32 +141,51 @@ const App = observer(() => {
       </StyledHeader>
       <Main>
         <Card>
-          <TopInformation>
-            <span>Question: 1/10</span>
-            {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
-            <span>Score: 0</span>
-          </TopInformation>
-          <picture>
-            <source
-              type="image/webp"
-              srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.webp,
+          {quizStore.questionNumber > quizStore.maxQuestions ? (
+            <TopInformation>
+              <span>
+                That's all! You answered {quizStore.score} times out of{' '}
+                {quizStore.maxQuestions}
+              </span>
+              <span>Score: {quizStore.score}</span>
+            </TopInformation>
+          ) : (
+            <>
+              <TopInformation>
+                <span>
+                  Question: {quizStore.questionNumber}/{quizStore.maxQuestions}
+                </span>
+                {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
+                <span>Score: {quizStore.score}</span>
+              </TopInformation>
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.webp,
       https://flagcdn.com/w1280/${quizStore.answer?.[0]}.webp 2x`}
-            />
-            <source
-              type="image/png"
-              srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png,
+                />
+                <source
+                  type="image/png"
+                  srcSet={`https://flagcdn.com/w640/${quizStore.data?.[0]?.[0]}.png,
       https://flagcdn.com/w1280/${quizStore.answer?.[0]}.png 2x`}
-            />
-            <Img
-              src={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.png`}
-              alt="Guess it!"
-            />
-          </picture>
-          <Buttons>
-            {quizStore.variants.map((variant) => (
-              <Button key={uuidv4()}>{variant?.[1]}</Button>
-            ))}
-          </Buttons>
+                />
+                <Img
+                  src={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.png`}
+                  alt="Guess it!"
+                />
+              </picture>
+              <Buttons>
+                {quizStore.variants.map((variant) => (
+                  <Button
+                    key={uuidv4()}
+                    onClick={() => handleClick(variant?.[0])}
+                  >
+                    {variant?.[1]}
+                  </Button>
+                ))}
+              </Buttons>
+            </>
+          )}
         </Card>
       </Main>
     </>
