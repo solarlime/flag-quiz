@@ -9,6 +9,7 @@ export default createGlobalStyle`
     
   body * {
       all: unset;
+      display: block;
       font-family: "DINish", Arial, sans-serif;
       font-stretch: normal;
       font-style: oblique 8deg;

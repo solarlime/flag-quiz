@@ -14,7 +14,6 @@ const StyledSwitchRoot = styled(Switch.Root)`
 `;
 
 const StyledSwitchThumb = styled(Switch.Thumb)`
-  display: block;
   width: calc(var(--font-size) + var(--border-width) * 2);
   height: calc(var(--font-size) + var(--border-width) * 2);
   background-color: ${(props) => props.theme.colors.color12};
@@ -33,7 +32,6 @@ const StyledH1 = styled.h1`
   font-stretch: expanded;
 
   & > a {
-    display: block;
     font: inherit;
     cursor: pointer;
   }
@@ -77,7 +75,6 @@ const Main = styled.main`
 `;
 
 const Card = styled.div`
-  display: block;
   width: auto;
   max-width: 640px;
   padding: var(--padding-l);
@@ -86,18 +83,26 @@ const Card = styled.div`
   background-color: ${(props) => props.theme.colors.color1};
 `;
 
-const Img = styled.img`
-  display: block;
-  width: 100%;
-  border-radius: var(--radius-m);
-  border: var(--border-width) solid ${(props) => props.theme.colors.color3};
-  box-sizing: border-box;
+const Flag = styled.div`
+  display: flex;
+  align-items: center;
+  aspect-ratio: 3/2;
 
-  ${(props) =>
-    props.theme.name === 'dark' &&
-    css`
-      filter: opacity(0.9);
-    `}
+  & img {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-m);
+    border: var(--border-width) solid ${(props) => props.theme.colors.color3};
+    box-sizing: border-box;
+    object-fit: contain;
+    object-position: center center;
+
+    ${(props) =>
+      props.theme.name === 'dark' &&
+      css`
+        filter: opacity(0.9);
+      `}
+  }
 `;
 
 const Buttons = styled.div`
@@ -158,22 +163,24 @@ const App = observer(() => {
                 {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
                 <span>Score: {quizStore.score}</span>
               </TopInformation>
-              <picture>
-                <source
-                  type="image/webp"
-                  srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.webp,
+              <Flag>
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.webp,
       https://flagcdn.com/w1280/${quizStore.answer?.[0]}.webp 2x`}
-                />
-                <source
-                  type="image/png"
-                  srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]?.[0]}.png,
+                  />
+                  <source
+                    type="image/png"
+                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]?.[0]}.png,
       https://flagcdn.com/w1280/${quizStore.answer?.[0]}.png 2x`}
-                />
-                <Img
-                  src={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.png`}
-                  alt="Guess it!"
-                />
-              </picture>
+                  />
+                  <img
+                    src={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.png`}
+                    alt="Guess it!"
+                  />
+                </picture>
+              </Flag>
               <Buttons>
                 {quizStore.variants.map((variant) => (
                   <Button
