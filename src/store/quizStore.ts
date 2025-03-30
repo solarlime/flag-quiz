@@ -1,4 +1,5 @@
 import { observable, action, computed, runInAction } from 'mobx';
+import type { Result, RawResult } from '../interfaces/data.ts';
 
 export const shuffleArray = (array: Array<any>) => {
   const newArray = array.slice();
@@ -17,15 +18,23 @@ class QuizStore {
     return this._fetchStatus;
   }
 
-  private _data: Array<[string, string]> | null = null;
+  private _data: Array<Result> | null = null;
 
   @action async fetchCountries() {
     try {
-      const res = await fetch('https://flagcdn.com/en/codes.json');
-      const result: { [key: string]: string } = await res.json();
+      const res = await fetch(
+        'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
+      );
+      const result: RawResult[] = await res.json();
       runInAction(() => {
         this._data = shuffleArray(
-          Object.entries(result).filter((pair) => !pair[0].includes('us-')),
+          result.map((rawItem) => ({
+            name: rawItem.name.common,
+            countryCodeAlpha2: rawItem.cca2.toLowerCase(),
+            independent: rawItem.independent,
+            flagSymbol: rawItem.flag,
+            continents: new Set(rawItem.continents),
+          })),
         );
         this.newQuestion();
         this._fetchStatus = 'done';
@@ -38,13 +47,13 @@ class QuizStore {
     }
   }
 
-  @observable private accessor _answer: [string, string] | null = null;
+  @observable private accessor _answer: Result | null = null;
 
   @computed get answer() {
     return this._answer;
   }
 
-  @observable private accessor _variants: Array<string[]> = [];
+  @observable private accessor _variants: Array<Result> = [];
 
   @computed get variants() {
     return this._variants;

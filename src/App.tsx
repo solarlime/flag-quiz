@@ -121,7 +121,7 @@ const App = observer(() => {
   }, []);
 
   const handleClick = (countryCode: string) => {
-    if (countryCode === quizStore.answer?.[0]) {
+    if (countryCode === quizStore.answer?.countryCodeAlpha2) {
       quizStore.increaseScore();
     }
     quizStore.increaseQuestionNumber();
@@ -167,16 +167,16 @@ const App = observer(() => {
                 <picture>
                   <source
                     type="image/webp"
-                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.webp,
-      https://flagcdn.com/w1280/${quizStore.answer?.[0]}.webp 2x`}
+                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.webp,
+      https://flagcdn.com/w1280/${quizStore.answer?.countryCodeAlpha2}.webp 2x`}
                   />
                   <source
                     type="image/png"
-                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.[0]?.[0]}.png,
-      https://flagcdn.com/w1280/${quizStore.answer?.[0]}.png 2x`}
+                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2?.[0]}.png,
+      https://flagcdn.com/w1280/${quizStore.answer?.countryCodeAlpha2}.png 2x`}
                   />
                   <img
-                    src={`https://flagcdn.com/w640/${quizStore.answer?.[0]}.png`}
+                    src={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.png`}
                     alt="Guess it!"
                   />
                 </picture>
@@ -185,9 +185,9 @@ const App = observer(() => {
                 {quizStore.variants.map((variant) => (
                   <Button
                     key={uuidv4()}
-                    onClick={() => handleClick(variant?.[0])}
+                    onClick={() => handleClick(variant.countryCodeAlpha2)}
                   >
-                    {variant?.[1]}
+                    {variant.name}
                   </Button>
                 ))}
               </Buttons>
