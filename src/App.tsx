@@ -149,7 +149,7 @@ const App = observer(() => {
           {quizStore.questionNumber > quizStore.maxQuestions ? (
             <TopInformation>
               <span>
-                That's all! You answered {quizStore.score} times out of{' '}
+                That&apos;s all! You answered {quizStore.score} times out of{' '}
                 {quizStore.maxQuestions}
               </span>
               <span>Score: {quizStore.score}</span>

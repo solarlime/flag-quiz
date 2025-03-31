@@ -10,7 +10,7 @@ import pluginImport from 'eslint-plugin-import';
 import pluginMobx from 'eslint-plugin-mobx';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.yarn'] },
   {
     extends: [
       pluginImport.flatConfigs.recommended,
@@ -34,9 +34,7 @@ export default tseslint.config(
         version: 'detect',
       },
       'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
+        typescript: true,
       },
     },
     plugins: {
@@ -58,6 +56,7 @@ export default tseslint.config(
       'no-undef': 'warn',
       'react/prop-types': 'off',
       'no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
 );

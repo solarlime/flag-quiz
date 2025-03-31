@@ -6,6 +6,7 @@ const Button = styled.button`
   border: var(--border-width) solid ${(props) => props.theme.colors.color7};
   border-radius: var(--radius-m);
   text-align: center;
+  cursor: pointer;
   &:hover {
     background-color: ${(props) => props.theme.colors.color5};
     border-color: ${(props) => props.theme.colors.color8};

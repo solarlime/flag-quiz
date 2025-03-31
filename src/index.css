@@ -12,10 +12,10 @@
 
   --font-size: var(--font-size-m);
 
-  --padding-xl: 1rem;
-  --padding-l: 0.8rem;
-  --padding-m: 0.6rem;
-  --padding-s: 0.4rem;
+  --padding-xl: 1.8rem;
+  --padding-l: 1.3rem;
+  --padding-m: 0.9rem;
+  --padding-s: 0.5rem;
 
   --radius-xl: var(--padding-xl);
   --radius-l: var(--padding-l);

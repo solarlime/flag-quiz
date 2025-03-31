@@ -1,7 +1,8 @@
+/* eslint-disable mobx/missing-make-observable */
 import { observable, action, computed, runInAction } from 'mobx';
 import type { Result, RawResult } from '../interfaces/data.ts';
 
-export const shuffleArray = (array: Array<any>) => {
+export const shuffleArray = (array: Array<Result>) => {
   const newArray = array.slice();
   for (let i = newArray.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -83,7 +84,8 @@ class QuizStore {
   }
 
   @observable private accessor _questionNumber: number = 1;
-  private accessor _maxQuestions: number = 10;
+
+  private _maxQuestions: number = 10;
 
   get maxQuestions() {
     return this._maxQuestions;
