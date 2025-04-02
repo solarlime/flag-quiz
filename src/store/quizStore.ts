@@ -73,7 +73,12 @@ class QuizStore {
   @action newQuestion() {
     if (this._data && this._data.length) {
       if (this.answer) {
-        this._data.splice(this._data.indexOf(this.answer), 1);
+        this._data.splice(
+          this._data.findIndex(
+            (item) => item.countryCodeAlpha2 === this.answer?.countryCodeAlpha2,
+          ),
+          1,
+        );
       }
       const getItem = makeItemGetter(this._data);
       const variants = [1, 1, 1, 1].map((_item) => getItem());

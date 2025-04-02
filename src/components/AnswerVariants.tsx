@@ -24,14 +24,17 @@ const AnswerVariants = () => {
 
   return (
     <Buttons>
-      {quizStore.variants.map((variant) => (
-        <Button
-          key={uuidv4()}
-          onClick={() => handleClick(variant.countryCodeAlpha2)}
-        >
-          {variant.name}
-        </Button>
-      ))}
+      {quizStore.variants.map(
+        (variant) =>
+          variant && (
+            <Button
+              key={uuidv4()}
+              onClick={() => handleClick(variant.countryCodeAlpha2)}
+            >
+              {variant.name}
+            </Button>
+          ),
+      )}
     </Buttons>
   );
 };
