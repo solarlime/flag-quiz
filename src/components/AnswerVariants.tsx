@@ -15,26 +15,29 @@ const AnswerVariants = () => {
   const { quizStore } = useStore();
 
   const handleClick = (countryCode: string) => {
-    if (countryCode === quizStore.answer?.countryCodeAlpha2) {
-      quizStore.increaseScore();
+    if (quizStore) {
+      if (countryCode === quizStore.answer?.countryCodeAlpha2) {
+        quizStore.increaseScore();
+      }
+      quizStore.increaseQuestionNumber();
+      quizStore.newQuestion();
     }
-    quizStore.increaseQuestionNumber();
-    quizStore.newQuestion();
   };
 
   return (
     <Buttons>
-      {quizStore.variants.map(
-        (variant) =>
-          variant && (
-            <Button
-              key={uuidv4()}
-              onClick={() => handleClick(variant.countryCodeAlpha2)}
-            >
-              {variant.name}
-            </Button>
-          ),
-      )}
+      {quizStore &&
+        quizStore.variants.map(
+          (variant) =>
+            variant && (
+              <Button
+                key={uuidv4()}
+                onClick={() => handleClick(variant.countryCodeAlpha2)}
+              >
+                {variant.name}
+              </Button>
+            ),
+        )}
     </Buttons>
   );
 };

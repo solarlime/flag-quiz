@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import AnswerVariants from './AnswerVariants.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
+import { useEffect } from 'react';
 
 const TopInformation = styled.div`
   display: flex;
@@ -58,49 +59,60 @@ const Flag = styled.div`
 `;
 
 const Card = observer(() => {
-  const { quizStore } = useStore();
+  const { quizStore: qStore } = useStore();
+  const quizStore = qStore!;
+
+  useEffect(() => {
+    quizStore.fetchCountries();
+  }, []);
 
   return (
-    <StyledCard>
-      {quizStore.questionNumber > quizStore.maxQuestions ? (
-        <TopInformation>
-          <span>
-            That&apos;s all! You answered {quizStore.score} times out of{' '}
-            {quizStore.maxQuestions}
-          </span>
-          <span>Score: {quizStore.score}</span>
-        </TopInformation>
-      ) : (
-        <>
-          <TopInformation>
-            <span>
-              Question: {quizStore.questionNumber}/{quizStore.maxQuestions}
-            </span>
-            {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
-            <span>Score: {quizStore.score}</span>
-          </TopInformation>
-          <Flag>
-            <picture>
-              <source
-                type="image/webp"
-                srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.webp,
+    <>
+      {quizStore.fetchStatus === 'loading' && <p>Loading...</p>}
+      {quizStore.fetchStatus === 'error' && <p>An error occurred</p>}
+      {quizStore.fetchStatus === 'done' && (
+        <StyledCard>
+          {quizStore.questionNumber > quizStore.maxQuestions ? (
+            <TopInformation>
+              <span>
+                That&apos;s all! You answered {quizStore.score} times out of{' '}
+                {quizStore.maxQuestions}
+              </span>
+              <span>Score: {quizStore.score}</span>
+            </TopInformation>
+          ) : (
+            <>
+              <TopInformation>
+                <span>
+                  Question: {quizStore.questionNumber}/{quizStore.maxQuestions}
+                </span>
+                {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
+                <span>Score: {quizStore.score}</span>
+              </TopInformation>
+              <Flag>
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.webp,
       https://flagcdn.com/w1280/${quizStore.answer?.countryCodeAlpha2}.webp 2x`}
-              />
-              <source
-                type="image/png"
-                srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2?.[0]}.png,
+                  />
+                  <source
+                    type="image/png"
+                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.png,
       https://flagcdn.com/w1280/${quizStore.answer?.countryCodeAlpha2}.png 2x`}
-              />
-              <img
-                src={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.png`}
-                alt="Guess it!"
-              />
-            </picture>
-          </Flag>
-          <AnswerVariants />
-        </>
+                  />
+                  <img
+                    src={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.png`}
+                    alt="Guess it!"
+                  />
+                </picture>
+              </Flag>
+              <AnswerVariants />
+            </>
+          )}
+        </StyledCard>
       )}
-    </StyledCard>
+    </>
   );
 });
 
