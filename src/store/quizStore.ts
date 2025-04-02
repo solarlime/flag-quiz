@@ -11,6 +11,16 @@ export const shuffleArray = (array: Array<Result>) => {
   return newArray;
 };
 
+const makeItemGetter = (array: Array<Result>) => {
+  const usedArray = array.slice();
+  return () => {
+    const index = Math.floor(Math.random() * usedArray.length);
+    const item = usedArray[index];
+    usedArray.splice(index, 1);
+    return item;
+  };
+};
+
 class QuizStore {
   @observable private accessor _fetchStatus: 'loading' | 'done' | 'error' =
     'loading';
@@ -65,9 +75,8 @@ class QuizStore {
       if (this.answer) {
         this._data.splice(this._data.indexOf(this.answer), 1);
       }
-      const variants = [1, 1, 1, 1].map(
-        (_item) => this._data![Math.floor(Math.random() * this._data!.length)],
-      );
+      const getItem = makeItemGetter(this._data);
+      const variants = [1, 1, 1, 1].map((_item) => getItem());
       this._answer = variants[0];
       this._variants = shuffleArray(variants);
     }
