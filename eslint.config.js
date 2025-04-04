@@ -57,6 +57,7 @@ export default tseslint.config(
       'react/prop-types': 'off',
       'no-unused-vars': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/ban-ts-comment': 'warn',
     },
   },
 );

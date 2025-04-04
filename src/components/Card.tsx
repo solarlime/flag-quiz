@@ -66,7 +66,6 @@ const Card = observer(() => {
                 <span>
                   Question: {quizStore.questionNumber}/{quizStore.maxQuestions}
                 </span>
-                {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
                 <span>Score: {quizStore.score}</span>
               </TopInformation>
               <Flag info={quizStore.answer!} />

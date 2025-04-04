@@ -3,6 +3,9 @@ import reactSwc from '@vitejs/plugin-react-swc';
 
 // https://vite.dev/config/
 export default defineConfig({
+  esbuild: {
+    target: 'es2022',
+  },
   build: {
     target: ['ios12'],
   },

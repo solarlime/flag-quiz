@@ -5,6 +5,8 @@ export default createGlobalStyle`
       all: unset;
       background: ${(props) => props.theme.colors.color3};
       color: ${(props) => props.theme.colors.color12};
+      // Safari 12 ignores color property 
+      -webkit-text-fill-color: ${(props) => props.theme.colors.color12};
   }
     
   body * {
@@ -12,7 +14,9 @@ export default createGlobalStyle`
       display: block;
       font-family: "DINish", Arial, sans-serif;
       font-stretch: normal;
-      font-style: oblique 8deg;
+      // font-style: oblique 8deg;
+      // Works in FF & Chrome but Safari needs -8deg. Setting via font-variation-settings works everywhere
+      font-variation-settings: "slnt" -8;
       font-size: var(--font-size);
       line-height: 1.2;
       font-weight: 300;

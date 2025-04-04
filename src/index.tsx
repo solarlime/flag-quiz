@@ -26,10 +26,19 @@ autorun(() => {
   localStorage.setItem('themeName', store.themeStore.theme.name);
 });
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <StoreProvider value={store}>
-      <ThemedApp />
-    </StoreProvider>
-  </StrictMode>,
-);
+const renderApp = () =>
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <StoreProvider value={store}>
+        <ThemedApp />
+      </StoreProvider>
+    </StrictMode>,
+  );
+
+if ('any' in Promise) {
+  renderApp();
+} else {
+  console.info('Using polyfills');
+  // @ts-ignore
+  import('core-js/es/promise/any.js').then(() => renderApp());
+}
