@@ -33,10 +33,27 @@ class QuizStore {
 
   @action async fetchCountries() {
     try {
-      const res = await fetch(
-        'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
-      );
-      const result: RawResult[] = await res.json();
+      const abortController = new AbortController();
+      const result: RawResult[] = await Promise.any([
+        fetch(
+          'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
+          { signal: abortController.signal },
+        ).then((response) => {
+          console.info('Successfully loaded countries');
+          return response.json();
+        }),
+        new Promise((resolve) => {
+          setTimeout(
+            () =>
+              import('./fallback_countries.json').then((module) => {
+                abortController.abort();
+                console.info('Fallback countries loaded');
+                resolve(module.default);
+              }),
+            2000,
+          );
+        }),
+      ]);
       runInAction(() => {
         this._data = shuffleArray(
           result.map((rawItem) => ({
