@@ -23,4 +23,6 @@
   --radius-s: var(--padding-s);
 
   --border-width: 1px;
+
+  --card-max-width: 640px;
 }

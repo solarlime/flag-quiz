@@ -7,7 +7,7 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: var(--padding-xl);
+  padding: var(--padding-l);
   background-color: ${(props) => props.theme.colors.color5};
   box-sizing: border-box;
 `;

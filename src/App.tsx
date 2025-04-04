@@ -6,7 +6,11 @@ import { useStore } from './store/StoreProvider.tsx';
 import Button from './components/Button.tsx';
 
 const Main = styled.main`
-  padding: var(--padding-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xl) var(--padding-l);
 `;
 
 const App = observer(() => {

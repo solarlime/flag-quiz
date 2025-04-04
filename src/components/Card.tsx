@@ -1,6 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import AnswerVariants from './AnswerVariants.tsx';
+import Flag from './Flag.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
 import { useEffect } from 'react';
 
@@ -28,34 +29,13 @@ const TopInformation = styled.div`
 `;
 
 const StyledCard = styled.div`
-  width: auto;
-  max-width: 640px;
+  width: 100%;
+  max-width: var(--card-max-width);
   padding: var(--padding-l);
   margin: 0 auto;
   border-radius: var(--radius-xl);
   background-color: ${(props) => props.theme.colors.color1};
-`;
-
-const Flag = styled.div`
-  display: flex;
-  align-items: center;
-  aspect-ratio: 3/2;
-
-  & img {
-    width: 100%;
-    height: 100%;
-    border-radius: var(--radius-m);
-    border: var(--border-width) solid ${(props) => props.theme.colors.color3};
-    box-sizing: border-box;
-    object-fit: contain;
-    object-position: center center;
-
-    ${(props) =>
-      props.theme.name === 'dark' &&
-      css`
-        filter: opacity(0.9);
-      `}
-  }
+  box-sizing: border-box;
 `;
 
 const Card = observer(() => {
@@ -89,24 +69,7 @@ const Card = observer(() => {
                 {quizStore.fetchStatus === 'done' && <span>Guess it!</span>}
                 <span>Score: {quizStore.score}</span>
               </TopInformation>
-              <Flag>
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.webp,
-      https://flagcdn.com/w1280/${quizStore.answer?.countryCodeAlpha2}.webp 2x`}
-                  />
-                  <source
-                    type="image/png"
-                    srcSet={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.png,
-      https://flagcdn.com/w1280/${quizStore.answer?.countryCodeAlpha2}.png 2x`}
-                  />
-                  <img
-                    src={`https://flagcdn.com/w640/${quizStore.answer?.countryCodeAlpha2}.png`}
-                    alt="Guess it!"
-                  />
-                </picture>
-              </Flag>
+              <Flag info={quizStore.answer!} />
               <AnswerVariants />
             </>
           )}
