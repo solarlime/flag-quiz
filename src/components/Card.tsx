@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
+import { v4 as uuidv4 } from 'uuid';
 import AnswerVariants from './AnswerVariants.tsx';
 import Flag from './Flag.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
@@ -18,6 +19,7 @@ const TopInformation = styled.div`
     flex-basis: 5%;
     flex-grow: 1;
     text-align: center;
+
     &:first-child {
       text-align: left;
     }
@@ -53,13 +55,26 @@ const Card = observer(() => {
       {quizStore.fetchStatus === 'done' && (
         <StyledCard>
           {quizStore.questionNumber > quizStore.maxQuestions ? (
-            <TopInformation>
-              <span>
-                That&apos;s all! You answered {quizStore.score} times out of{' '}
-                {quizStore.maxQuestions}
-              </span>
-              <span>Score: {quizStore.score}</span>
-            </TopInformation>
+            <>
+              <TopInformation>
+                <span>
+                  You answered correctly {quizStore.score} time
+                  {quizStore.score !== 1 && 's'} out of {quizStore.maxQuestions}
+                </span>
+              </TopInformation>
+              <div>
+                <h3>Your mistakes:</h3>
+                <ul>
+                  {quizStore.mistakes.map((mistake) => (
+                    <li key={uuidv4()}>
+                      <Flag info={mistake.correct} />
+                      <p>Correct answer: {mistake.correct.name}</p>
+                      <p>Your answer: {mistake.chosen.name}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
           ) : (
             <>
               <TopInformation>

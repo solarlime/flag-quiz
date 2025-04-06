@@ -13,3 +13,8 @@ export interface RawResult {
   flag: string;
   continents: Array<string>;
 }
+
+export interface Mistake {
+  chosen: Result;
+  correct: Result;
+}

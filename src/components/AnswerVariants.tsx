@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import Button from './Button.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
+import { Result } from '../interfaces/data.ts';
 
 const Buttons = styled.div`
   display: grid;
@@ -14,13 +15,17 @@ const Buttons = styled.div`
 const AnswerVariants = () => {
   const { quizStore } = useStore();
 
-  const handleClick = (countryCode: string) => {
-    if (quizStore) {
-      if (countryCode === quizStore.answer?.countryCodeAlpha2) {
+  const handleClick = (variant: Result) => {
+    if (quizStore && quizStore.answer) {
+      if (variant.countryCodeAlpha2 === quizStore.answer?.countryCodeAlpha2) {
         quizStore.increaseScore();
+      } else {
+        quizStore.addAMistake({ chosen: variant, correct: quizStore.answer });
       }
       quizStore.increaseQuestionNumber();
-      quizStore.newQuestion();
+      if (quizStore.questionNumber <= quizStore.maxQuestions) {
+        quizStore.newQuestion();
+      }
     }
   };
 
@@ -30,10 +35,7 @@ const AnswerVariants = () => {
         quizStore.variants.map(
           (variant) =>
             variant && (
-              <Button
-                key={uuidv4()}
-                onClick={() => handleClick(variant.countryCodeAlpha2)}
-              >
+              <Button key={uuidv4()} onClick={() => handleClick(variant)}>
                 {variant.name}
               </Button>
             ),

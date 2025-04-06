@@ -1,6 +1,6 @@
 /* eslint-disable mobx/missing-make-observable */
 import { observable, action, computed, runInAction } from 'mobx';
-import type { Result, RawResult } from '../interfaces/data.ts';
+import type { Result, RawResult, Mistake } from '../interfaces/data.ts';
 
 export const shuffleArray = (array: Array<Result>) => {
   const newArray = array.slice();
@@ -104,6 +104,11 @@ class QuizStore {
     }
   }
 
+  @action finishQuiz() {
+    this._answer = null;
+    this._variants = [];
+  }
+
   @observable private accessor _score: number = 0;
 
   @computed get score() {
@@ -114,13 +119,23 @@ class QuizStore {
     this._score += 1;
   }
 
-  @observable private accessor _questionNumber: number = 1;
+  @observable private accessor _mistakes: Array<Mistake> = [];
+
+  @computed get mistakes() {
+    return this._mistakes;
+  }
+
+  @action addAMistake(mistake: Mistake) {
+    this._mistakes.push(mistake);
+  }
 
   private _maxQuestions: number = 10;
 
   get maxQuestions() {
     return this._maxQuestions;
   }
+
+  @observable private accessor _questionNumber: number = 1;
 
   @computed get questionNumber() {
     return this._questionNumber;
