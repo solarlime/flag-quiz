@@ -18,13 +18,9 @@ const TopInformation = styled.div`
   & > span {
     flex-basis: 5%;
     flex-grow: 1;
-    text-align: center;
+    text-align: left;
 
-    &:first-child {
-      text-align: left;
-    }
-
-    &:last-child {
+    &:last-child:not(:first-child) {
       text-align: right;
     }
   }
@@ -38,6 +34,21 @@ const StyledCard = styled.div`
   border-radius: var(--radius-xl);
   background-color: ${(props) => props.theme.colors.color1};
   box-sizing: border-box;
+`;
+
+const Mistakes = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, calc(50% - var(--padding-l) / 2));
+  gap: var(--padding-l);
+  align-items: stretch;
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 100%;
+  }
+`;
+
+const MistakesTitle = styled.h3`
+  margin-bottom: var(--padding-l);
 `;
 
 const Card = observer(() => {
@@ -60,20 +71,24 @@ const Card = observer(() => {
                 <span>
                   You answered correctly {quizStore.score} time
                   {quizStore.score !== 1 && 's'} out of {quizStore.maxQuestions}
+                  !
                 </span>
               </TopInformation>
-              <div>
-                <h3>Your mistakes:</h3>
-                <ul>
-                  {quizStore.mistakes.map((mistake) => (
-                    <li key={uuidv4()}>
-                      <Flag info={mistake.correct} />
-                      <p>Correct answer: {mistake.correct.name}</p>
-                      <p>Your answer: {mistake.chosen.name}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {quizStore.mistakes.length ? (
+                <div>
+                  <MistakesTitle>Here are your mistakes:</MistakesTitle>
+                  <Mistakes>
+                    {quizStore.mistakes.map((mistake) => (
+                      <li key={uuidv4()}>
+                        <Flag info={mistake.correct}>
+                          <p>Correct answer: {mistake.correct.name}</p>
+                          <p>Your answer: {mistake.chosen.name}</p>
+                        </Flag>
+                      </li>
+                    ))}
+                  </Mistakes>
+                </div>
+              ) : null}
             </>
           ) : (
             <>
