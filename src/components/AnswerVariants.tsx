@@ -7,9 +7,14 @@ import { Result } from '../interfaces/data.ts';
 const Buttons = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-auto-rows: 1fr;
   gap: var(--padding-s);
   margin-top: var(--padding-l);
+
+  @media screen and (max-width: 400px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const AnswerVariants = () => {

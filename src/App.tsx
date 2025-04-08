@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import Header from './components/Header.tsx';
-import Card from './components/Card.tsx';
+import Quiz from './components/Quiz.tsx';
 import { useStore } from './store/StoreProvider.tsx';
 import Button from './components/Button.tsx';
 
@@ -11,6 +11,10 @@ const Main = styled.main`
   align-items: center;
   justify-content: center;
   padding: var(--padding-xl) var(--padding-l);
+
+  @media screen and (max-width: 400px) {
+    padding: var(--padding-xl) 0;
+  }
 `;
 
 const App = observer(() => {
@@ -24,7 +28,7 @@ const App = observer(() => {
     <>
       <Header />
       <Main>
-        {quizStore ? <Card /> : <Button onClick={startQuiz}>New quiz</Button>}
+        {quizStore ? <Quiz /> : <Button onClick={startQuiz}>New quiz</Button>}
       </Main>
     </>
   );

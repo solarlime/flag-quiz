@@ -9,7 +9,6 @@ const StyledFlag = styled.figure`
   flex-direction: column;
   align-items: start;
   justify-content: start;
-  gap: var(--padding-m);
   width: 100%;
   height: 100%;
   padding: var(--padding-l);
@@ -18,7 +17,10 @@ const StyledFlag = styled.figure`
   background: ${(props) => props.theme.colors.color3};
 
   &:not(:has(figcaption)) {
+    align-items: center;
+    justify-content: center;
     padding: 0;
+    aspect-ratio: 3/2;
   }
 
   & > figcaption {
@@ -26,7 +28,13 @@ const StyledFlag = styled.figure`
     flex-direction: column;
 
     & > p {
-      font-size: var(--font-size-s);
+      font-size: calc(var(--font-size) * 0.8);
+
+      @media screen and (max-width: 500px) {
+        & {
+          font-size: var(--font-size);
+        }
+      }
 
       &:not(:last-child) {
         margin-bottom: var(--padding-s);
@@ -39,6 +47,7 @@ const PictureWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   aspect-ratio: 3/2;
   background: ${(props) => props.theme.colors.color2};
   border-radius: var(--radius-m);
@@ -46,6 +55,14 @@ const PictureWrapper = styled.div`
       ${(props) => props.theme.colors.color4} 0px 0px var(--padding-s)
     )
     ${(props) => props.theme.name === 'dark' && css`opacity(0.9);`};
+
+  &:not(:only-child) {
+    margin-bottom: var(--padding-m);
+
+    @media screen and (max-width: 500px) {
+      aspect-ratio: auto;
+    }
+  }
 
   & img {
     --max-width: calc(var(--card-max-width) - 2 * var(--padding-l));

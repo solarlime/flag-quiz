@@ -26,6 +26,16 @@ const TopInformation = styled.div`
   }
 `;
 
+const Question = styled.span`
+  &:before {
+    content: 'Question: ';
+
+    @media screen and (max-width: 400px) {
+      content: '';
+    }
+  }
+`;
+
 const StyledCard = styled.div`
   width: 100%;
   max-width: var(--card-max-width);
@@ -38,8 +48,8 @@ const StyledCard = styled.div`
 
 const Mistakes = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, calc(50% - var(--padding-l) / 2));
-  gap: var(--padding-l);
+  grid-template-columns: repeat(auto-fit, calc(50% - var(--padding-s) / 2));
+  gap: var(--padding-s);
   align-items: stretch;
 
   @media screen and (max-width: 500px) {
@@ -51,7 +61,7 @@ const MistakesTitle = styled.h3`
   margin-bottom: var(--padding-l);
 `;
 
-const Card = observer(() => {
+const Quiz = observer(() => {
   const { quizStore: qStore } = useStore();
   const quizStore = qStore!;
 
@@ -93,9 +103,9 @@ const Card = observer(() => {
           ) : (
             <>
               <TopInformation>
-                <span>
-                  Question: {quizStore.questionNumber}/{quizStore.maxQuestions}
-                </span>
+                <Question>
+                  {quizStore.questionNumber}/{quizStore.maxQuestions}
+                </Question>
                 <span>Score: {quizStore.score}</span>
               </TopInformation>
               <Flag info={quizStore.answer!} />
@@ -108,4 +118,4 @@ const Card = observer(() => {
   );
 });
 
-export default Card;
+export default Quiz;
