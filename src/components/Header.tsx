@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <Title />
-      <Switch />
+      <Switch testId="theme-switcher" />
     </StyledHeader>
   );
 };

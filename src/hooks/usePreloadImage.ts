@@ -81,6 +81,7 @@ const usePreloadImage = (trigger: Result) => {
       } else {
         img.src = `https://flagcdn.com/w640/${trigger.countryCodeAlpha2}.${format}`;
       }
+      // @ts-ignore
       timeout = setTimeout(() => {
         img.dispatchEvent(new Event('error'));
       }, 5000);

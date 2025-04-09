@@ -23,7 +23,7 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb)`
   }
 `;
 
-const Switch = observer(() => {
+const Switch = observer(({ testId }: { testId?: string }) => {
   const { themeStore } = useStore();
 
   return (
@@ -31,6 +31,8 @@ const Switch = observer(() => {
       checked={themeStore.theme.name === 'dark'}
       onCheckedChange={() => themeStore.toggleTheme()}
       value={themeStore.theme.name}
+      data-value={themeStore.theme.name}
+      data-testid={testId}
     >
       <StyledSwitchThumb />
     </StyledSwitchRoot>

@@ -39,3 +39,6 @@ dist-ssr
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Playwright
+/blob-report/
