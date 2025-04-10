@@ -1,0 +1,94 @@
+[
+  {
+    "name": {
+      "common": "Spain",
+      "official": "Kingdom of Spain",
+      "nativeName": {
+        "spa": {
+          "official": "Reino de España",
+          "common": "España"
+        }
+      }
+    },
+    "cca2": "ES",
+    "independent": true,
+    "flag": "🇪🇸",
+    "continents": ["Europe"]
+  },
+  {
+    "name": {
+      "common": "Egypt",
+      "official": "Arab Republic of Egypt",
+      "nativeName": {
+        "ara": {
+          "official": "جمهورية مصر العربية",
+          "common": "مصر"
+        }
+      }
+    },
+    "cca2": "EG",
+    "independent": true,
+    "flag": "🇪🇬",
+    "continents": ["Africa"]
+  },
+  {
+    "name": {
+      "common": "Canada",
+      "official": "Canada",
+      "nativeName": {
+        "eng": {
+          "official": "Canada",
+          "common": "Canada"
+        },
+        "fra": {
+          "official": "Canada",
+          "common": "Canada"
+        }
+      }
+    },
+    "cca2": "CA",
+    "independent": true,
+    "flag": "🇨🇦",
+    "continents": ["North America"]
+  },
+  {
+    "name": {
+      "common": "Thailand",
+      "official": "Kingdom of Thailand",
+      "nativeName": {
+        "tha": {
+          "official": "ราชอาณาจักรไทย",
+          "common": "ประเทศไทย"
+        }
+      }
+    },
+    "cca2": "TH",
+    "independent": true,
+    "flag": "🇹🇭",
+    "continents": ["Asia"]
+  },
+  {
+    "name": {
+      "common": "Fiji",
+      "official": "Republic of Fiji",
+      "nativeName": {
+        "eng": {
+          "official": "Republic of Fiji",
+          "common": "Fiji"
+        },
+        "fij": {
+          "official": "Matanitu Tugalala o Viti",
+          "common": "Viti"
+        },
+        "hif": {
+          "official": "रिपब्लिक ऑफ फीजी",
+          "common": "फिजी"
+        }
+      }
+    },
+    "cca2": "FJ",
+    "independent": true,
+    "flag": "🇫🇯",
+    "continents": ["Oceania"]
+  }
+]

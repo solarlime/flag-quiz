@@ -103,10 +103,10 @@ const Quiz = observer(() => {
           ) : (
             <>
               <TopInformation>
-                <Question>
+                <Question data-testid="question-number">
                   {quizStore.questionNumber}/{quizStore.maxQuestions}
                 </Question>
-                <span>Score: {quizStore.score}</span>
+                <span data-testid="score">Score: {quizStore.score}</span>
               </TopInformation>
               <Flag info={quizStore.answer!} />
               <AnswerVariants />

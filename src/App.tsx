@@ -28,7 +28,13 @@ const App = observer(() => {
     <>
       <Header />
       <Main>
-        {quizStore ? <Quiz /> : <Button onClick={startQuiz}>New quiz</Button>}
+        {quizStore ? (
+          <Quiz />
+        ) : (
+          <Button onClick={startQuiz} data-testid="quiz-start-button">
+            New quiz
+          </Button>
+        )}
       </Main>
     </>
   );
