@@ -2,15 +2,27 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { Switch as RadixSwitch } from 'radix-ui';
 import { useStore } from '../store/StoreProvider.tsx';
+import { ReactNode } from 'react';
 
 const StyledSwitchRoot = styled(RadixSwitch.Root)`
+  display: flex;
+  align-items: center;
   width: calc((var(--font-size) + var(--border-width) * 2) * 2);
   background-color: ${(props) => props.theme.colors.color2};
   padding: calc(var(--padding-s));
   border-radius: var(--padding-m);
+
+  &[data-state='checked'] span.icon {
+    padding: calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.3)
+      calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.1);
+    transform: translateX(
+      calc(calc(var(--font-size) + var(--border-width) * 2) * -1)
+    );
+  }
 `;
 
 const StyledSwitchThumb = styled(RadixSwitch.Thumb)`
+  flex-shrink: 0;
   width: calc(var(--font-size) + var(--border-width) * 2);
   height: calc(var(--font-size) + var(--border-width) * 2);
   background-color: ${(props) => props.theme.colors.color12};
@@ -23,20 +35,23 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb)`
   }
 `;
 
-const Switch = observer(({ testId }: { testId?: string }) => {
-  const { themeStore } = useStore();
+const Switch = observer(
+  ({ testId, children }: { testId?: string; children?: ReactNode }) => {
+    const { themeStore } = useStore();
 
-  return (
-    <StyledSwitchRoot
-      checked={themeStore.theme.name === 'dark'}
-      onCheckedChange={() => themeStore.toggleTheme()}
-      value={themeStore.theme.name}
-      data-value={themeStore.theme.name}
-      data-testid={testId}
-    >
-      <StyledSwitchThumb />
-    </StyledSwitchRoot>
-  );
-});
+    return (
+      <StyledSwitchRoot
+        checked={themeStore.theme.name === 'dark'}
+        onCheckedChange={() => themeStore.toggleTheme()}
+        value={themeStore.theme.name}
+        data-value={themeStore.theme.name}
+        data-testid={testId}
+      >
+        <StyledSwitchThumb />
+        {children}
+      </StyledSwitchRoot>
+    );
+  },
+);
 
 export default Switch;

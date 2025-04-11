@@ -12,6 +12,7 @@
     "test": "yarn playwright test"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.7",
     "@radix-ui/colors": "^3.0.0",
     "core-js": "^3.41.0",
     "mobx": "^6.13.7",

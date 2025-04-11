@@ -485,6 +485,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@phosphor-icons/react@npm:^2.1.7":
+  version: 2.1.7
+  resolution: "@phosphor-icons/react@npm:2.1.7"
+  peerDependencies:
+    react: ">= 16.8"
+    react-dom: ">= 16.8"
+  checksum: 10c0/8e5c42056f606c5efdfa113174de4c312a084b1ca117262f9bb3063cb68ec58fa9e4ebb414d99372213a23924e064add34bcc917177b2f092f42e90c683e0dbd
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -3502,6 +3512,7 @@ __metadata:
   resolution: "flag-quiz@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.21.0"
+    "@phosphor-icons/react": "npm:^2.1.7"
     "@playwright/test": "npm:^1.51.1"
     "@radix-ui/colors": "npm:^3.0.0"
     "@types/eslint-plugin-jsx-a11y": "npm:^6"

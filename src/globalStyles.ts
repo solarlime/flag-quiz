@@ -10,8 +10,9 @@ export default createGlobalStyle`
   }
     
   body * {
-      all: unset;
       display: block;
+      padding: 0;
+      margin: 0;
       font-family: "DINish", Arial, sans-serif;
       font-stretch: normal;
       // font-style: oblique 8deg;
@@ -28,10 +29,15 @@ export default createGlobalStyle`
   }
     
   button {
+      all: unset;
       padding: var(--padding-s) var(--padding-m);
       border-radius: var(--radius-m);
       line-height: 1;
       cursor: pointer;
+  }
+  
+  a {
+      all: unset;
   }
 
   :focus-visible {
