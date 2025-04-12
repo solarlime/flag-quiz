@@ -40,7 +40,11 @@ const AnswerVariants = () => {
         quizStore.variants.map(
           (variant) =>
             variant && (
-              <Button key={uuidv4()} onClick={() => handleClick(variant)}>
+              <Button
+                key={uuidv4()}
+                onClick={() => handleClick(variant)}
+                data-testid="answer-variant"
+              >
                 {variant.name}
               </Button>
             ),

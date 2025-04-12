@@ -129,7 +129,9 @@ class QuizStore {
     this._mistakes.push(mistake);
   }
 
-  private _maxQuestions: number = 10;
+  private _maxQuestions: number = import.meta.env.VITE_MAX_QUESTIONS
+    ? +import.meta.env.VITE_MAX_QUESTIONS
+    : 10;
 
   get maxQuestions() {
     return this._maxQuestions;

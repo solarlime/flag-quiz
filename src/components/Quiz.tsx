@@ -78,7 +78,7 @@ const Quiz = observer(() => {
           {quizStore.questionNumber > quizStore.maxQuestions ? (
             <>
               <TopInformation>
-                <span>
+                <span data-testid="quiz-result">
                   You answered correctly {quizStore.score} time
                   {quizStore.score !== 1 && 's'} out of {quizStore.maxQuestions}
                   !
@@ -89,7 +89,7 @@ const Quiz = observer(() => {
                   <MistakesTitle>Here are your mistakes:</MistakesTitle>
                   <Mistakes>
                     {quizStore.mistakes.map((mistake) => (
-                      <li key={uuidv4()}>
+                      <li key={uuidv4()} data-testid="mistake">
                         <Flag info={mistake.correct}>
                           <p>Correct answer: {mistake.correct.name}</p>
                           <p>Your answer: {mistake.chosen.name}</p>
