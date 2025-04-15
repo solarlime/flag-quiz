@@ -24,7 +24,7 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.24.0",
     "@playwright/test": "^1.51.1",
     "@types/eslint-plugin-jsx-a11y": "^6",
     "@types/node": "^22.14.0",
