@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
 import AnswerVariants from './AnswerVariants.tsx';
 import Flag from './Flag.tsx';
-import { useStore } from '../store/StoreProvider.tsx';
+import { useStore } from '../../store/StoreProvider.tsx';
 import { useEffect } from 'react';
 
 const TopInformation = styled.div`

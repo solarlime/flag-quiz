@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { Switch as RadixSwitch } from 'radix-ui';
-import { useStore } from '../store/StoreProvider.tsx';
+import { useStore } from '../../store/StoreProvider.tsx';
 import { ReactNode } from 'react';
 
 const StyledSwitchRoot = styled(RadixSwitch.Root)`
@@ -11,6 +11,10 @@ const StyledSwitchRoot = styled(RadixSwitch.Root)`
   background-color: ${(props) => props.theme.colors.color2};
   padding: calc(var(--padding-s));
   border-radius: var(--padding-m);
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.color3};
+  }
 
   &[data-state='checked'] span.icon {
     padding: calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.3)

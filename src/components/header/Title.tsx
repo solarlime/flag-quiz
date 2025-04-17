@@ -17,7 +17,7 @@ const StyledH1 = styled.h1`
 const Title = () => {
   return (
     <StyledH1>
-      <a href="/" title="Homepage" rel="nofollow noreferrer">
+      <a href="/public" title="Homepage" rel="nofollow noreferrer">
         Flag quiz
       </a>
     </StyledH1>

@@ -2,6 +2,11 @@
 import { observable, action, computed, runInAction } from 'mobx';
 import type { Result, RawResult, Mistake } from '../interfaces/data.ts';
 
+type Properties<T> = {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  [K in keyof T as T[K] extends Function ? never : K]: T[K];
+};
+
 export const shuffleArray = (array: Array<Result>) => {
   const newArray = array.slice();
   for (let i = newArray.length - 1; i > 0; i -= 1) {
@@ -33,6 +38,10 @@ class QuizStore {
   }
 
   private _data: Array<Result> | null = null;
+
+  @computed get data() {
+    return this._data;
+  }
 
   @action async fetchCountries() {
     try {
@@ -153,6 +162,20 @@ class QuizStore {
 
   @action increaseQuestionNumber() {
     this._questionNumber += 1;
+  }
+
+  @action saveQuiz() {
+    const quiz: Properties<QuizStore> = {
+      data: this.data,
+      score: this.score,
+      mistakes: this.mistakes,
+      fetchStatus: this.fetchStatus,
+      answer: this.answer,
+      variants: this.variants,
+      questionNumber: this.questionNumber,
+      maxQuestions: this.maxQuestions,
+    };
+    localStorage.setItem('savedState', JSON.stringify(quiz));
   }
 }
 

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import Button from './Button.tsx';
-import { useStore } from '../store/StoreProvider.tsx';
-import { Result } from '../interfaces/data.ts';
+import Button from '../generic/Button.tsx';
+import { useStore } from '../../store/StoreProvider.tsx';
+import { Result } from '../../interfaces/data.ts';
 
 const Buttons = styled.div`
   display: grid;

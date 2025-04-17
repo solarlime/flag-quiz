@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import Header from './components/Header.tsx';
-import Quiz from './components/Quiz.tsx';
+import Header from './components/header/Header.tsx';
+import Quiz from './components/quiz/Quiz.tsx';
 import { useStore } from './store/StoreProvider.tsx';
-import Button from './components/Button.tsx';
+import Button from './components/generic/Button.tsx';
 
 const Main = styled.main`
   display: flex;

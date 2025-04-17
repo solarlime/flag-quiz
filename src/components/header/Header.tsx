@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import Title from './Title.tsx';
 import Switch from './Switch.tsx';
-import { useStore } from '../store/StoreProvider.tsx';
+import SaveButton from './SaveButton.tsx';
+import { useStore } from '../../store/StoreProvider.tsx';
 import { Moon, Sun } from '@phosphor-icons/react';
 import { observer } from 'mobx-react-lite';
 
@@ -13,6 +14,15 @@ const StyledHeader = styled.header`
   padding: var(--padding-l);
   background-color: ${(props) => props.theme.colors.color5};
   box-sizing: border-box;
+`;
+
+const HeaderButtons = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > button:not(:last-child) {
+    margin-right: var(--padding-s);
+  }
 `;
 
 const Icon = styled.span`
@@ -31,20 +41,25 @@ const Icon = styled.span`
 `;
 
 const Header = observer(() => {
-  const { themeStore } = useStore();
+  const { themeStore, quizStore } = useStore();
 
   return (
     <StyledHeader>
       <Title />
-      <Switch testId="theme-switcher">
-        <Icon className="icon">
-          {themeStore.theme.name === 'light' ? (
-            <Sun weight="fill" />
-          ) : (
-            <Moon weight="fill" />
-          )}
-        </Icon>
-      </Switch>
+      <HeaderButtons>
+        {quizStore?.fetchStatus === 'done' && (
+          <SaveButton data-testid="quiz-save-button">Save</SaveButton>
+        )}
+        <Switch testId="theme-switcher">
+          <Icon className="icon">
+            {themeStore.theme.name === 'light' ? (
+              <Sun weight="fill" />
+            ) : (
+              <Moon weight="fill" />
+            )}
+          </Icon>
+        </Switch>
+      </HeaderButtons>
     </StyledHeader>
   );
 });
