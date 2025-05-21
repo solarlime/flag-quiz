@@ -1,11 +1,11 @@
 /* eslint-disable mobx/missing-make-observable */
 import { observable, action, computed, runInAction } from 'mobx';
-import type { Result, RawResult, Mistake } from '../interfaces/data.ts';
-
-type Properties<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  [K in keyof T as T[K] extends Function ? never : K]: T[K];
-};
+import type {
+  Result,
+  RawResult,
+  Mistake,
+  Properties,
+} from '../interfaces/data.ts';
 
 export const shuffleArray = (array: Array<Result>) => {
   const newArray = array.slice();
@@ -27,6 +27,20 @@ const makeItemGetter = (array: Array<Result>) => {
 };
 
 class QuizStore {
+  constructor(savedState?: Properties<QuizStore>) {
+    if (savedState) {
+      console.log('Restoring saved state');
+      this._data = savedState.data;
+      this._score = savedState.score;
+      this._mistakes = savedState.mistakes;
+      this._fetchStatus = savedState.fetchStatus;
+      this._answer = savedState.answer;
+      this._variants = savedState.variants;
+      this._questionNumber = savedState.questionNumber;
+      this._maxQuestions = savedState.maxQuestions;
+    }
+  }
+
   @observable private accessor _fetchStatus:
     | 'idle'
     | 'loading'

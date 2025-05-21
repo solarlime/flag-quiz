@@ -1,6 +1,7 @@
 import ThemeStore from './themeStore.ts';
 import QuizStore from './quizStore.ts';
 import { makeAutoObservable } from 'mobx';
+import type { Properties } from '../interfaces/data.ts';
 
 class Store {
   constructor() {
@@ -10,8 +11,8 @@ class Store {
   themeStore = new ThemeStore();
   quizStore: QuizStore | undefined;
 
-  initQuizStore() {
-    this.quizStore = new QuizStore();
+  initQuizStore(savedState?: Properties<QuizStore>) {
+    this.quizStore = new QuizStore(savedState);
   }
 
   get rootStore() {

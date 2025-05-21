@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import Header from './components/header/Header.tsx';
 import Quiz from './components/quiz/Quiz.tsx';
 import { useStore } from './store/StoreProvider.tsx';
-import Button from './components/generic/Button.tsx';
+import StartMenu from './components/StartMenu.tsx';
 
 const Main = styled.main`
   display: flex;
@@ -18,24 +18,12 @@ const Main = styled.main`
 `;
 
 const App = observer(() => {
-  const { rootStore, quizStore } = useStore();
-
-  const startQuiz = () => {
-    rootStore.initQuizStore();
-  };
+  const { quizStore } = useStore();
 
   return (
     <>
       <Header />
-      <Main>
-        {quizStore ? (
-          <Quiz />
-        ) : (
-          <Button onClick={startQuiz} data-testid="quiz-start-button">
-            New quiz
-          </Button>
-        )}
-      </Main>
+      <Main>{quizStore ? <Quiz /> : <StartMenu />}</Main>
     </>
   );
 });

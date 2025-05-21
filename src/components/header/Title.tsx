@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
 
 const StyledH1 = styled.h1`
   font-size: calc(
@@ -14,7 +15,7 @@ const StyledH1 = styled.h1`
   }
 `;
 
-const Title = () => {
+const Title = observer(() => {
   return (
     <StyledH1>
       <a href="/public" title="Homepage" rel="nofollow noreferrer">
@@ -22,6 +23,6 @@ const Title = () => {
       </a>
     </StyledH1>
   );
-};
+});
 
 export default Title;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../generic/Button.tsx';
 import { useStore } from '../../store/StoreProvider.tsx';
@@ -17,7 +18,7 @@ const Buttons = styled.div`
   }
 `;
 
-const AnswerVariants = () => {
+const AnswerVariants = observer(() => {
   const { quizStore } = useStore();
 
   const handleClick = (variant: Result) => {
@@ -51,6 +52,6 @@ const AnswerVariants = () => {
         )}
     </Buttons>
   );
-};
+});
 
 export default AnswerVariants;
