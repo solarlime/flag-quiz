@@ -47,9 +47,10 @@ const Header = observer(() => {
     <StyledHeader>
       <Title />
       <HeaderButtons>
-        {quizStore?.fetchStatus === 'done' && (
-          <SaveButton data-testid="quiz-save-button">Save</SaveButton>
-        )}
+        {quizStore?.fetchStatus === 'done' &&
+          quizStore.questionNumber <= quizStore.maxQuestions && (
+            <SaveButton data-testid="quiz-save-button" />
+          )}
         <Switch testId="theme-switcher">
           <Icon className="icon">
             {themeStore.theme.name === 'light' ? (

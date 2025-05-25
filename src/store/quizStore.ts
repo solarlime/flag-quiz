@@ -27,7 +27,7 @@ const makeItemGetter = (array: Array<Result>) => {
 };
 
 class QuizStore {
-  constructor(savedState?: Properties<QuizStore>) {
+  constructor(savedState?: Properties<QuizStore, 'isCurrentSaved'>) {
     if (savedState) {
       console.log('Restoring saved state');
       this._data = savedState.data;
@@ -38,6 +38,7 @@ class QuizStore {
       this._variants = savedState.variants;
       this._questionNumber = savedState.questionNumber;
       this._maxQuestions = savedState.maxQuestions;
+      this._isCurrentSaved = true;
     }
   }
 
@@ -132,6 +133,7 @@ class QuizStore {
       const variants = [1, 1, 1, 1].map((_item) => getItem());
       this._answer = variants[0];
       this._variants = shuffleArray(variants);
+      if (this.isCurrentSaved) this._isCurrentSaved = false;
     }
   }
 
@@ -178,8 +180,14 @@ class QuizStore {
     this._questionNumber += 1;
   }
 
+  @observable private accessor _isCurrentSaved = false;
+
+  @computed get isCurrentSaved() {
+    return this._isCurrentSaved;
+  }
+
   @action saveQuiz() {
-    const quiz: Properties<QuizStore> = {
+    const quiz: Properties<QuizStore, 'isCurrentSaved'> = {
       data: this.data,
       score: this.score,
       mistakes: this.mistakes,
@@ -190,6 +198,7 @@ class QuizStore {
       maxQuestions: this.maxQuestions,
     };
     localStorage.setItem('savedState', JSON.stringify(quiz));
+    this._isCurrentSaved = true;
   }
 }
 

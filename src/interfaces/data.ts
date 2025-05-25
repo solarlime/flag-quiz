@@ -19,7 +19,10 @@ export interface Mistake {
   correct: Result;
 }
 
-export type Properties<T> = {
+export type Properties<T, O extends string> = {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  [K in keyof T as T[K] extends Function ? never : K]: T[K];
+  [K in keyof Omit<T, O> as Omit<T, O>[K] extends Function ? never : K]: Omit<
+    T,
+    O
+  >[K];
 };

@@ -26,7 +26,10 @@ const AnswerVariants = observer(() => {
       if (variant.countryCodeAlpha2 === quizStore.answer?.countryCodeAlpha2) {
         quizStore.increaseScore();
       } else {
-        quizStore.addAMistake({ chosen: variant, correct: quizStore.answer });
+        quizStore.addAMistake({
+          chosen: variant,
+          correct: quizStore.answer,
+        });
       }
       quizStore.increaseQuestionNumber();
       if (quizStore.questionNumber <= quizStore.maxQuestions) {

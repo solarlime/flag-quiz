@@ -7,9 +7,15 @@ const Button = styled.button`
   border-radius: var(--radius-m);
   text-align: center;
   cursor: pointer;
-  &:hover {
+
+  &:not(:disabled):hover {
     background-color: ${(props) => props.theme.colors.color5};
     border-color: ${(props) => props.theme.colors.color8};
+  }
+
+  &:disabled {
+    color: ${(props) => props.theme.colors.color6};
+    cursor: not-allowed;
   }
 `;
 

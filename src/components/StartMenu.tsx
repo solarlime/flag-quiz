@@ -22,9 +22,9 @@ const StartMenu = observer(() => {
 
   const loadQuiz = () => {
     try {
-      const savedState = localStorage.getItem('savedState');
-      if (savedState) {
-        rootStore.initQuizStore(JSON.parse(savedState));
+      const savedState = rootStore.savedState;
+      if (savedState.isDefined) {
+        rootStore.initQuizStore(JSON.parse(savedState.data));
       } else {
         throw new CustomError('No saved quiz found');
       }
@@ -42,7 +42,11 @@ const StartMenu = observer(() => {
       <Button onClick={startQuiz} data-testid="quiz-start-button">
         New quiz
       </Button>
-      <Button onClick={loadQuiz} data-testid="quiz-load-button">
+      <Button
+        onClick={loadQuiz}
+        data-testid="quiz-load-button"
+        disabled={!rootStore.savedState.isDefined}
+      >
         Load quiz
       </Button>
     </StyledStartMenu>

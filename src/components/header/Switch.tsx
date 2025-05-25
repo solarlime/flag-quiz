@@ -10,9 +10,11 @@ const StyledSwitchRoot = styled(RadixSwitch.Root)`
   width: calc((var(--font-size) + var(--border-width) * 2) * 2);
   background-color: ${(props) => props.theme.colors.color2};
   padding: calc(var(--padding-s));
+  border: 0;
   border-radius: var(--padding-m);
+  box-sizing: content-box;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: ${(props) => props.theme.colors.color3};
   }
 
