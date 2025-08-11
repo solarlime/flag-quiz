@@ -34,16 +34,18 @@ class QuizStore {
   @action async fetchCountries() {
     try {
       const abortController = new AbortController();
+      let timeout: null | NodeJS.Timeout = null;
       const result: RawResult[] = await Promise.any([
         fetch(
           'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
           { signal: abortController.signal },
         ).then((response) => {
+          if (timeout) clearTimeout(timeout);
           console.info('Successfully loaded countries');
           return response.json();
         }),
         new Promise((resolve) => {
-          setTimeout(
+          timeout = setTimeout(
             () =>
               import('./fallback_countries.json').then((module) => {
                 abortController.abort();
