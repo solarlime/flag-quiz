@@ -22,8 +22,11 @@ const makeItemGetter = (array: Array<Result>) => {
 };
 
 class QuizStore {
-  @observable private accessor _fetchStatus: 'loading' | 'done' | 'error' =
-    'loading';
+  @observable private accessor _fetchStatus:
+    | 'idle'
+    | 'loading'
+    | 'done'
+    | 'error' = 'idle';
 
   @computed get fetchStatus() {
     return this._fetchStatus;
@@ -33,6 +36,9 @@ class QuizStore {
 
   @action async fetchCountries() {
     try {
+      runInAction(() => {
+        this._fetchStatus = 'loading';
+      });
       const abortController = new AbortController();
       let timeout: null | NodeJS.Timeout = null;
       const result: RawResult[] = await Promise.any([

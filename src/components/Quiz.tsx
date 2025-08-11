@@ -66,7 +66,9 @@ const Quiz = observer(() => {
   const quizStore = qStore!;
 
   useEffect(() => {
-    quizStore.fetchCountries();
+    if (quizStore.fetchStatus === 'idle') {
+      quizStore.fetchCountries();
+    }
   }, []);
 
   return (
