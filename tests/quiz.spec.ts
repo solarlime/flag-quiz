@@ -33,7 +33,14 @@ test('Should pass the quiz', async ({ page }) => {
   const quizStartButton = page.getByTestId('quiz-start-button');
   await expect(quizStartButton).toBeEnabled();
 
+  const quizLoadButton = page.getByTestId('quiz-load-button');
+  await expect(quizLoadButton).toBeDisabled();
+
+  const quizSaveButton = page.getByTestId('quiz-save-button');
+  await expect(quizSaveButton).not.toBeAttached();
+
   await quizStartButton.click();
+  await expect(quizSaveButton).toBeAttached();
 
   const score = page.getByTestId('score');
   await expect(score).toContainText('0');
@@ -60,6 +67,18 @@ test('Should pass the quiz', async ({ page }) => {
 
   await countryButton.click();
 
+  await expect(score).toContainText('1');
+  await expect(question).toHaveText('2/2');
+
+  await expect(quizSaveButton).toBeEnabled();
+  await quizSaveButton.click();
+  await expect(quizSaveButton).toContainText('Saved');
+  await expect(quizSaveButton).toBeDisabled();
+
+  await page.reload({ waitUntil: 'networkidle' });
+  await expect(quizLoadButton).toBeEnabled();
+
+  await quizLoadButton.click();
   await expect(score).toContainText('1');
   await expect(question).toHaveText('2/2');
 
