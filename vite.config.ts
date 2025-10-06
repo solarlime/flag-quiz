@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { svgPlugin } from 'vite-plugin-fast-react-svg';
 import reactSwc from '@vitejs/plugin-react-swc';
 
 // https://vite.dev/config/
@@ -10,6 +11,7 @@ export default defineConfig({
     target: ['ios12'],
   },
   plugins: [
+    svgPlugin(),
     reactSwc({
       useAtYourOwnRisk_mutateSwcOptions(options) {
         if (options.jsc && options.jsc.parser && options.jsc.transform) {
