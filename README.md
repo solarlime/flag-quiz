@@ -1,6 +1,6 @@
 [![CI](https://github.com/solarlime/flag-quiz/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/solarlime/flag-quiz/actions/workflows/main.yml)
 
-# Flag quiz
+# Flaq (ex. Flag quiz)
 
 ### What:
 
@@ -18,4 +18,4 @@ It's a simple app helping to learn the flags of the countries.
 - Supports all modern browsers on desktop, Android & iOS 12+
 - Tested with Playwright
 
-Try it on [Vercel](https://flag-quiz.solarlime.dev/)!
+Try it on [Vercel](https://flaq.solarlime.dev/)!
