@@ -7,6 +7,10 @@ import { Moon, Sun } from '@phosphor-icons/react';
 import { observer } from 'mobx-react-lite';
 
 const StyledHeader = styled.header`
+  position: sticky;
+  position: -webkit-sticky; /* For Safari */
+  top: 0;
+  z-index: 5;
   display: flex;
   justify-content: space-between;
   align-items: center;
