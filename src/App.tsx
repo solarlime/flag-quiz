@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import Header from './components/header/Header.tsx';
-import Quiz from './components/quiz/Quiz.tsx';
-import { useStore } from './store/StoreProvider.tsx';
-import StartMenu from './components/StartMenu.tsx';
+import { Outlet } from 'react-router';
 
 const Main = styled.main`
   display: flex;
@@ -18,12 +16,12 @@ const Main = styled.main`
 `;
 
 const App = observer(() => {
-  const { quizStore } = useStore();
-
   return (
     <>
       <Header />
-      <Main>{quizStore ? <Quiz /> : <StartMenu />}</Main>
+      <Main>
+        <Outlet />
+      </Main>
     </>
   );
 });

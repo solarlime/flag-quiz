@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import Button from './generic/Button.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
 import CustomError from '../utils/CustomError.ts';
+import { useNavigate } from 'react-router';
 
 const StyledStartMenu = styled.div`
   display: flex;
@@ -15,9 +16,11 @@ const StyledStartMenu = styled.div`
 
 const StartMenu = observer(() => {
   const { rootStore } = useStore();
+  const navigate = useNavigate();
 
   const startQuiz = () => {
     rootStore.initQuizStore();
+    navigate('/quiz');
   };
 
   const loadQuiz = () => {
@@ -25,6 +28,7 @@ const StartMenu = observer(() => {
       const savedState = rootStore.savedState;
       if (savedState.isDefined) {
         rootStore.initQuizStore(JSON.parse(savedState.data));
+        navigate('/quiz');
       } else {
         throw new CustomError('No saved quiz found');
       }

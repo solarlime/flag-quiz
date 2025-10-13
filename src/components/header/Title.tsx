@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router';
 import Logo from '../../assets/images/logo.svg';
 
 const StyledH1 = styled.h1`
@@ -26,9 +27,9 @@ const StyledH1 = styled.h1`
 const Title = observer(() => {
   return (
     <StyledH1>
-      <a href="/" title="Homepage" rel="nofollow noreferrer">
+      <Link to="/" title="Homepage" rel="nofollow noreferrer">
         <Logo />
-      </a>
+      </Link>
     </StyledH1>
   );
 });
