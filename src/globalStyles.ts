@@ -27,13 +27,6 @@ export default createGlobalStyle`
     flex-direction: column;
     min-height: 100dvh;
   }
-    
-  button {
-    padding: var(--padding-s) var(--padding-m);
-    border-radius: var(--radius-m);
-    line-height: 1;
-    cursor: pointer;
-  }
   
   a {
     color: inherit;

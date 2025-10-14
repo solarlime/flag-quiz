@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
-import Button from '../generic/Button.tsx';
+import VariantButton from '../generic/VariantButton.tsx';
 import { useStore } from '../../store/StoreProvider.tsx';
 import { Result } from '../../interfaces/data.ts';
 
@@ -44,13 +44,13 @@ const AnswerVariants = observer(() => {
         quizStore.variants.map(
           (variant) =>
             variant && (
-              <Button
+              <VariantButton
                 key={uuidv4()}
                 onClick={() => handleClick(variant)}
                 data-testid="answer-variant"
               >
                 {variant.name}
-              </Button>
+              </VariantButton>
             ),
         )}
     </Buttons>

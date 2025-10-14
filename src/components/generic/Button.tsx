@@ -1,21 +1,24 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background-color: ${(props) => props.theme.colors.color3};
-  color: ${(props) => props.theme.colors.color10};
-  border: var(--border-width) solid ${(props) => props.theme.colors.color7};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-s) var(--padding-m);
+  border: var(--border-width) solid;
   border-radius: var(--radius-m);
-  text-align: center;
+  font-size: var(--font-size);
+  line-height: 1;
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
   cursor: pointer;
 
-  &:not(:disabled):hover {
-    background-color: ${(props) => props.theme.colors.color5};
-    border-color: ${(props) => props.theme.colors.color8};
+  &:disabled {
+    cursor: not-allowed;
   }
 
-  &:disabled {
-    color: ${(props) => props.theme.colors.color6};
-    cursor: not-allowed;
+  & > svg {
+    margin-right: var(--padding-s);
   }
 `;
 

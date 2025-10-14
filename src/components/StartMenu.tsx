@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import Button from './generic/Button.tsx';
+import VariantButton from './generic/VariantButton.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
 import CustomError from '../utils/CustomError.ts';
 import { useNavigate } from 'react-router';
@@ -43,16 +43,16 @@ const StartMenu = observer(() => {
 
   return (
     <StyledStartMenu>
-      <Button onClick={startQuiz} data-testid="quiz-start-button">
+      <VariantButton onClick={startQuiz} data-testid="quiz-start-button">
         New quiz
-      </Button>
-      <Button
+      </VariantButton>
+      <VariantButton
         onClick={loadQuiz}
         data-testid="quiz-load-button"
         disabled={!rootStore.savedState.isDefined}
       >
         Load quiz
-      </Button>
+      </VariantButton>
     </StyledStartMenu>
   );
 });

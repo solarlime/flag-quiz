@@ -13,9 +13,14 @@ const StyledSwitchRoot = styled(RadixSwitch.Root)`
   border: 0;
   border-radius: var(--padding-m);
   box-sizing: content-box;
+  cursor: pointer;
 
   &:not(:disabled):hover {
     background-color: ${(props) => props.theme.colors.color3};
+  }
+
+  &:not(:disabled):active {
+    background-color: ${(props) => props.theme.colors.color4};
   }
 
   &[data-state='checked'] span.icon {
