@@ -1,0 +1,95 @@
+import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
+import AnswerVariants from './AnswerVariants.tsx';
+import Flag from './Flag.tsx';
+import { useStore } from '../../../store/StoreProvider.tsx';
+import { useEffect } from 'react';
+import SaveButton from './SaveButton.tsx';
+import { Navigate } from 'react-router';
+import SectionTitle from '../SectionTitle.tsx';
+
+const TopInformation = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--padding-l);
+
+  &:only-child {
+    margin-bottom: 0;
+  }
+
+  & > span {
+    flex-basis: 5%;
+    flex-grow: 1;
+    text-align: left;
+
+    &:last-child:not(:first-child) {
+      text-align: right;
+    }
+  }
+`;
+
+const Question = styled.span`
+  &:before {
+    content: 'Question: ';
+
+    @media screen and (max-width: 400px) {
+      content: '';
+    }
+  }
+`;
+
+const StyledCard = styled.div`
+  width: 100%;
+  max-width: var(--card-max-width);
+  padding: var(--padding-l);
+  margin: 0 auto;
+  border-radius: var(--radius-xl);
+  background-color: ${(props) => props.theme.colors.color1};
+  box-sizing: border-box;
+`;
+
+const Quiz = observer(() => {
+  const { quizStore: qStore } = useStore();
+  const quizStore = qStore!;
+
+  useEffect(() => {
+    if (quizStore.fetchStatus === 'idle') {
+      quizStore.fetchCountries();
+    }
+  }, []);
+
+  return (
+    <>
+      {quizStore.fetchStatus === 'loading' && <p>Loading...</p>}
+      {quizStore.fetchStatus === 'error' && <p>An error occurred</p>}
+      {quizStore.fetchStatus === 'done' && (
+        <>
+          {quizStore.questionNumber > quizStore.maxQuestions ? (
+            <Navigate to="/result" />
+          ) : (
+            <>
+              <SectionTitle title="Quiz">
+                {quizStore?.fetchStatus === 'done' &&
+                  quizStore.questionNumber <= quizStore.maxQuestions && (
+                    <SaveButton data-testid="quiz-save-button" />
+                  )}
+              </SectionTitle>
+              <StyledCard>
+                <TopInformation>
+                  <Question data-testid="question-number">
+                    {quizStore.questionNumber}/{quizStore.maxQuestions}
+                  </Question>
+                  <span data-testid="score">Score: {quizStore.score}</span>
+                </TopInformation>
+                <Flag info={quizStore.answer!} />
+                <AnswerVariants />
+              </StyledCard>
+            </>
+          )}
+        </>
+      )}
+    </>
+  );
+});
+
+export default Quiz;

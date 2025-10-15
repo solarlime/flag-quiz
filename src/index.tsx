@@ -31,7 +31,19 @@ const router = createBrowserRouter([
           }
         },
         lazy: () =>
-          import('./components/quiz/Quiz.tsx').then((module) => ({
+          import('./components/sections/quiz/Quiz.tsx').then((module) => ({
+            Component: module.default,
+          })),
+      },
+      {
+        path: 'result',
+        loader: () => {
+          if (!store.quizStore || !store.quizStore.maxQuestions) {
+            return redirect('/');
+          }
+        },
+        lazy: () =>
+          import('./components/sections/result/Result.tsx').then((module) => ({
             Component: module.default,
           })),
       },

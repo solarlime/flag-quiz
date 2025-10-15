@@ -25,6 +25,10 @@
   --border-width: 1px;
 
   --card-max-width: 640px;
+
+  --title-size: calc(
+    var(--font-size) + var(--padding-s) + var(--border-width) * 2
+  );
 }
 
 @media screen and (max-width: 500px) {

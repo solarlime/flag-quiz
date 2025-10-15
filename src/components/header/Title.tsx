@@ -4,9 +4,7 @@ import { Link } from 'react-router';
 import Logo from '../../assets/images/logo.svg';
 
 const StyledH1 = styled.h1`
-  font-size: calc(
-    var(--font-size) + var(--padding-s) + var(--border-width) * 2
-  );
+  font-size: var(--title-size);
   // Safari incorrectly renders the font-weight: 600
   font-weight: 599;
   font-stretch: expanded;

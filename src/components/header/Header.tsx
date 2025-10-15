@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Title from './Title.tsx';
 import Switch from './Switch.tsx';
-import SaveButton from './SaveButton.tsx';
 import { useStore } from '../../store/StoreProvider.tsx';
 import { Moon, Sun } from '@phosphor-icons/react';
 import { observer } from 'mobx-react-lite';
@@ -45,16 +44,12 @@ const Icon = styled.span`
 `;
 
 const Header = observer(() => {
-  const { themeStore, quizStore } = useStore();
+  const { themeStore } = useStore();
 
   return (
     <StyledHeader>
       <Title />
       <HeaderButtons>
-        {quizStore?.fetchStatus === 'done' &&
-          quizStore.questionNumber <= quizStore.maxQuestions && (
-            <SaveButton data-testid="quiz-save-button" />
-          )}
         <Switch testId="theme-switcher">
           <Icon className="icon">
             {themeStore.theme.name === 'light' ? (

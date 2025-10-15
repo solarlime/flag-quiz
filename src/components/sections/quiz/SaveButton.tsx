@@ -1,10 +1,10 @@
 import { ComponentProps } from 'react';
-import HeaderButton from './HeaderButton.tsx';
+import CoreButton from '../CoreButton.tsx';
 import { observer } from 'mobx-react-lite';
 import { Check } from '@phosphor-icons/react';
-import { useStore } from '../../store/StoreProvider.tsx';
+import { useStore } from '../../../store/StoreProvider.tsx';
 
-const SaveButton = observer((props: ComponentProps<typeof HeaderButton>) => {
+const SaveButton = observer((props: ComponentProps<typeof CoreButton>) => {
   const { quizStore } = useStore();
 
   const handleClick = () => {
@@ -14,14 +14,14 @@ const SaveButton = observer((props: ComponentProps<typeof HeaderButton>) => {
   };
 
   return quizStore?.isCurrentSaved ? (
-    <HeaderButton {...props} disabled>
+    <CoreButton {...props} disabled>
       <Check weight="regular" />
       Saved
-    </HeaderButton>
+    </CoreButton>
   ) : (
-    <HeaderButton {...props} onClick={handleClick}>
+    <CoreButton {...props} onClick={handleClick}>
       Save
-    </HeaderButton>
+    </CoreButton>
   );
 });
 

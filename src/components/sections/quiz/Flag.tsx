@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import { Result } from '../../interfaces/data.ts';
+import { Result } from '../../../interfaces/data.ts';
 import styled, { css } from 'styled-components';
-import usePreloadImage from '../../hooks/usePreloadImage.ts';
+import usePreloadImage from '../../../hooks/usePreloadImage.ts';
 import { ReactNode } from 'react';
 
 const StyledFlag = styled.figure`
