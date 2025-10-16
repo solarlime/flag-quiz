@@ -10,12 +10,18 @@ const StyledHeader = styled.header`
   position: -webkit-sticky; /* For Safari */
   top: 0;
   z-index: 5;
+  background-color: ${(props) => props.theme.colors.color5};
+  box-sizing: border-box;
+`;
+
+const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
   padding: var(--padding-l);
-  background-color: ${(props) => props.theme.colors.color5};
   box-sizing: border-box;
 `;
 
@@ -48,18 +54,20 @@ const Header = observer(() => {
 
   return (
     <StyledHeader>
-      <Title />
-      <HeaderButtons>
-        <Switch testId="theme-switcher">
-          <Icon className="icon">
-            {themeStore.theme.name === 'light' ? (
-              <Sun weight="fill" />
-            ) : (
-              <Moon weight="fill" />
-            )}
-          </Icon>
-        </Switch>
-      </HeaderButtons>
+      <HeaderContainer>
+        <Title />
+        <HeaderButtons>
+          <Switch testId="theme-switcher">
+            <Icon className="icon">
+              {themeStore.theme.name === 'light' ? (
+                <Sun weight="fill" />
+              ) : (
+                <Moon weight="fill" />
+              )}
+            </Icon>
+          </Switch>
+        </HeaderButtons>
+      </HeaderContainer>
     </StyledHeader>
   );
 });

@@ -16,11 +16,19 @@ const StyledFlag = styled.figure`
   border-radius: var(--radius-l);
   background: ${(props) => props.theme.colors.color3};
 
+  @media screen and (min-width: 701px) {
+    grid-area: flag;
+  }
+
   &:not(:has(figcaption)) {
     align-items: center;
     justify-content: center;
     padding: 0;
     aspect-ratio: 3/2;
+
+    @media screen and (min-width: 701px) {
+      aspect-ratio: unset;
+    }
   }
 
   & > figcaption {
@@ -64,11 +72,12 @@ const PictureWrapper = styled.div`
     }
   }
 
+  @media screen and (min-width: 701px) {
+    aspect-ratio: auto;
+  }
+
   & img {
-    --max-width: calc(var(--card-max-width) - 2 * var(--padding-l));
     width: 100%;
-    max-width: var(--max-width);
-    max-height: calc(var(--max-width) / 3 * 2);
     border-radius: var(--radius-m);
     box-sizing: border-box;
   }

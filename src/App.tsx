@@ -9,6 +9,9 @@ const Main = styled.main`
   align-items: center;
   justify-content: center;
   padding: var(--padding-xl) var(--padding-l);
+  margin: 0 auto;
+  max-width: 1300px;
+  box-sizing: border-box;
 
   @media screen and (max-width: 400px) {
     padding: var(--padding-xl) 0;

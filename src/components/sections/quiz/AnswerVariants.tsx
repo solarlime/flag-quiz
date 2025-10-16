@@ -16,6 +16,15 @@ const Buttons = styled.div`
   @media screen and (max-width: 400px) {
     grid-template-columns: 1fr;
   }
+
+  @media screen and (min-width: 701px) {
+    grid-area: answers;
+    margin-top: 0;
+  }
+
+  @media screen and (min-width: 701px) and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const AnswerVariants = observer(() => {

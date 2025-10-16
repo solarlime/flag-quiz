@@ -27,7 +27,6 @@ const TopInformation = styled.div`
 
 const StyledCard = styled.div`
   width: 100%;
-  max-width: var(--card-max-width);
   padding: var(--padding-l);
   margin: 0 auto;
   border-radius: var(--radius-xl);
@@ -37,12 +36,24 @@ const StyledCard = styled.div`
 
 const Mistakes = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, calc(50% - var(--padding-s) / 2));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--padding-s);
   align-items: stretch;
 
   @media screen and (max-width: 500px) {
     grid-template-columns: 100%;
+  }
+
+  @media screen and (min-width: 701px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (min-width: 1001px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  & > li > figure > div {
+    aspect-ratio: 3/2;
   }
 `;
 

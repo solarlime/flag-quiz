@@ -13,6 +13,10 @@ const TopInformation = styled.div`
   justify-content: space-between;
   margin-bottom: var(--padding-l);
 
+  @media screen and (min-width: 701px) {
+    grid-area: top-information;
+  }
+
   &:only-child {
     margin-bottom: 0;
   }
@@ -46,6 +50,18 @@ const StyledCard = styled.div`
   border-radius: var(--radius-xl);
   background-color: ${(props) => props.theme.colors.color1};
   box-sizing: border-box;
+
+  @media screen and (min-width: 701px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 'top-information top-information' 'flag answers';
+    column-gap: var(--padding-l);
+    max-width: unset;
+  }
+
+  @media screen and (min-width: 1001px) {
+    grid-template-areas: 'flag top-information' 'flag answers';
+  }
 `;
 
 const Quiz = observer(() => {
