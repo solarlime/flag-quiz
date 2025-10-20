@@ -17,7 +17,7 @@ export default createGlobalStyle`
     // font-style: oblique 8deg;
     // Works in FF & Chrome but Safari needs -8deg. Setting via font-variation-settings works everywhere
     font-variation-settings: "slnt" -8;
-    font-size: var(--font-size);
+    font-size: var(--font-size-normal);
     line-height: 1.2;
     font-weight: 300;
   }

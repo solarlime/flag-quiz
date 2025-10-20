@@ -1,7 +1,8 @@
 import ThemeStore from './themeStore.ts';
 import QuizStore from './quizStore.ts';
 import { makeAutoObservable } from 'mobx';
-import type { Properties } from '../interfaces/data.ts';
+import type { TSavedState } from '../interfaces/data.ts';
+import type { TParameters } from '../interfaces/quizForm.ts';
 
 type SavedState =
   | {
@@ -35,8 +36,8 @@ class Store {
     };
   }
 
-  initQuizStore(savedState?: Properties<QuizStore, 'isCurrentSaved'>) {
-    this.quizStore = new QuizStore(savedState);
+  initQuizStore(arg: TSavedState<QuizStore, 'isCurrentSaved'> | TParameters) {
+    this.quizStore = new QuizStore(arg);
   }
 
   get rootStore() {

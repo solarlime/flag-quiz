@@ -24,6 +24,13 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <StartMenu /> },
       {
+        path: 'new',
+        lazy: () =>
+          import('./components/sections/new/New.tsx').then((module) => ({
+            Component: module.default,
+          })),
+      },
+      {
         path: 'quiz',
         loader: () => {
           if (!store.quizStore) {
@@ -38,7 +45,7 @@ const router = createBrowserRouter([
       {
         path: 'result',
         loader: () => {
-          if (!store.quizStore || !store.quizStore.maxQuestions) {
+          if (!store.quizStore || !store.quizStore.questionsQuantity) {
             return redirect('/');
           }
         },

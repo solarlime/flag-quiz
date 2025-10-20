@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import VariantButton from './generic/VariantButton.tsx';
+import CoreButton from './generic/CoreButton.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
 import CustomError from '../utils/CustomError.ts';
 import { useNavigate } from 'react-router';
@@ -17,11 +17,6 @@ const StyledStartMenu = styled.div`
 const StartMenu = observer(() => {
   const { rootStore } = useStore();
   const navigate = useNavigate();
-
-  const startQuiz = () => {
-    rootStore.initQuizStore();
-    navigate('/quiz');
-  };
 
   const loadQuiz = () => {
     try {
@@ -43,16 +38,19 @@ const StartMenu = observer(() => {
 
   return (
     <StyledStartMenu>
-      <VariantButton onClick={startQuiz} data-testid="quiz-start-button">
+      <CoreButton
+        onClick={() => navigate('/new')}
+        data-testid="quiz-start-button"
+      >
         New quiz
-      </VariantButton>
-      <VariantButton
+      </CoreButton>
+      <CoreButton
         onClick={loadQuiz}
         data-testid="quiz-load-button"
         disabled={!rootStore.savedState.isDefined}
       >
         Load quiz
-      </VariantButton>
+      </CoreButton>
     </StyledStartMenu>
   );
 });

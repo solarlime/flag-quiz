@@ -16,7 +16,7 @@ const StyledH1 = styled.h1`
 
     & > svg {
       height: calc(
-        var(--font-size) + var(--padding-s) + var(--border-width) * 2
+        var(--font-size-normal) + var(--padding-s) + var(--border-width) * 2
       );
     }
   }

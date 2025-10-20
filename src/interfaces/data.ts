@@ -26,3 +26,5 @@ export type Properties<T, O extends string> = {
     O
   >[K];
 };
+
+export type TSavedState<T, O extends string> = { savedState: Properties<T, O> };

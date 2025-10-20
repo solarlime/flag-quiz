@@ -68,11 +68,11 @@ const Result = observer(() => {
   return (
     <>
       <SectionTitle title="Result">
-        {+(quizStore.score / quizStore.maxQuestions).toFixed(1) < 0.4
+        {+(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.4
           ? '🤨'
-          : +(quizStore.score / quizStore.maxQuestions).toFixed(1) < 0.6
+          : +(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.6
             ? '😐'
-            : +(quizStore.score / quizStore.maxQuestions).toFixed(1) < 0.8
+            : +(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.8
               ? '😌'
               : '😊'}
       </SectionTitle>
@@ -80,7 +80,7 @@ const Result = observer(() => {
         <TopInformation>
           <span data-testid="quiz-result">
             You answered correctly {quizStore.score} time
-            {quizStore.score !== 1 && 's'} out of {quizStore.maxQuestions}!
+            {quizStore.score !== 1 && 's'} out of {quizStore.questionsQuantity}!
           </span>
         </TopInformation>
         {quizStore.mistakes.length ? (

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Button from '../generic/Button.tsx';
+import Button from './Button.tsx';
 
 const CoreButton = styled(Button)`
   color: ${(props) => props.theme.colors.color12};

@@ -13,6 +13,10 @@ const Main = styled.main`
   max-width: 1300px;
   box-sizing: border-box;
 
+  &:has(form) {
+    width: 100%;
+  }
+
   @media screen and (max-width: 400px) {
     padding: var(--padding-xl) 0;
   }

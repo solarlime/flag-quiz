@@ -36,11 +36,11 @@ const StyledFlag = styled.figure`
     flex-direction: column;
 
     & > p {
-      font-size: calc(var(--font-size) * 0.8);
+      font-size: calc(var(--font-size-normal) * 0.8);
 
       @media screen and (max-width: 500px) {
         & {
-          font-size: var(--font-size);
+          font-size: var(--font-size-normal);
         }
       }
 

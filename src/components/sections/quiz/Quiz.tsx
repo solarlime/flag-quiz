@@ -80,20 +80,20 @@ const Quiz = observer(() => {
       {quizStore.fetchStatus === 'error' && <p>An error occurred</p>}
       {quizStore.fetchStatus === 'done' && (
         <>
-          {quizStore.questionNumber > quizStore.maxQuestions ? (
+          {quizStore.questionNumber > quizStore.questionsQuantity ? (
             <Navigate to="/result" />
           ) : (
             <>
               <SectionTitle title="Quiz">
                 {quizStore?.fetchStatus === 'done' &&
-                  quizStore.questionNumber <= quizStore.maxQuestions && (
+                  quizStore.questionNumber <= quizStore.questionsQuantity && (
                     <SaveButton data-testid="quiz-save-button" />
                   )}
               </SectionTitle>
               <StyledCard>
                 <TopInformation>
                   <Question data-testid="question-number">
-                    {quizStore.questionNumber}/{quizStore.maxQuestions}
+                    {quizStore.questionNumber}/{quizStore.questionsQuantity}
                   </Question>
                   <span data-testid="score">Score: {quizStore.score}</span>
                 </TopInformation>

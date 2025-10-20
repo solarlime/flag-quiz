@@ -9,13 +9,15 @@
   --font-size-l: 24px;
   --font-size-m: 20px;
   --font-size-s: 16px;
+  --font-size-xs: 12px;
 
-  --font-size: var(--font-size-m);
+  --font-size-lower: var(--font-size-s);
+  --font-size-normal: var(--font-size-m);
 
-  --padding-xl: calc(1.8 * var(--font-size));
-  --padding-l: calc(1.3 * var(--font-size));
-  --padding-m: calc(0.9 * var(--font-size));
-  --padding-s: calc(0.5 * var(--font-size));
+  --padding-xl: calc(1.8 * var(--font-size-normal));
+  --padding-l: calc(1.3 * var(--font-size-normal));
+  --padding-m: calc(0.9 * var(--font-size-normal));
+  --padding-s: calc(0.5 * var(--font-size-normal));
 
   --radius-xl: var(--padding-xl);
   --radius-l: var(--padding-l);
@@ -27,12 +29,13 @@
   --card-max-width: 640px;
 
   --title-size: calc(
-    var(--font-size) + var(--padding-s) + var(--border-width) * 2
+    var(--font-size-normal) + var(--padding-s) + var(--border-width) * 2
   );
 }
 
 @media screen and (max-width: 500px) {
   :root {
-    --font-size: var(--font-size-s);
+    --font-size-lower: var(--font-size-xs);
+    --font-size-normal: var(--font-size-s);
   }
 }

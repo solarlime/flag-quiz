@@ -7,7 +7,7 @@ const Button = styled.button`
   padding: var(--padding-s) var(--padding-m);
   border: var(--border-width) solid;
   border-radius: var(--radius-m);
-  font-size: var(--font-size);
+  font-size: var(--font-size-normal);
   line-height: 1;
   user-select: none;
   -webkit-user-select: none; /* For Safari */
@@ -17,7 +17,11 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 
-  & > svg {
+  &:has(svg:only-child) {
+    padding: var(--padding-s);
+  }
+
+  & > svg:not(:only-child) {
     margin-right: var(--padding-s);
   }
 `;

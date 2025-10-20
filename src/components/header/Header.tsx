@@ -37,10 +37,11 @@ const HeaderButtons = styled.div`
 const Icon = styled.span`
   flex-shrink: 0;
   color: ${(props) => props.theme.colors.color12};
-  width: calc(var(--font-size) + var(--border-width) * 2);
-  height: calc(var(--font-size) + var(--border-width) * 2);
-  padding: calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.1)
-    calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.3);
+  width: calc(var(--font-size-normal) + var(--border-width) * 2);
+  height: calc(var(--font-size-normal) + var(--border-width) * 2);
+  padding: calc(var(--font-size-normal) * 0.2)
+    calc(var(--font-size-normal) * 0.1) calc(var(--font-size-normal) * 0.2)
+    calc(var(--font-size-normal) * 0.3);
   box-sizing: border-box;
 
   svg {

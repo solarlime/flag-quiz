@@ -4,8 +4,9 @@ import type {
   Result,
   RawResult,
   Mistake,
-  Properties,
+  TSavedState,
 } from '../interfaces/data.ts';
+import type { TParameters } from '../interfaces/quizForm.ts';
 
 export const shuffleArray = (array: Array<Result>) => {
   const newArray = array.slice();
@@ -27,9 +28,10 @@ const makeItemGetter = (array: Array<Result>) => {
 };
 
 class QuizStore {
-  constructor(savedState?: Properties<QuizStore, 'isCurrentSaved'>) {
-    if (savedState) {
+  constructor(arg: TSavedState<QuizStore, 'isCurrentSaved'> | TParameters) {
+    if ('savedState' in arg) {
       console.log('Restoring saved state');
+      const savedState = arg.savedState!;
       this._data = savedState.data;
       this._score = savedState.score;
       this._mistakes = savedState.mistakes;
@@ -37,8 +39,13 @@ class QuizStore {
       this._answer = savedState.answer;
       this._variants = savedState.variants;
       this._questionNumber = savedState.questionNumber;
-      this._maxQuestions = savedState.maxQuestions;
+      this._questionsQuantity = savedState.questionsQuantity;
       this._isCurrentSaved = true;
+    }
+    if ('parameters' in arg) {
+      console.log('Starting a new quiz with parameters');
+      const parameters = arg.parameters!;
+      this._questionsQuantity = parameters.questionsQuantity;
     }
   }
 
@@ -162,12 +169,12 @@ class QuizStore {
     this._mistakes.push(mistake);
   }
 
-  private _maxQuestions: number = import.meta.env.VITE_MAX_QUESTIONS
-    ? +import.meta.env.VITE_MAX_QUESTIONS
+  private _questionsQuantity: number = import.meta.env.VITE_QUESTIONS_QUANTITY
+    ? +import.meta.env.VITE_QUESTIONS_QUANTITY
     : 10;
 
-  get maxQuestions() {
-    return this._maxQuestions;
+  get questionsQuantity() {
+    return this._questionsQuantity;
   }
 
   @observable private accessor _questionNumber: number = 1;
@@ -187,15 +194,17 @@ class QuizStore {
   }
 
   @action saveQuiz() {
-    const quiz: Properties<QuizStore, 'isCurrentSaved'> = {
-      data: this.data,
-      score: this.score,
-      mistakes: this.mistakes,
-      fetchStatus: this.fetchStatus,
-      answer: this.answer,
-      variants: this.variants,
-      questionNumber: this.questionNumber,
-      maxQuestions: this.maxQuestions,
+    const quiz: TSavedState<QuizStore, 'isCurrentSaved'> = {
+      savedState: {
+        data: this.data,
+        score: this.score,
+        mistakes: this.mistakes,
+        fetchStatus: this.fetchStatus,
+        answer: this.answer,
+        variants: this.variants,
+        questionNumber: this.questionNumber,
+        questionsQuantity: this.questionsQuantity,
+      },
     };
     localStorage.setItem('savedState', JSON.stringify(quiz));
     this._isCurrentSaved = true;

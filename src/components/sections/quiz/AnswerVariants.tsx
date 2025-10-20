@@ -41,7 +41,7 @@ const AnswerVariants = observer(() => {
         });
       }
       quizStore.increaseQuestionNumber();
-      if (quizStore.questionNumber <= quizStore.maxQuestions) {
+      if (quizStore.questionNumber <= quizStore.questionsQuantity) {
         quizStore.newQuestion();
       }
     }

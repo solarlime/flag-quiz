@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import CoreButton from '../CoreButton.tsx';
+import CoreButton from '../../generic/CoreButton.tsx';
 import { observer } from 'mobx-react-lite';
 import { Check } from '@phosphor-icons/react';
 import { useStore } from '../../../store/StoreProvider.tsx';
