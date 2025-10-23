@@ -72,7 +72,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'VITE_MAX_QUESTIONS=2 yarn run dev',
+    command: 'VITE_MIN_QUESTIONS=2 yarn run dev',
     port: 5173,
     reuseExistingServer: !process.env.CI,
   },

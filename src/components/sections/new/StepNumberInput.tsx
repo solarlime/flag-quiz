@@ -43,6 +43,7 @@ const WithButtons = observer(
           type="button"
           onClick={() => changeValue('-')}
           disabled={isMin}
+          data-testid="questions-quantity-decrement"
         >
           <Minus weight="regular" />
         </VariantButton>
@@ -51,6 +52,7 @@ const WithButtons = observer(
           type="button"
           onClick={() => changeValue('+')}
           disabled={isMax}
+          data-testid="questions-quantity-increment"
         >
           <Plus weight="regular" />
         </VariantButton>
@@ -81,6 +83,7 @@ const StepNumberInput = observer(
           id="questionsQuantity"
           type="text"
           autoComplete="off"
+          data-testid="questions-quantity-input"
           {...register('questionsQuantity', {
             required: 'This field is required',
             valueAsNumber: true,

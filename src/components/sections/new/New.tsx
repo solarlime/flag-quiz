@@ -83,7 +83,11 @@ const New = observer(() => {
 
   return (
     <FormProvider {...methods}>
-      <Form name="new-quiz-form" onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        name="new-quiz-form"
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid="parameters-form"
+      >
         <Field>
           <Label htmlFor="questionsQuantity">How many questions?</Label>
           <StepNumberInput

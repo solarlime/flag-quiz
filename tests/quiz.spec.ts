@@ -30,14 +30,42 @@ test('Should pass the quiz', async ({ page }) => {
     });
   });
 
-  const quizStartButton = page.getByTestId('quiz-start-button');
-  await expect(quizStartButton).toBeEnabled();
+  const quizNewButton = page.getByTestId('quiz-new-button');
+  await expect(quizNewButton).toBeEnabled();
 
   const quizLoadButton = page.getByTestId('quiz-load-button');
   await expect(quizLoadButton).toBeDisabled();
 
+  const quizStartButton = page.getByTestId('quiz-start-button');
+  await expect(quizStartButton).not.toBeAttached();
+
   const quizSaveButton = page.getByTestId('quiz-save-button');
   await expect(quizSaveButton).not.toBeAttached();
+
+  await quizNewButton.click();
+  await expect(quizStartButton).toBeAttached();
+
+  const parametersForm = page.getByTestId('parameters-form');
+  const questionsQuantityInput = page.getByTestId('questions-quantity-input');
+  await expect(questionsQuantityInput).toHaveValue('10');
+
+  const questionsQuantityIncrement = page.getByTestId(
+    'questions-quantity-increment',
+  );
+  const questionsQuantityDecrement = page.getByTestId(
+    'questions-quantity-decrement',
+  );
+  await questionsQuantityInput.fill('1');
+  await expect(questionsQuantityDecrement).toBeDisabled();
+  await expect(questionsQuantityIncrement).toBeEnabled();
+
+  await quizStartButton.click();
+  await expect(parametersForm).toContainText('Minimum is');
+  await expect(quizStartButton).toBeDisabled();
+
+  await questionsQuantityIncrement.click();
+  await expect(questionsQuantityInput).toHaveValue('2');
+  await expect(quizStartButton).toBeEnabled();
 
   await quizStartButton.click();
   await expect(quizSaveButton).toBeAttached();

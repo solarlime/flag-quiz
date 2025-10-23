@@ -40,7 +40,7 @@ const StartMenu = observer(() => {
     <StyledStartMenu>
       <CoreButton
         onClick={() => navigate('/new')}
-        data-testid="quiz-start-button"
+        data-testid="quiz-new-button"
       >
         New quiz
       </CoreButton>
