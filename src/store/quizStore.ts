@@ -5,6 +5,7 @@ import type {
   RawResult,
   Mistake,
   TSavedState,
+  Properties,
 } from '../interfaces/data.ts';
 import type { TParameters } from '../interfaces/quizForm.ts';
 
@@ -28,10 +29,22 @@ const makeItemGetter = (array: Array<Result>) => {
 };
 
 class QuizStore {
-  constructor(arg: TSavedState<QuizStore, 'isCurrentSaved'> | TParameters) {
-    if ('savedState' in arg) {
+  constructor(
+    arg:
+      | TSavedState<QuizStore, 'isCurrentSaved'>
+      | Properties<QuizStore, 'isCurrentSaved'>
+      | TParameters,
+  ) {
+    // Previously saved games used { answer, score, ... } instead of { savedState: { answer, score, ... } }
+    if (
+      'savedState' in arg ||
+      (!('savedState' in arg) && !('parameters' in arg) && 'answer' in arg)
+    ) {
       console.log('Restoring saved state');
-      const savedState = arg.savedState!;
+      const savedState =
+        // @ts-ignore
+        (arg.savedState as Properties<QuizStore, 'isCurrentSaved'>) ??
+        (arg as Properties<QuizStore, 'isCurrentSaved'>);
       this._data = savedState.data;
       this._score = savedState.score;
       this._mistakes = savedState.mistakes;
@@ -39,7 +52,10 @@ class QuizStore {
       this._answer = savedState.answer;
       this._variants = savedState.variants;
       this._questionNumber = savedState.questionNumber;
-      this._questionsQuantity = savedState.questionsQuantity;
+      // Previously saved games used maxQuestions to store questionsQuantity
+      this._questionsQuantity =
+        // @ts-ignore
+        savedState.questionsQuantity ?? savedState.maxQuestions;
       this._isCurrentSaved = true;
     }
     if ('parameters' in arg) {
