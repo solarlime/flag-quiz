@@ -10,6 +10,7 @@ import Store from './store/store.ts';
 import { StoreProvider, useStore } from './store/StoreProvider.tsx';
 import GlobalStyles from './globalStyles.ts';
 import StartMenu from './components/StartMenu.tsx';
+import withLazy from './WithLazy.tsx';
 
 const store = new Store();
 
@@ -22,13 +23,10 @@ const router = createBrowserRouter([
     path: '/',
     Component: App,
     children: [
-      { index: true, element: <StartMenu /> },
+      { index: true, Component: StartMenu },
       {
         path: 'new',
-        lazy: () =>
-          import('./components/sections/new/New.tsx').then((module) => ({
-            Component: module.default,
-          })),
+        Component: withLazy('./components/sections/new/New.tsx'),
       },
       {
         path: 'quiz',
@@ -37,10 +35,7 @@ const router = createBrowserRouter([
             return redirect('/');
           }
         },
-        lazy: () =>
-          import('./components/sections/quiz/Quiz.tsx').then((module) => ({
-            Component: module.default,
-          })),
+        Component: withLazy('./components/sections/quiz/Quiz.tsx'),
       },
       {
         path: 'result',
@@ -49,10 +44,7 @@ const router = createBrowserRouter([
             return redirect('/');
           }
         },
-        lazy: () =>
-          import('./components/sections/result/Result.tsx').then((module) => ({
-            Component: module.default,
-          })),
+        Component: withLazy('./components/sections/result/Result.tsx'),
       },
     ],
   },

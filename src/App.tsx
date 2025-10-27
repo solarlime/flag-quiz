@@ -10,12 +10,9 @@ const Main = styled.main`
   justify-content: center;
   padding: var(--padding-xl) var(--padding-l);
   margin: 0 auto;
+  width: 100%;
   max-width: 1300px;
   box-sizing: border-box;
-
-  &:has(form) {
-    width: 100%;
-  }
 
   @media screen and (max-width: 400px) {
     padding: var(--padding-xl) 0;
