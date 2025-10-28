@@ -11,6 +11,7 @@ import { StoreProvider, useStore } from './store/StoreProvider.tsx';
 import GlobalStyles from './globalStyles.ts';
 import StartMenu from './components/StartMenu.tsx';
 import withLazy from './WithLazy.tsx';
+import ErrorElement from './components/errorHandlers/ErrorElement.tsx';
 
 const store = new Store();
 
@@ -22,11 +23,17 @@ const router = createBrowserRouter([
   {
     path: '/',
     Component: App,
+    errorElement: <ErrorElement />,
     children: [
-      { index: true, Component: StartMenu },
+      {
+        index: true,
+        Component: StartMenu,
+        errorElement: <ErrorElement />,
+      },
       {
         path: 'new',
         Component: withLazy('./components/sections/new/New.tsx'),
+        errorElement: <ErrorElement />,
       },
       {
         path: 'quiz',
@@ -36,6 +43,7 @@ const router = createBrowserRouter([
           }
         },
         Component: withLazy('./components/sections/quiz/Quiz.tsx'),
+        errorElement: <ErrorElement />,
       },
       {
         path: 'result',
@@ -45,6 +53,20 @@ const router = createBrowserRouter([
           }
         },
         Component: withLazy('./components/sections/result/Result.tsx'),
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: '*',
+        loader: () => {
+          throw new Response(
+            'This page was not found. Maybe there is a mistake in your URL. Check for it and try again.',
+            {
+              status: 404,
+              statusText: 'Not Found',
+            },
+          );
+        },
+        errorElement: <ErrorElement />,
       },
     ],
   },

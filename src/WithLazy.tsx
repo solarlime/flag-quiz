@@ -1,56 +1,6 @@
 /* eslint-disable mobx/missing-observer */
-import {
-  Suspense,
-  lazy,
-  Component,
-  ReactNode,
-  useMemo,
-  useState,
-  MemoExoticComponent,
-} from 'react';
-import CoreButton from './components/generic/CoreButton.tsx';
-
-interface Props {
-  children: ReactNode;
-  setRetryNumber: (arg: ((i: number) => number) | number) => void;
-}
-
-interface State {
-  error: null | Error;
-}
-
-class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { error: null };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    return { error };
-  }
-
-  retry() {
-    this.props.setRetryNumber((i) => i + 1);
-  }
-
-  render() {
-    const { error } = this.state;
-
-    if (error) {
-      return (
-        <>
-          <div style={{ padding: 20, textAlign: 'center', maxWidth: '600px' }}>
-            <h3>Component was not loaded</h3>
-            <p>{error.message}</p>
-          </div>
-          <CoreButton onClick={() => this.retry()}>Try to reload</CoreButton>
-        </>
-      );
-    }
-
-    return this.props.children;
-  }
-}
+import { Suspense, lazy, useMemo, useState, MemoExoticComponent } from 'react';
+import ErrorBoundary from './components/errorHandlers/ErrorBoundary.tsx';
 
 export default function withLazy(componentPath: string) {
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
