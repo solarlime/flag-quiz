@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/logo.svg?react';
 
 const StyledH1 = styled.h1`
   font-size: var(--title-size);

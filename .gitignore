@@ -42,3 +42,7 @@ dist-ssr
 
 # Playwright
 /blob-report/
+
+# Environment variables
+.env
+.env.test

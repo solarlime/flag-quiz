@@ -38,6 +38,22 @@ const ErrorComponent = styled.p`
   text-align: center;
 `;
 
+// Workaround for the situation where env variables
+// may be defined or not but import.meta.env is always undefined (!)
+let minValue, maxValue;
+
+try {
+  minValue = +import.meta.env.MIN_QUESTIONS;
+} catch (e) {
+  minValue = 5;
+}
+
+try {
+  maxValue = +import.meta.env.MAX_QUESTIONS;
+} catch (e) {
+  maxValue = 30;
+}
+
 const New = observer(() => {
   const methods = useForm<IQuizForm>({
     defaultValues: { questionsQuantity: 10 },
@@ -53,12 +69,6 @@ const New = observer(() => {
     formState: { errors },
     clearErrors,
   } = methods;
-  const minValue = import.meta.env.VITE_MIN_QUESTIONS
-    ? +import.meta.env.VITE_MIN_QUESTIONS
-    : 5;
-  const maxValue = import.meta.env.VITE_MAX_QUESTIONS
-    ? +import.meta.env.VITE_MAX_QUESTIONS
-    : 30;
 
   const startQuiz = (parametersObj: TParameters) => {
     rootStore.initQuizStore(parametersObj);

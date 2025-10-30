@@ -1,0 +1,118 @@
+import path, { dirname } from 'path';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import HtmlWebPackPlugin from 'html-webpack-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { fileURLToPath } from 'url';
+import Dotenv from 'dotenv-webpack';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const config = (mode) => ({
+  mode: mode,
+  entry: './src/index.tsx',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            // получает имя, то есть node_modules/packageName/not/this/part.js
+            // или node_modules/packageName
+            const match = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+            );
+
+            // сюда же попадает сторонний css
+            const packageName = match?.[1];
+            if (packageName) {
+              // некоторые серверы не любят символы наподобие @
+              return `vendor.${packageName.replace('@', '')}`;
+            }
+            return `vendor.${crypto.randomUUID()}`;
+          },
+        },
+      },
+    },
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(m?js|jsx)$/,
+        // some developers don't transpile their code
+        include: /(uuid|radix-ui|react-router)/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'swc-loader',
+        },
+      },
+      {
+        test: /\.(m?ts|tsx)$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'swc-loader',
+        },
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: { not: [/react/] }, // exclude react component if *.svg?react
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: /react/, // *.svg?react
+        use: ['@svgr/webpack'],
+      },
+      {
+        test: /\.(png|jpg|gif|ico)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
+    ],
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new Dotenv({ prefix: 'import.meta.env.', systemvars: true }),
+    new HtmlWebPackPlugin({
+      template: './index.html',
+      filename: './index.html',
+    }),
+    new FaviconsWebpackPlugin({
+      logo: './public/favicon.svg',
+      mode: 'webapp',
+      devMode: 'light',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ],
+});
+
+export default config;

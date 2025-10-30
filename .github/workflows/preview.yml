@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  MIN_QUESTIONS: 2
+
 jobs:
   build:
     timeout-minutes: 60

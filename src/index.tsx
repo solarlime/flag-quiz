@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'new',
-        Component: withLazy('./components/sections/new/New.tsx'),
+        Component: withLazy(() => import(`./components/sections/new/New`)),
         errorElement: <ErrorElement />,
       },
       {
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
             return redirect('/');
           }
         },
-        Component: withLazy('./components/sections/quiz/Quiz.tsx'),
+        Component: withLazy(() => import(`./components/sections/quiz/Quiz`)),
         errorElement: <ErrorElement />,
       },
       {
@@ -52,7 +52,9 @@ const router = createBrowserRouter([
             return redirect('/');
           }
         },
-        Component: withLazy('./components/sections/result/Result.tsx'),
+        Component: withLazy(
+          () => import(`./components/sections/result/Result`),
+        ),
         errorElement: <ErrorElement />,
       },
       {

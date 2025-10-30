@@ -185,9 +185,7 @@ class QuizStore {
     this._mistakes.push(mistake);
   }
 
-  private _questionsQuantity: number = import.meta.env.VITE_QUESTIONS_QUANTITY
-    ? +import.meta.env.VITE_QUESTIONS_QUANTITY
-    : 10;
+  private _questionsQuantity: number = 10;
 
   get questionsQuantity() {
     return this._questionsQuantity;
