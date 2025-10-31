@@ -1,19 +1,18 @@
 import path, { dirname } from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import HtmlWebPackPlugin from 'html-webpack-plugin';
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { rspack } from '@rspack/core';
 import { fileURLToPath } from 'url';
 import Dotenv from 'dotenv-webpack';
+import { swcOptions, browsersList } from './swcOptions.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const config = (mode) => ({
-  mode: mode,
+const config = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
+    publicPath: '/',
+    clean: true,
   },
   optimization: {
     splitChunks: {
@@ -43,24 +42,29 @@ const config = (mode) => ({
     },
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.jsx', '.ts', '.js'],
   },
   module: {
     rules: [
       {
         test: /\.(m?js|jsx)$/,
         // some developers don't transpile their code
-        include: /(uuid|radix-ui|react-router)/,
-        exclude: /(node_modules)/,
+        exclude: (modulePath) =>
+          /node_modules/.test(modulePath) &&
+          !/(uuid|radix-ui|react-router)/.test(modulePath),
         use: {
-          loader: 'swc-loader',
+          loader: 'builtin:swc-loader',
+          options: swcOptions,
+          type: 'javascript/auto',
         },
       },
       {
         test: /\.(m?ts|tsx)$/,
         exclude: /(node_modules)/,
         use: {
-          loader: 'swc-loader',
+          loader: 'builtin:swc-loader',
+          options: swcOptions,
+          type: 'javascript/auto',
         },
       },
       {
@@ -73,7 +77,17 @@ const config = (mode) => ({
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [
+          rspack.CssExtractRspackPlugin.loader,
+          'css-loader',
+          {
+            loader: 'builtin:lightningcss-loader',
+            options: {
+              targets: browsersList,
+            },
+          },
+        ],
+        type: 'javascript/auto',
       },
       {
         test: /\.svg$/i,
@@ -97,22 +111,17 @@ const config = (mode) => ({
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new Dotenv({ prefix: 'import.meta.env.', systemvars: true }),
-    new HtmlWebPackPlugin({
+    new rspack.HtmlRspackPlugin({
       template: './index.html',
       filename: './index.html',
+      favicon: './public/favicon.svg',
     }),
-    new FaviconsWebpackPlugin({
-      logo: './public/favicon.svg',
-      mode: 'webapp',
-      devMode: 'light',
-    }),
-    new MiniCssExtractPlugin({
+    new rspack.CssExtractRspackPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
   ],
-});
+};
 
 export default config;
