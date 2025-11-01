@@ -112,10 +112,12 @@ const config = {
   },
   plugins: [
     new Dotenv({ prefix: 'import.meta.env.', systemvars: true }),
+    new rspack.CopyRspackPlugin({
+      patterns: [{ from: './public' }],
+    }),
     new rspack.HtmlRspackPlugin({
       template: './index.html',
       filename: './index.html',
-      favicon: './public/favicon.svg',
     }),
     new rspack.CssExtractRspackPlugin({
       filename: '[name].css',
