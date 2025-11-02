@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
+import { useRef } from 'react';
 import VariantButton from '../../generic/VariantButton.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
 import { Result } from '../../../interfaces/data.ts';
+import waitFor from '../../../utils/waitFor.ts';
 
 const Buttons = styled.div`
   display: grid;
@@ -25,13 +27,26 @@ const Buttons = styled.div`
   @media screen and (min-width: 701px) and (max-width: 1000px) {
     grid-template-columns: 1fr;
   }
+
+  & button:disabled:not(.fade) {
+    color: ${(props) => props.theme.colors.color1};
+    border-color: ${(props) => props.theme.colors.color9};
+    background-color: ${(props) => props.theme.colors.color9};
+  }
 `;
 
 const AnswerVariants = observer(() => {
   const { quizStore } = useStore();
+  const buttons = useRef<Array<HTMLButtonElement>>([]);
 
-  const handleClick = (variant: Result) => {
+  const handleClick = async (variant: Result) => {
     if (quizStore && quizStore.answer) {
+      buttons.current.forEach((button) => {
+        button.disabled = true;
+        if (button.name !== quizStore.answer?.name)
+          button.classList.add('fade');
+      });
+      await waitFor(1000);
       if (variant.countryCodeAlpha2 === quizStore.answer?.countryCodeAlpha2) {
         quizStore.increaseScore();
       } else {
@@ -51,11 +66,15 @@ const AnswerVariants = observer(() => {
     <Buttons>
       {quizStore &&
         quizStore.variants.map(
-          (variant) =>
+          (variant, i) =>
             variant && (
               <VariantButton
                 key={uuidv4()}
+                name={variant.name}
                 onClick={() => handleClick(variant)}
+                ref={(el) => {
+                  buttons.current[i] = el!;
+                }}
                 data-testid="answer-variant"
               >
                 {variant.name}

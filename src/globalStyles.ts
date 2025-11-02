@@ -37,4 +37,10 @@ export default createGlobalStyle`
     outline: var(--border-width) solid ${(props) => props.theme.colors.color12};
     outline-offset: var(--border-width);
   }
+  
+  button.fade {
+    visibility: hidden;
+    opacity: 0;
+  }
+  
 `;

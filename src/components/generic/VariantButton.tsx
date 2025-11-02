@@ -5,6 +5,11 @@ const VariantButton = styled(Button)`
   color: ${(props) => props.theme.colors.color10};
   background-color: ${(props) => props.theme.colors.color3};
   border-color: ${(props) => props.theme.colors.color7};
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 0.5s ease-out,
+    visibility 0.5s ease-out;
 
   &:not(:disabled):hover {
     background-color: ${(props) => props.theme.colors.color5};
