@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Result } from '../../../interfaces/data.ts';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import usePreloadImage from '../../../hooks/usePreloadImage.ts';
 import { ReactNode } from 'react';
 
@@ -58,11 +58,8 @@ const PictureWrapper = styled.div`
   width: 100%;
   aspect-ratio: 3/2;
   background: ${(props) => props.theme.colors.color2};
+  border: 1px solid ${(props) => props.theme.colors.color7};
   border-radius: var(--radius-m);
-  filter: drop-shadow(
-      ${(props) => props.theme.colors.color4} 0px 0px var(--padding-s)
-    )
-    ${(props) => props.theme.name === 'dark' && css`opacity(0.9);`};
 
   &:not(:only-child) {
     margin-bottom: var(--padding-m);
@@ -78,8 +75,10 @@ const PictureWrapper = styled.div`
 
   & img {
     width: 100%;
-    border-radius: var(--radius-m);
+    padding: var(--padding-s);
     box-sizing: border-box;
+    aspect-ratio: 3/2;
+    object-fit: contain;
   }
 `;
 
