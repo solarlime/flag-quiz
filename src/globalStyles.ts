@@ -19,7 +19,7 @@ export default createGlobalStyle`
     font-variation-settings: "slnt" -8;
     font-size: var(--font-size-normal);
     line-height: 1.2;
-    font-weight: 300;
+    font-weight: 400;
   }
   
   #root {

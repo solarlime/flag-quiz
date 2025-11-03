@@ -10,7 +10,7 @@ import pluginImport from 'eslint-plugin-import';
 import pluginMobx from 'eslint-plugin-mobx';
 
 export default tseslint.config(
-  { ignores: ['dist', '.yarn'] },
+  { ignores: ['dist', '.yarn', 'src/assets/fonts'] },
   {
     extends: [
       pluginImport.flatConfigs.recommended,

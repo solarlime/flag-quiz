@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 const StyledH2 = styled.h2`
   font-size: var(--title-size);
-  font-weight: 400;
+  font-weight: 300;
   font-stretch: expanded;
 `;
 
