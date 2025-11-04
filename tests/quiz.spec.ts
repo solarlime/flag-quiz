@@ -18,10 +18,19 @@ test('Should pass the quiz', async ({ page }) => {
 
   let answerCountryCode: string | undefined;
 
+  await page.route('https://flagcdn.com/w640/ad.png', (route) =>
+    route.fulfill({
+      status: 200,
+      headers: {},
+      contentType: 'application/json',
+      body: Buffer.from([]),
+    }),
+  );
+
   await page.route('https://flagcdn.com/**/*.webp', (route, request) => {
     const url = request.url();
     const countryCodeFile = url.split('/').pop();
-    answerCountryCode = countryCodeFile.split('.')[0];
+    answerCountryCode = countryCodeFile!.split('.')[0];
     return route.fulfill({
       status: 200,
       headers: {},

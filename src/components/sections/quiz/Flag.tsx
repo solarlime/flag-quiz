@@ -84,7 +84,7 @@ const PictureWrapper = styled.div`
 
 const Flag = observer(
   ({ info, children }: { info: Result; children?: ReactNode }) => {
-    const [state] = usePreloadImage(info);
+    const [state, source] = usePreloadImage(info);
 
     return (
       <StyledFlag>
@@ -93,23 +93,27 @@ const Flag = observer(
         {state === 'done' && (
           <>
             <PictureWrapper>
-              <picture>
-                <source
-                  type="image/webp"
-                  srcSet={`https://flagcdn.com/w640/${info?.countryCodeAlpha2}.webp,
-      https://flagcdn.com/w1280/${info?.countryCodeAlpha2}.webp 2x`}
-                />
-                <source
-                  type="image/png"
-                  srcSet={`https://flagcdn.com/w640/${info?.countryCodeAlpha2}.png,
-      https://flagcdn.com/w1280/${info?.countryCodeAlpha2}.png 2x`}
-                />
-                <img
-                  src={`https://flagcdn.com/w640/${info?.countryCodeAlpha2}.png`}
-                  alt="Guess it!"
-                  data-testid="flag"
-                />
-              </picture>
+              {source ? (
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={`https://${source}/w640/${info?.countryCodeAlpha2}.webp,
+      https://${source}/w1280/${info?.countryCodeAlpha2}.webp 2x`}
+                  />
+                  <source
+                    type="image/png"
+                    srcSet={`https://${source}/w640/${info?.countryCodeAlpha2}.png,
+      https://${source}/w1280/${info?.countryCodeAlpha2}.png 2x`}
+                  />
+                  <img
+                    src={`https://${source}/w640/${info?.countryCodeAlpha2}.png`}
+                    alt="Guess it!"
+                    data-testid="flag"
+                  />
+                </picture>
+              ) : (
+                <div>Failed to define a flag source</div>
+              )}
             </PictureWrapper>
             {children && <figcaption>{children}</figcaption>}
           </>
