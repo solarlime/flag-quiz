@@ -92,11 +92,13 @@ class QuizStore {
         fetch(
           'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
           { signal: abortController.signal },
-        ).then((response) => {
-          if (timeout) clearTimeout(timeout);
-          console.info('Successfully loaded countries');
-          return response.json();
-        }),
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            if (timeout) clearTimeout(timeout);
+            console.info('Successfully loaded countries');
+            return result;
+          }),
         new Promise((resolve) => {
           timeout = setTimeout(
             () =>
