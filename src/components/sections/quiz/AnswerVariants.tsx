@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRef } from 'react';
 import VariantButton from '../../generic/VariantButton.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import { Result } from '../../../interfaces/data.ts';
+import type { IResult } from '../../../interfaces/data.ts';
 import waitFor from '../../../utils/waitFor.ts';
 
 const Buttons = styled.div`
@@ -39,7 +39,7 @@ const AnswerVariants = observer(() => {
   const { quizStore } = useStore();
   const buttons = useRef<Array<HTMLButtonElement>>([]);
 
-  const handleClick = async (variant: Result) => {
+  const handleClick = async (variant: IResult) => {
     if (quizStore && quizStore.answer) {
       buttons.current.forEach((button) => {
         button.disabled = true;

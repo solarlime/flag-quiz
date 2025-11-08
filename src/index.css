@@ -11,18 +11,22 @@
   --font-size-s: 16px;
   --font-size-xs: 12px;
 
-  --font-size-lower: var(--font-size-s);
+  --font-size-small: var(--font-size-s);
   --font-size-normal: var(--font-size-m);
+  --font-size-big: var(--font-size-l);
+  --font-size-bigger: var(--font-size-xl);
 
   --padding-xl: calc(1.8 * var(--font-size-normal));
   --padding-l: calc(1.3 * var(--font-size-normal));
   --padding-m: calc(0.9 * var(--font-size-normal));
   --padding-s: calc(0.5 * var(--font-size-normal));
+  --padding-xs: calc(0.3 * var(--font-size-normal));
 
   --radius-xl: var(--padding-xl);
   --radius-l: var(--padding-l);
   --radius-m: var(--padding-m);
   --radius-s: var(--padding-s);
+  --radius-xs: var(--padding-xs);
 
   --border-width: 1px;
 
@@ -35,7 +39,9 @@
 
 @media screen and (max-width: 500px) {
   :root {
-    --font-size-lower: var(--font-size-xs);
+    --font-size-small: var(--font-size-xs);
     --font-size-normal: var(--font-size-s);
+    --font-size-big: var(--font-size-m);
+    --font-size-bigger: var(--font-size-l);
   }
 }

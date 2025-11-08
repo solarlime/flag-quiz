@@ -16,8 +16,12 @@ export const ErrorDescription = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  font-family: Courier, monospace;
-  font-size: var(--font-size-lower);
+  font-family: 'DINish', Courier, monospace;
+  font-stretch: expanded;
+  // font-style: oblique 4deg;
+  // Works in FF & Chrome but Safari needs -8deg. Setting via font-variation-settings works everywhere
+  font-variation-settings: 'slnt' -4;
+  font-size: var(--font-size-small);
   padding: var(--padding-s);
   border-radius: var(--padding-s);
   background: ${(props) => props.theme.colors.color2};

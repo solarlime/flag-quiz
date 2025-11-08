@@ -4,9 +4,8 @@ import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import CoreButton from '../../generic/CoreButton.tsx';
 import StepNumberInput from './StepNumberInput.tsx';
-import { IQuizForm } from '../../../interfaces/quizForm.ts';
+import type { IQuizForm } from '../../../interfaces/forms.ts';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import type { TParameters } from '../../../interfaces/quizForm.ts';
 
 const Form = styled.form`
   display: flex;
@@ -34,7 +33,7 @@ const Label = styled.label`
 `;
 
 const ErrorComponent = styled.p`
-  font-size: var(--font-size-lower);
+  font-size: var(--font-size-small);
   text-align: center;
 `;
 
@@ -70,13 +69,10 @@ const New = observer(() => {
     clearErrors,
   } = methods;
 
-  const startQuiz = (parametersObj: TParameters) => {
-    rootStore.initQuizStore(parametersObj);
+  const onSubmit: SubmitHandler<IQuizForm> = (data) => {
+    rootStore.initQuizStore(data);
     navigate('/quiz');
   };
-
-  const onSubmit: SubmitHandler<IQuizForm> = (data) =>
-    startQuiz({ parameters: data });
 
   const changeValue = (direction: '+' | '-') => {
     if (errors.questionsQuantity) {

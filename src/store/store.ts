@@ -1,17 +1,18 @@
 import ThemeStore from './themeStore.ts';
 import QuizStore from './quizStore.ts';
 import { makeAutoObservable } from 'mobx';
-import type { TSavedState } from '../interfaces/data.ts';
-import type { TParameters } from '../interfaces/quizForm.ts';
+import type { IQuizForm } from '../interfaces/forms.ts';
+import type { TProperties } from '../interfaces/data.ts';
+import CustomError from '../utils/CustomError.ts';
 
 type SavedState =
   | {
       isDefined: true;
-      data: string;
+      data: TProperties<QuizStore, 'isCurrentSaved'>;
     }
   | {
       isDefined: false;
-      data: string | null;
+      data: CustomError | Error;
     };
 
 class Store {
@@ -23,20 +24,29 @@ class Store {
   quizStore: QuizStore | undefined;
 
   get savedState(): SavedState {
-    const savedState = localStorage.getItem('savedState');
-    if (savedState && savedState.length) {
-      return {
-        isDefined: true,
-        data: savedState,
-      };
+    const savedStateString = localStorage.getItem('savedState');
+    if (savedStateString && savedStateString.length) {
+      try {
+        const savedState = JSON.parse(savedStateString);
+        return {
+          isDefined: true,
+          data: savedState,
+        };
+      } catch (error) {
+        console.error(error);
+        return {
+          isDefined: false,
+          data: new Error('The saved quiz is corrupted'),
+        };
+      }
     }
     return {
       isDefined: false,
-      data: null,
+      data: new CustomError('No saved quiz found'),
     };
   }
 
-  initQuizStore(arg: TSavedState<QuizStore, 'isCurrentSaved'> | TParameters) {
+  initQuizStore(arg: TProperties<QuizStore, 'isCurrentSaved'> | IQuizForm) {
     this.quizStore = new QuizStore(arg);
   }
 

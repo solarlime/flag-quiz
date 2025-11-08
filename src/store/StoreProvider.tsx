@@ -1,8 +1,8 @@
 import {
   createContext,
-  FunctionComponent,
+  type FunctionComponent,
   useContext,
-  ProviderProps,
+  type ProviderProps,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import Store from './store.ts';

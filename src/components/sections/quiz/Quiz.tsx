@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import { Navigate } from 'react-router';
 import AnswerVariants from './AnswerVariants.tsx';
 import Flag from './Flag.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import { useEffect } from 'react';
 import SaveButton from './SaveButton.tsx';
-import { Navigate } from 'react-router';
 import SectionTitle from '../SectionTitle.tsx';
 
 const TopInformation = styled.div`

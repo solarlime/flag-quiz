@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { Switch as RadixSwitch } from 'radix-ui';
+import { type ReactNode } from 'react';
 import { useStore } from '../../store/StoreProvider.tsx';
-import { ReactNode } from 'react';
 
 const StyledSwitchRoot = styled(RadixSwitch.Root)`
   display: flex;

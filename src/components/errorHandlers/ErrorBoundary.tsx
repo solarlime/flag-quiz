@@ -1,5 +1,5 @@
 /* eslint-disable mobx/missing-observer */
-import { Component, ReactNode } from 'react';
+import { Component, type ReactNode } from 'react';
 import CoreButton from '../generic/CoreButton.tsx';
 import SectionTitle from '../sections/SectionTitle.tsx';
 import { ErrorDescription, ErrorMessage } from './errorStyles.ts';

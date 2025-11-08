@@ -1,15 +1,15 @@
 /* eslint-disable mobx/missing-make-observable */
 import { observable, action, computed, runInAction } from 'mobx';
 import type {
-  Result,
-  RawResult,
-  Mistake,
+  IResult,
+  IRawResult,
+  IMistake,
   TSavedState,
-  Properties,
+  TProperties,
 } from '../interfaces/data.ts';
-import type { TParameters } from '../interfaces/quizForm.ts';
+import type { IQuizForm } from '../interfaces/forms.ts';
 
-export const shuffleArray = (array: Array<Result>) => {
+export const shuffleArray = (array: Array<IResult>) => {
   const newArray = array.slice();
   for (let i = newArray.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -18,7 +18,7 @@ export const shuffleArray = (array: Array<Result>) => {
   return newArray;
 };
 
-const makeItemGetter = (array: Array<Result>) => {
+const makeItemGetter = (array: Array<IResult>) => {
   const usedArray = array.slice();
   return () => {
     const index = Math.floor(Math.random() * usedArray.length);
@@ -32,19 +32,16 @@ class QuizStore {
   constructor(
     arg:
       | TSavedState<QuizStore, 'isCurrentSaved'>
-      | Properties<QuizStore, 'isCurrentSaved'>
-      | TParameters,
+      | TProperties<QuizStore, 'isCurrentSaved'>
+      | IQuizForm,
   ) {
-    // Previously saved games used { answer, score, ... } instead of { savedState: { answer, score, ... } }
-    if (
-      'savedState' in arg ||
-      (!('savedState' in arg) && !('parameters' in arg) && 'answer' in arg)
-    ) {
+    // Previously saved games used { savedState: { answer, score, ... } } instead of { answer, score, ... }
+    if ('savedState' in arg || (!('savedState' in arg) && 'answer' in arg)) {
       console.log('Restoring saved state');
       const savedState =
         // @ts-ignore
-        (arg.savedState as Properties<QuizStore, 'isCurrentSaved'>) ??
-        (arg as Properties<QuizStore, 'isCurrentSaved'>);
+        (arg.savedState as TProperties<QuizStore, 'isCurrentSaved'>) ??
+        (arg as TProperties<QuizStore, 'isCurrentSaved'>);
       this._data = savedState.data;
       this._score = savedState.score;
       this._mistakes = savedState.mistakes;
@@ -58,10 +55,9 @@ class QuizStore {
         savedState.questionsQuantity ?? savedState.maxQuestions;
       this._isCurrentSaved = true;
     }
-    if ('parameters' in arg) {
+    if ('questionsQuantity' in arg) {
       console.log('Starting a new quiz with parameters');
-      const parameters = arg.parameters!;
-      this._questionsQuantity = parameters.questionsQuantity;
+      this._questionsQuantity = arg.questionsQuantity;
     }
   }
 
@@ -75,7 +71,7 @@ class QuizStore {
     return this._fetchStatus;
   }
 
-  private _data: Array<Result> | null = null;
+  private _data: Array<IResult> | null = null;
 
   @computed get data() {
     return this._data;
@@ -88,7 +84,7 @@ class QuizStore {
       });
       const abortController = new AbortController();
       let timeout: null | NodeJS.Timeout = null;
-      const result: RawResult[] = await Promise.any([
+      const result: IRawResult[] = await Promise.any([
         fetch(
           'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
           { signal: abortController.signal },
@@ -132,13 +128,13 @@ class QuizStore {
     }
   }
 
-  @observable private accessor _answer: Result | null = null;
+  @observable private accessor _answer: IResult | null = null;
 
   @computed get answer() {
     return this._answer;
   }
 
-  @observable private accessor _variants: Array<Result> = [];
+  @observable private accessor _variants: Array<IResult> = [];
 
   @computed get variants() {
     return this._variants;
@@ -177,13 +173,13 @@ class QuizStore {
     this._score += 1;
   }
 
-  @observable private accessor _mistakes: Array<Mistake> = [];
+  @observable private accessor _mistakes: Array<IMistake> = [];
 
   @computed get mistakes() {
     return this._mistakes;
   }
 
-  @action addAMistake(mistake: Mistake) {
+  @action addAMistake(mistake: IMistake) {
     this._mistakes.push(mistake);
   }
 

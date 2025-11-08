@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
-import { Result } from '../../../interfaces/data.ts';
 import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
+import { type ReactNode } from 'react';
+import type { IResult } from '../../../interfaces/data.ts';
 import usePreloadImage from '../../../hooks/usePreloadImage.ts';
-import { ReactNode } from 'react';
 
 const StyledFlag = styled.figure`
   display: flex;
@@ -83,7 +83,7 @@ const PictureWrapper = styled.div`
 `;
 
 const Flag = observer(
-  ({ info, children }: { info: Result; children?: ReactNode }) => {
+  ({ info, children }: { info: IResult; children?: ReactNode }) => {
     const [state, source] = usePreloadImage(info);
 
     return (

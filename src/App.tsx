@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import Header from './components/header/Header.tsx';
 import { Outlet } from 'react-router';
+import Header from './components/header/Header.tsx';
 
 const Main = styled.main`
   display: flex;

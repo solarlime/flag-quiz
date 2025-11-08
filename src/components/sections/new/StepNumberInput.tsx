@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { Plus, Minus } from '@phosphor-icons/react';
 import { useWatch, useFormContext } from 'react-hook-form';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import VariantButton from '../../generic/VariantButton.tsx';
 
 const StyledWithButtons = styled.div`

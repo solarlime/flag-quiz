@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 const StyledH2 = styled.h2`
   font-size: var(--title-size);

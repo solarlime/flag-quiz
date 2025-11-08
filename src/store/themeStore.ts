@@ -3,8 +3,8 @@ import {
   grass as lightPalette,
   grassDark as darkPalette,
 } from '@radix-ui/colors';
-import { ITheme } from '../interfaces/styled.ts';
-import { DefaultTheme } from 'styled-components';
+import type { ITheme } from '../interfaces/styled.ts';
+import { type DefaultTheme } from 'styled-components';
 
 const toUncolored = (palette: { [key: string]: string }) =>
   Object.fromEntries(

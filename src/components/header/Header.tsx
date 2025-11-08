@@ -1,9 +1,9 @@
 import styled from 'styled-components';
+import { Moon, Sun } from '@phosphor-icons/react';
+import { observer } from 'mobx-react-lite';
 import Title from './Title.tsx';
 import Switch from './Switch.tsx';
 import { useStore } from '../../store/StoreProvider.tsx';
-import { Moon, Sun } from '@phosphor-icons/react';
-import { observer } from 'mobx-react-lite';
 
 const StyledHeader = styled.header`
   position: sticky;
