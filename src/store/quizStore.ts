@@ -1,15 +1,10 @@
 /* eslint-disable mobx/missing-make-observable */
 import { observable, action, computed, runInAction } from 'mobx';
-import type {
-  IResult,
-  IRawResult,
-  IMistake,
-  TSavedState,
-  TProperties,
-} from '../interfaces/data.ts';
-import type { IQuizForm } from '../interfaces/forms.ts';
+import type { TResult, TRawResult, TMistake } from '../types/data.ts';
+import type { IQuizForm } from '../types/forms.ts';
+import type { TProperties } from '../types/save.ts';
 
-export const shuffleArray = (array: Array<IResult>) => {
+export const shuffleArray = (array: Array<TResult>) => {
   const newArray = array.slice();
   for (let i = newArray.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -18,7 +13,7 @@ export const shuffleArray = (array: Array<IResult>) => {
   return newArray;
 };
 
-const makeItemGetter = (array: Array<IResult>) => {
+const makeItemGetter = (array: Array<TResult>) => {
   const usedArray = array.slice();
   return () => {
     const index = Math.floor(Math.random() * usedArray.length);
@@ -29,19 +24,10 @@ const makeItemGetter = (array: Array<IResult>) => {
 };
 
 class QuizStore {
-  constructor(
-    arg:
-      | TSavedState<QuizStore, 'isCurrentSaved'>
-      | TProperties<QuizStore, 'isCurrentSaved'>
-      | IQuizForm,
-  ) {
-    // Previously saved games used { savedState: { answer, score, ... } } instead of { answer, score, ... }
-    if ('savedState' in arg || (!('savedState' in arg) && 'answer' in arg)) {
+  constructor(arg: TProperties | IQuizForm) {
+    if ('answer' in arg) {
       console.log('Restoring saved state');
-      const savedState =
-        // @ts-ignore
-        (arg.savedState as TProperties<QuizStore, 'isCurrentSaved'>) ??
-        (arg as TProperties<QuizStore, 'isCurrentSaved'>);
+      const savedState = arg;
       this._data = savedState.data;
       this._score = savedState.score;
       this._mistakes = savedState.mistakes;
@@ -49,15 +35,11 @@ class QuizStore {
       this._answer = savedState.answer;
       this._variants = savedState.variants;
       this._questionNumber = savedState.questionNumber;
-      // Previously saved games used maxQuestions to store questionsQuantity
-      this._questionsQuantity =
-        // @ts-ignore
-        savedState.questionsQuantity ?? savedState.maxQuestions;
+      this._questionsQuantity = savedState.questionsQuantity;
       this._isCurrentSaved = true;
-    }
-    if ('questionsQuantity' in arg) {
+    } else {
       console.log('Starting a new quiz with parameters');
-      this._questionsQuantity = arg.questionsQuantity;
+      this._questionsQuantity = (arg as IQuizForm).questionsQuantity;
     }
   }
 
@@ -71,7 +53,7 @@ class QuizStore {
     return this._fetchStatus;
   }
 
-  private _data: Array<IResult> | null = null;
+  private _data: Array<TResult> = [];
 
   @computed get data() {
     return this._data;
@@ -84,7 +66,7 @@ class QuizStore {
       });
       const abortController = new AbortController();
       let timeout: null | NodeJS.Timeout = null;
-      const result: IRawResult[] = await Promise.any([
+      const result: TRawResult[] = await Promise.any([
         fetch(
           'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
           { signal: abortController.signal },
@@ -114,7 +96,7 @@ class QuizStore {
             countryCodeAlpha2: rawItem.cca2.toLowerCase(),
             independent: rawItem.independent,
             flagSymbol: rawItem.flag,
-            continents: new Set(rawItem.continents),
+            continents: rawItem.continents,
           })),
         );
         this.newQuestion();
@@ -128,13 +110,13 @@ class QuizStore {
     }
   }
 
-  @observable private accessor _answer: IResult | null = null;
+  @observable private accessor _answer: TResult | null = null;
 
   @computed get answer() {
     return this._answer;
   }
 
-  @observable private accessor _variants: Array<IResult> = [];
+  @observable private accessor _variants: Array<TResult> = [];
 
   @computed get variants() {
     return this._variants;
@@ -173,13 +155,13 @@ class QuizStore {
     this._score += 1;
   }
 
-  @observable private accessor _mistakes: Array<IMistake> = [];
+  @observable private accessor _mistakes: Array<TMistake> = [];
 
   @computed get mistakes() {
     return this._mistakes;
   }
 
-  @action addAMistake(mistake: IMistake) {
+  @action addAMistake(mistake: TMistake) {
     this._mistakes.push(mistake);
   }
 

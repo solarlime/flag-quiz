@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "rspack serve --config rspack.dev.js",
-    "build": "rspack build --config rspack.prod.js",
+    "build": "tsc --noEmit && rspack build --config rspack.prod.js",
     "analyze": "yarn run build --analyze",
     "prettier": "prettier . --check",
     "lint": "eslint .",
@@ -23,7 +23,8 @@
     "react-hook-form": "^7.65.0",
     "react-router": "^7.9.4",
     "styled-components": "^6.1.16",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "valibot": "^1.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

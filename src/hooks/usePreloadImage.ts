@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { IResult } from '../interfaces/data.ts';
+import type { TResult } from '../types/data.ts';
 
 const makeCachedCheckFunction = <T>(checkFn: () => Promise<T>) => {
   let cachedResult: T | null = null;
@@ -48,7 +48,7 @@ const checkFlagcdn = () => {
 const isWebpSupported = makeCachedCheckFunction(checkWebpSupport);
 const isFlagcdnAvailable = makeCachedCheckFunction(checkFlagcdn);
 
-const usePreloadImage = (trigger: IResult) => {
+const usePreloadImage = (trigger: TResult) => {
   const [state, setState] = useState('loading');
   const [source, setSource] = useState<string | null>(null);
 

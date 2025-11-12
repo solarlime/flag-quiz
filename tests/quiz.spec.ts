@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import type { IRawResult } from '../src/interfaces/data';
+import type { TRawResult } from '../src/types/data';
 
 test('Should pass the quiz', async ({ page }) => {
   await page.goto('/');
@@ -96,7 +96,7 @@ test('Should pass the quiz', async ({ page }) => {
   );
 
   const country1 = countries.find(
-    (c: IRawResult) => c.cca2.toLowerCase() === answerCountryCode,
+    (c: TRawResult) => c.cca2.toLowerCase() === answerCountryCode,
   );
 
   const countryButton = page.getByText(country1.name.common);
@@ -120,7 +120,7 @@ test('Should pass the quiz', async ({ page }) => {
   await expect(question).toHaveText('2/2');
 
   const country2 = countries.find(
-    (c: IRawResult) => c.cca2.toLowerCase() === answerCountryCode,
+    (c: TRawResult) => c.cca2.toLowerCase() === answerCountryCode,
   );
 
   const wrongCountryButton = page

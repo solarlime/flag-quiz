@@ -4,7 +4,7 @@ import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import CoreButton from '../../generic/CoreButton.tsx';
 import StepNumberInput from './StepNumberInput.tsx';
-import type { IQuizForm } from '../../../interfaces/forms.ts';
+import type { IQuizForm } from '../../../types/forms.ts';
 import { useStore } from '../../../store/StoreProvider.tsx';
 
 const Form = styled.form`

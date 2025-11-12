@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRef } from 'react';
 import VariantButton from '../../generic/VariantButton.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import type { IResult } from '../../../interfaces/data.ts';
+import type { TResult } from '../../../types/data.ts';
 import waitFor from '../../../utils/waitFor.ts';
 
 const Buttons = styled.div`
@@ -39,7 +39,7 @@ const AnswerVariants = observer(() => {
   const { quizStore } = useStore();
   const buttons = useRef<Array<HTMLButtonElement>>([]);
 
-  const handleClick = async (variant: IResult) => {
+  const handleClick = async (variant: TResult) => {
     if (quizStore && quizStore.answer) {
       buttons.current.forEach((button) => {
         button.disabled = true;
@@ -47,7 +47,7 @@ const AnswerVariants = observer(() => {
           button.classList.add('fade');
       });
       await waitFor(1000);
-      if (variant.countryCodeAlpha2 === quizStore.answer?.countryCodeAlpha2) {
+      if (variant.countryCodeAlpha2 === quizStore.answer.countryCodeAlpha2) {
         quizStore.increaseScore();
       } else {
         quizStore.addAMistake({

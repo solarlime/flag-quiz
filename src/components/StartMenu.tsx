@@ -20,15 +20,16 @@ const StyledErrorMessage = styled(ErrorMessage)`
 
 const StartMenu = observer(() => {
   const { rootStore } = useStore();
-  const { savedState } = rootStore;
+  const { states } = rootStore;
   const navigate = useNavigate();
 
   const loadQuiz = () => {
-    if (savedState.isDefined) {
-      rootStore.initQuizStore(savedState.data);
-      navigate('/quiz');
-    } else {
-      alert(savedState.data.message);
+    if (states.areAvailableToLoad) {
+      if (states.saved.length === 1) {
+        const savedState = states.saved[0];
+        rootStore.initQuizStore(savedState);
+        navigate('/quiz');
+      }
     }
   };
 
@@ -44,13 +45,13 @@ const StartMenu = observer(() => {
         <CoreButton
           onClick={loadQuiz}
           data-testid="quiz-load-button"
-          disabled={!savedState.isDefined}
+          disabled={!states.areAvailableToLoad}
         >
           Load quiz
         </CoreButton>
       </StyledStartMenu>
-      {!savedState.isDefined && (
-        <StyledErrorMessage>{savedState.data.message}</StyledErrorMessage>
+      {states.corrupted && states.corrupted.length > 0 && (
+        <StyledErrorMessage>Failed to load a saved quiz</StyledErrorMessage>
       )}
     </>
   );
