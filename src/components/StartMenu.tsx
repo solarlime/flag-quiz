@@ -29,6 +29,8 @@ const StartMenu = observer(() => {
         const savedState = states.saved[0];
         rootStore.initQuizStore(savedState);
         navigate('/quiz');
+      } else {
+        navigate('/load');
       }
     }
   };
@@ -51,7 +53,10 @@ const StartMenu = observer(() => {
         </CoreButton>
       </StyledStartMenu>
       {states.corrupted && states.corrupted.length > 0 && (
-        <StyledErrorMessage>Failed to load a saved quiz</StyledErrorMessage>
+        <StyledErrorMessage>
+          Failed to load {states.corrupted.length} saved quiz
+          {states.corrupted.length > 1 && 'zes'}
+        </StyledErrorMessage>
       )}
     </>
   );

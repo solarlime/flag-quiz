@@ -19,6 +19,10 @@ autorun(() => {
   localStorage.setItem('themeName', store.themeStore.theme.name);
 });
 
+const savedStatesLoader = () => {
+  return store.updateNeeded && store.loadSavedStates();
+};
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -27,12 +31,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: savedStatesLoader,
         Component: StartMenu,
         errorElement: <ErrorElement />,
       },
       {
         path: 'new',
         Component: withLazy(() => import(`./components/sections/new/New`)),
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: 'load',
+        loader: savedStatesLoader,
+        Component: withLazy(() => import(`./components/sections/load/Load`)),
         errorElement: <ErrorElement />,
       },
       {

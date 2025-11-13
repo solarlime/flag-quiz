@@ -97,16 +97,16 @@ const Flag = observer(
                 <picture>
                   <source
                     type="image/webp"
-                    srcSet={`https://${source}/w640/${info?.countryCodeAlpha2}.webp,
-      https://${source}/w1280/${info?.countryCodeAlpha2}.webp 2x`}
+                    srcSet={`https://${source}/w640/${info.countryCodeAlpha2}.webp,
+      https://${source}/w1280/${info.countryCodeAlpha2}.webp 2x`}
                   />
                   <source
                     type="image/png"
-                    srcSet={`https://${source}/w640/${info?.countryCodeAlpha2}.png,
-      https://${source}/w1280/${info?.countryCodeAlpha2}.png 2x`}
+                    srcSet={`https://${source}/w640/${info.countryCodeAlpha2}.png,
+      https://${source}/w1280/${info.countryCodeAlpha2}.png 2x`}
                   />
                   <img
-                    src={`https://${source}/w640/${info?.countryCodeAlpha2}.png`}
+                    src={`https://${source}/w640/${info.countryCodeAlpha2}.png`}
                     alt="Guess it!"
                     data-testid="flag"
                   />

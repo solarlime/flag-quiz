@@ -25,7 +25,7 @@ const StyledH1 = styled.h1`
 const Title = observer(() => {
   return (
     <StyledH1>
-      <Link to="/" title="Homepage" rel="nofollow noreferrer">
+      <Link to="/" title="Main page" rel="nofollow noreferrer">
         <Logo />
       </Link>
     </StyledH1>

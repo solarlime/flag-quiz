@@ -1,4 +1,5 @@
 /* eslint-disable mobx/missing-make-observable */
+import { v4 as uuidv4 } from 'uuid';
 import { observable, action, computed, runInAction } from 'mobx';
 import type { TResult, TRawResult, TMistake } from '../types/data.ts';
 import type { IQuizForm } from '../types/forms.ts';
@@ -188,19 +189,22 @@ class QuizStore {
   }
 
   @action saveQuiz() {
-    const quiz: TSavedState<QuizStore, 'isCurrentSaved'> = {
-      savedState: {
-        data: this.data,
-        score: this.score,
-        mistakes: this.mistakes,
-        fetchStatus: this.fetchStatus,
-        answer: this.answer,
-        variants: this.variants,
-        questionNumber: this.questionNumber,
-        questionsQuantity: this.questionsQuantity,
-      },
+    const date = new Date().toISOString();
+
+    const id = uuidv4();
+    const quiz: TProperties = {
+      data: this.data,
+      score: this.score,
+      mistakes: this.mistakes,
+      fetchStatus: this.fetchStatus,
+      answer: this.answer,
+      variants: this.variants,
+      questionNumber: this.questionNumber,
+      questionsQuantity: this.questionsQuantity,
+      timestamp: date,
+      id,
     };
-    localStorage.setItem('savedState', JSON.stringify(quiz));
+    localStorage.setItem(`savedState_${id}`, JSON.stringify(quiz));
     this._isCurrentSaved = true;
   }
 }

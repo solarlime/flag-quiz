@@ -10,11 +10,12 @@ const TextNode = styled.span`
 `;
 
 const SaveButton = observer((props: ComponentProps<typeof CoreButton>) => {
-  const { quizStore } = useStore();
+  const { quizStore, rootStore } = useStore();
 
   const handleClick = () => {
     if (quizStore) {
       quizStore.saveQuiz();
+      rootStore.updateNeeded = true;
     }
   };
 

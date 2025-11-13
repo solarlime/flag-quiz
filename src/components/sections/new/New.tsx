@@ -1,24 +1,12 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
+import { type SubmitHandler, useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import CoreButton from '../../generic/CoreButton.tsx';
 import StepNumberInput from './StepNumberInput.tsx';
 import type { IQuizForm } from '../../../types/forms.ts';
 import { useStore } from '../../../store/StoreProvider.tsx';
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-
-  @media screen and (max-width: 400px) {
-    padding: 0 var(--padding-l);
-  }
-`;
+import Form from '../../generic/Form.tsx';
 
 const Field = styled.div`
   display: grid;

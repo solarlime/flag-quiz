@@ -85,10 +85,7 @@ const Quiz = observer(() => {
           ) : (
             <>
               <SectionTitle title="Quiz">
-                {quizStore?.fetchStatus === 'done' &&
-                  quizStore.questionNumber <= quizStore.questionsQuantity && (
-                    <SaveButton data-testid="quiz-save-button" />
-                  )}
+                <SaveButton data-testid="quiz-save-button" />
               </SectionTitle>
               <StyledCard>
                 <TopInformation>
