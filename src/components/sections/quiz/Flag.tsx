@@ -14,7 +14,7 @@ const StyledFlag = styled.figure`
   padding: var(--padding-l);
   box-sizing: border-box;
   border-radius: var(--radius-l);
-  background: ${(props) => props.theme.colors.color3};
+  background: ${(props) => props.theme.colors.grass3};
 
   @media screen and (min-width: 701px) {
     grid-area: flag;
@@ -57,8 +57,8 @@ const PictureWrapper = styled.div`
   justify-content: center;
   width: 100%;
   aspect-ratio: 3/2;
-  background: ${(props) => props.theme.colors.color2};
-  border: 1px solid ${(props) => props.theme.colors.color7};
+  background: ${(props) => props.theme.colors.grass2};
+  border: 1px solid ${(props) => props.theme.colors.grass7};
   border-radius: var(--radius-m);
 
   &:not(:only-child) {

@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   position: -webkit-sticky; /* For Safari */
   top: 0;
   z-index: 5;
-  background-color: ${(props) => props.theme.colors.color5};
+  background-color: ${(props) => props.theme.colors.grass5};
   box-sizing: border-box;
 `;
 
@@ -36,7 +36,7 @@ const HeaderButtons = styled.div`
 
 const Icon = styled.span`
   flex-shrink: 0;
-  color: ${(props) => props.theme.colors.color12};
+  color: ${(props) => props.theme.colors.grass12};
   width: calc(var(--font-size-normal) + var(--border-width) * 2);
   height: calc(var(--font-size-normal) + var(--border-width) * 2);
   padding: calc(var(--font-size-normal) * 0.2)

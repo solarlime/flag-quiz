@@ -4,8 +4,8 @@ export default createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    background: ${(props) => props.theme.colors.color3};
-    color: ${(props) => props.theme.colors.color12};
+    background: ${(props) => props.theme.colors.grass3};
+    color: ${(props) => props.theme.colors.grass12};
   }
     
   body * {
@@ -34,7 +34,7 @@ export default createGlobalStyle`
   }
 
   :focus-visible {
-    outline: var(--border-width) solid ${(props) => props.theme.colors.color12};
+    outline: var(--border-width) solid ${(props) => props.theme.colors.grass12};
     outline-offset: var(--border-width);
   }
   

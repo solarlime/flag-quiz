@@ -16,15 +16,15 @@ const RadioItem = styled(RadioGroup.Item)`
   height: var(--font-size-bigger);
   border: 0;
   border-radius: var(--padding-s);
-  background-color: ${(props) => props.theme.colors.color5};
+  background-color: ${(props) => props.theme.colors.grass6};
   cursor: pointer;
 
   &:not(:disabled):hover {
-    background-color: ${(props) => props.theme.colors.color7};
+    background-color: ${(props) => props.theme.colors.grass7};
   }
 
   &:not(:disabled):active {
-    background-color: ${(props) => props.theme.colors.color8};
+    background-color: ${(props) => props.theme.colors.grass8};
   }
 `;
 
@@ -42,12 +42,11 @@ const RadioIndicator = styled(RadioGroup.Indicator)`
     width: var(--font-size-normal);
     height: var(--font-size-normal);
     border-radius: var(--radius-xs);
-    background-color: ${(props) => props.theme.colors.color12};
+    background-color: ${(props) => props.theme.colors.grass12};
   }
 `;
 
 const SaveItem = observer(({ savedState }: { savedState: TProperties }) => {
-  console.log('render', savedState.id);
   return (
     <Choice key={savedState.id}>
       <RadioItem value={savedState.id} id={savedState.id}>

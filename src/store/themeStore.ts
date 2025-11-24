@@ -1,18 +1,7 @@
 import { makeAutoObservable } from 'mobx';
-import {
-  grass as lightPalette,
-  grassDark as darkPalette,
-} from '@radix-ui/colors';
+import { grass, grassDark, tomato, tomatoDark } from '@radix-ui/colors';
 import type { ITheme } from '../types/styled.ts';
 import { type DefaultTheme } from 'styled-components';
-
-const toUncolored = (palette: { [key: string]: string }) =>
-  Object.fromEntries(
-    Object.entries(palette).map(([key, value]) => [
-      key.replace(/[a-zA-Z]+/g, 'color'),
-      value,
-    ]),
-  );
 
 class ThemeStore {
   constructor() {
@@ -29,13 +18,15 @@ class ThemeStore {
     light: {
       name: 'light',
       colors: {
-        ...toUncolored(lightPalette),
+        ...grass,
+        ...tomato,
       },
     },
     dark: {
       name: 'dark',
       colors: {
-        ...toUncolored(darkPalette),
+        ...grassDark,
+        ...tomatoDark,
       },
     },
   };

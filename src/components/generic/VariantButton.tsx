@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import Button from './Button.tsx';
 
 const VariantButton = styled(Button)`
-  color: ${(props) => props.theme.colors.color10};
-  background-color: ${(props) => props.theme.colors.color3};
-  border-color: ${(props) => props.theme.colors.color7};
+  color: ${(props) => props.theme.colors.grass10};
+  background-color: ${(props) => props.theme.colors.grass3};
+  border-color: ${(props) => props.theme.colors.grass7};
   visibility: visible;
   opacity: 1;
   transition:
@@ -12,17 +12,17 @@ const VariantButton = styled(Button)`
     visibility 0.5s ease-out;
 
   &:not(:disabled):hover {
-    background-color: ${(props) => props.theme.colors.color5};
-    border-color: ${(props) => props.theme.colors.color8};
+    background-color: ${(props) => props.theme.colors.grass5};
+    border-color: ${(props) => props.theme.colors.grass8};
   }
 
   &:not(:disabled):active {
-    background-color: ${(props) => props.theme.colors.color6};
-    border-color: ${(props) => props.theme.colors.color9};
+    background-color: ${(props) => props.theme.colors.grass6};
+    border-color: ${(props) => props.theme.colors.grass9};
   }
 
   &:disabled {
-    color: ${(props) => props.theme.colors.color6};
+    color: ${(props) => props.theme.colors.grass6};
   }
 `;
 

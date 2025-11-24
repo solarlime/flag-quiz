@@ -48,7 +48,7 @@ const StyledCard = styled.div`
   padding: var(--padding-l);
   margin: 0 auto;
   border-radius: var(--radius-xl);
-  background-color: ${(props) => props.theme.colors.color1};
+  background-color: ${(props) => props.theme.colors.grass1};
   box-sizing: border-box;
 
   @media screen and (min-width: 701px) {

@@ -24,6 +24,6 @@ export const ErrorMessage = styled.p`
   font-size: var(--font-size-small);
   padding: var(--padding-s);
   border-radius: var(--padding-s);
-  background: ${(props) => props.theme.colors.color2};
+  background: ${(props) => props.theme.colors.grass2};
   word-break: break-word;
 `;

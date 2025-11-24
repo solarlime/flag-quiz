@@ -1,21 +1,24 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router';
+import { WarningDiamond } from '@phosphor-icons/react';
 import CoreButton from './generic/CoreButton.tsx';
 import { useStore } from '../store/StoreProvider.tsx';
-import { ErrorMessage } from './errorHandlers/errorStyles.ts';
+import { SectionContent } from './sections/Section.tsx';
+import TextNode from './generic/TextNode.tsx';
 
 const StyledStartMenu = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   & > button:not(:first-child) {
     margin-top: var(--padding-s);
   }
 `;
 
-const StyledErrorMessage = styled(ErrorMessage)`
-  margin-top: var(--padding-l);
+const StyledWarningDiamond = styled(WarningDiamond)`
+  color: ${(props) => props.theme.colors.tomato10};
 `;
 
 const StartMenu = observer(() => {
@@ -36,7 +39,7 @@ const StartMenu = observer(() => {
   };
 
   return (
-    <>
+    <SectionContent>
       <StyledStartMenu>
         <CoreButton
           onClick={() => navigate('/new')}
@@ -49,16 +52,13 @@ const StartMenu = observer(() => {
           data-testid="quiz-load-button"
           disabled={!states.areAvailableToLoad}
         >
-          Load quiz
+          {states.corrupted && states.corrupted.length > 0 && (
+            <StyledWarningDiamond weight="regular" />
+          )}
+          <TextNode>Load quiz</TextNode>
         </CoreButton>
       </StyledStartMenu>
-      {states.corrupted && states.corrupted.length > 0 && (
-        <StyledErrorMessage>
-          Failed to load {states.corrupted.length} saved quiz
-          {states.corrupted.length > 1 && 'zes'}
-        </StyledErrorMessage>
-      )}
-    </>
+    </SectionContent>
   );
 });
 

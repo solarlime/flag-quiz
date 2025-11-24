@@ -8,7 +8,7 @@ const StyledSwitchRoot = styled(RadixSwitch.Root)`
   display: flex;
   align-items: center;
   width: calc((var(--font-size-normal) + var(--border-width) * 2) * 2);
-  background-color: ${(props) => props.theme.colors.color2};
+  background-color: ${(props) => props.theme.colors.grass2};
   padding: calc(var(--padding-s));
   border: 0;
   border-radius: var(--padding-m);
@@ -16,11 +16,11 @@ const StyledSwitchRoot = styled(RadixSwitch.Root)`
   cursor: pointer;
 
   &:not(:disabled):hover {
-    background-color: ${(props) => props.theme.colors.color3};
+    background-color: ${(props) => props.theme.colors.grass3};
   }
 
   &:not(:disabled):active {
-    background-color: ${(props) => props.theme.colors.color4};
+    background-color: ${(props) => props.theme.colors.grass4};
   }
 
   &[data-state='checked'] span.icon {
@@ -37,7 +37,7 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb)`
   flex-shrink: 0;
   width: calc(var(--font-size-normal) + var(--border-width) * 2);
   height: calc(var(--font-size-normal) + var(--border-width) * 2);
-  background-color: ${(props) => props.theme.colors.color12};
+  background-color: ${(props) => props.theme.colors.grass12};
   border-radius: calc(var(--radius-m) - var(--radius-s));
   transition: transform 100ms;
   will-change: transform;

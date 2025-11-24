@@ -29,9 +29,9 @@ const Buttons = styled.div`
   }
 
   & button:disabled:not(.fade) {
-    color: ${(props) => props.theme.colors.color1};
-    border-color: ${(props) => props.theme.colors.color9};
-    background-color: ${(props) => props.theme.colors.color9};
+    color: ${(props) => props.theme.colors.grass1};
+    border-color: ${(props) => props.theme.colors.grass9};
+    background-color: ${(props) => props.theme.colors.grass9};
   }
 `;
 
