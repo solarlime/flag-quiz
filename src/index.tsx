@@ -20,7 +20,7 @@ autorun(() => {
 });
 
 const savedStatesLoader = () => {
-  return store.updateNeeded && store.loadSavedStates();
+  return store.saveStore.updateNeeded && store.saveStore.loadSavedStates();
 };
 
 const router = createBrowserRouter([

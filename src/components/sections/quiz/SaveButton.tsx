@@ -6,12 +6,12 @@ import TextNode from '../../generic/TextNode.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
 
 const SaveButton = observer((props: ComponentProps<typeof CoreButton>) => {
-  const { quizStore, rootStore } = useStore();
+  const { quizStore, saveStore } = useStore();
 
   const handleClick = () => {
     if (quizStore) {
       quizStore.saveQuiz();
-      rootStore.updateNeeded = true;
+      saveStore.updateNeeded = true;
     }
   };
 

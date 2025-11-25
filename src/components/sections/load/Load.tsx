@@ -17,8 +17,8 @@ const ChoiceGroup = styled(RadioGroup.Root)`
 `;
 
 const Load = observer(() => {
-  const { rootStore } = useStore();
-  const { states } = rootStore;
+  const { rootStore, saveStore } = useStore();
+  const { states } = saveStore;
   const navigate = useNavigate();
 
   if (states.areAvailableToLoad) {

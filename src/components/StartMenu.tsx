@@ -22,8 +22,8 @@ const StyledWarningDiamond = styled(WarningDiamond)`
 `;
 
 const StartMenu = observer(() => {
-  const { rootStore } = useStore();
-  const { states } = rootStore;
+  const { rootStore, saveStore } = useStore();
+  const { states } = saveStore;
   const navigate = useNavigate();
 
   const loadQuiz = () => {
