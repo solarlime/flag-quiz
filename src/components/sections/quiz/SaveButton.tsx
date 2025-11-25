@@ -10,21 +10,30 @@ const SaveButton = observer((props: ComponentProps<typeof CoreButton>) => {
 
   const handleClick = () => {
     if (quizStore) {
+      quizStore.canBeSaved = false;
       quizStore.saveQuiz();
       saveStore.updateNeeded = true;
     }
   };
 
-  return quizStore?.isCurrentSaved ? (
-    <CoreButton {...props} disabled>
-      <Check weight="regular" />
-      <TextNode>Saved</TextNode>
-    </CoreButton>
-  ) : (
-    <CoreButton {...props} onClick={handleClick}>
-      Save
-    </CoreButton>
-  );
+  if (quizStore) {
+    return quizStore.isCurrentSaved ? (
+      <CoreButton {...props} disabled={!quizStore.canBeSaved}>
+        <Check weight="regular" />
+        <TextNode>Saved</TextNode>
+      </CoreButton>
+    ) : (
+      <CoreButton
+        {...props}
+        onClick={handleClick}
+        disabled={!quizStore.canBeSaved}
+      >
+        Save
+      </CoreButton>
+    );
+  }
+
+  return null;
 });
 
 export default SaveButton;

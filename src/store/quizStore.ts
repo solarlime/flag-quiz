@@ -44,6 +44,16 @@ class QuizStore {
     }
   }
 
+  @observable private accessor _canBeSaved = true;
+
+  @computed get canBeSaved() {
+    return this._canBeSaved;
+  }
+
+  @action set canBeSaved(newValue: boolean) {
+    this._canBeSaved = newValue;
+  }
+
   @observable private accessor _fetchStatus:
     | 'idle'
     | 'loading'
@@ -138,6 +148,7 @@ class QuizStore {
       this._answer = variants[0];
       this._variants = shuffleArray(variants);
       if (this.isCurrentSaved) this._isCurrentSaved = false;
+      if (!this.canBeSaved) this.canBeSaved = true;
     }
   }
 

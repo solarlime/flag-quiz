@@ -21,6 +21,7 @@ class Store {
           (savedState) => savedState.id === arg.savedQuizId,
         )!,
       );
+      this.quizStore.canBeSaved = false;
     } else {
       this.quizStore = new QuizStore(arg as TProperties | IQuizForm);
     }

@@ -41,6 +41,7 @@ const AnswerVariants = observer(() => {
 
   const handleClick = async (variant: TResult) => {
     if (quizStore && quizStore.answer) {
+      quizStore.canBeSaved = false;
       buttons.current.forEach((button) => {
         button.disabled = true;
         if (button.name !== quizStore.answer?.name)
