@@ -6,7 +6,8 @@ import CoreButton from '../../generic/CoreButton.tsx';
 import StepNumberInput from './StepNumberInput.tsx';
 import type { IQuizForm } from '../../../types/forms.ts';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import Form from '../../generic/Form.tsx';
+import { Form } from '../../generic/Block.tsx';
+import { SectionContent, SectionTitle } from '../Section.tsx';
 
 const Field = styled.div`
   display: grid;
@@ -77,29 +78,34 @@ const New = observer(() => {
 
   return (
     <FormProvider {...methods}>
-      <Form
-        name="new-quiz-form"
-        onSubmit={handleSubmit(onSubmit)}
-        data-testid="parameters-form"
-      >
-        <Field>
-          <Label htmlFor="questionsQuantity">How many questions?</Label>
-          <StepNumberInput
-            changeValue={changeValue}
-            minValue={minValue}
-            maxValue={maxValue}
-          />
-          {errors.questionsQuantity && (
-            <ErrorComponent>{errors.questionsQuantity.message}</ErrorComponent>
-          )}
-        </Field>
-        <CoreButton
-          disabled={!!errors.questionsQuantity}
-          data-testid="quiz-start-button"
+      <SectionTitle title="New quiz" />
+      <SectionContent>
+        <Form
+          name="new-quiz-form"
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid="parameters-form"
         >
-          Start quiz
-        </CoreButton>
-      </Form>
+          <Field>
+            <Label htmlFor="questionsQuantity">How many questions?</Label>
+            <StepNumberInput
+              changeValue={changeValue}
+              minValue={minValue}
+              maxValue={maxValue}
+            />
+            {errors.questionsQuantity && (
+              <ErrorComponent>
+                {errors.questionsQuantity.message}
+              </ErrorComponent>
+            )}
+          </Field>
+          <CoreButton
+            disabled={!!errors.questionsQuantity}
+            data-testid="quiz-start-button"
+          >
+            Start quiz
+          </CoreButton>
+        </Form>
+      </SectionContent>
     </FormProvider>
   );
 });

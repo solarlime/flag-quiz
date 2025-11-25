@@ -25,9 +25,13 @@ const StyledSectionTitle = styled.div`
     align-self: center;
     flex-grow: 1;
   }
+
+  & > h2:only-child {
+    text-align: center;
+  }
 `;
 
-const SectionTitle = observer(
+export const SectionTitle = observer(
   ({ title, children }: { title: string; children?: ReactNode }) => {
     return (
       <StyledSectionTitle>
@@ -38,4 +42,18 @@ const SectionTitle = observer(
   },
 );
 
-export default SectionTitle;
+export const SectionContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--padding-l);
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 701px) {
+    &:has(> :nth-child(2)) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+`;

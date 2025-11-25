@@ -1,6 +1,6 @@
 /* eslint-disable mobx/missing-observer */
 import { isRouteErrorResponse, useRouteError } from 'react-router';
-import SectionTitle from '../sections/SectionTitle.tsx';
+import { SectionTitle } from '../sections/Section.tsx';
 import { ErrorDescription, ErrorMessage } from './errorStyles.ts';
 
 export function ErrorElement() {

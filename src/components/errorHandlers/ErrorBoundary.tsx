@@ -1,8 +1,9 @@
 /* eslint-disable mobx/missing-observer */
 import { Component, type ReactNode } from 'react';
 import CoreButton from '../generic/CoreButton.tsx';
-import SectionTitle from '../sections/SectionTitle.tsx';
+import { SectionTitle } from '../sections/Section.tsx';
 import { ErrorDescription, ErrorMessage } from './errorStyles.ts';
+import { Block } from '../generic/Block.tsx';
 
 interface Props {
   children: ReactNode;
@@ -32,7 +33,7 @@ export default class ErrorBoundary extends Component<Props, State> {
 
     if (error) {
       return (
-        <>
+        <Block>
           <SectionTitle title="Oops!">
             <CoreButton onClick={() => this.retry()}>Try to reload</CoreButton>
           </SectionTitle>
@@ -40,7 +41,7 @@ export default class ErrorBoundary extends Component<Props, State> {
             <p>Component was not loaded 😟</p>
             <ErrorMessage>{error.message}</ErrorMessage>
           </ErrorDescription>
-        </>
+        </Block>
       );
     }
 

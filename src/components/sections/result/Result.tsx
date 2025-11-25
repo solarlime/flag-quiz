@@ -3,7 +3,8 @@ import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
 import Flag from '../quiz/Flag.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import SectionTitle from '../SectionTitle.tsx';
+import { SectionTitle } from '../Section.tsx';
+import TextNode from '../../generic/TextNode.tsx';
 
 const TopInformation = styled.div`
   display: flex;
@@ -68,13 +69,16 @@ const Result = observer(() => {
   return (
     <>
       <SectionTitle title="Result">
-        {+(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.4
-          ? '🤨'
-          : +(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.6
-            ? '😐'
-            : +(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.8
-              ? '😌'
-              : '😊'}
+        <TextNode>
+          {+(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.4
+            ? '🤨'
+            : +(quizStore.score / quizStore.questionsQuantity).toFixed(1) < 0.6
+              ? '😐'
+              : +(quizStore.score / quizStore.questionsQuantity).toFixed(1) <
+                  0.8
+                ? '😌'
+                : '😊'}
+        </TextNode>
       </SectionTitle>
       <StyledCard>
         <TopInformation>

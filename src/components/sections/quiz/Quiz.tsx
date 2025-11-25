@@ -6,7 +6,7 @@ import AnswerVariants from './AnswerVariants.tsx';
 import Flag from './Flag.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
 import SaveButton from './SaveButton.tsx';
-import SectionTitle from '../SectionTitle.tsx';
+import { SectionTitle } from '../Section.tsx';
 
 const TopInformation = styled.div`
   display: flex;

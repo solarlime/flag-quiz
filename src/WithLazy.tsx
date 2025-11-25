@@ -7,6 +7,7 @@ import {
   type MemoExoticComponent,
 } from 'react';
 import ErrorBoundary from './components/errorHandlers/ErrorBoundary.tsx';
+import Fallback from './components/generic/Fallback.tsx';
 
 export default function withLazy(importModule: () => Promise<any>) {
   let cachedComponent: null | { default: MemoExoticComponent<any> } = null;
@@ -24,7 +25,7 @@ export default function withLazy(importModule: () => Promise<any>) {
     }, [retryNumber]);
 
     return (
-      <Suspense key={retryNumber} fallback={<div>Loading...</div>}>
+      <Suspense key={retryNumber} fallback={<Fallback />}>
         <ErrorBoundary key={retryNumber} setRetryNumber={setRetryNumber}>
           <LazyComponent key={retryNumber} />
         </ErrorBoundary>
