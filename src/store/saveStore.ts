@@ -51,6 +51,13 @@ class SaveStore {
     };
   }
 
+  deleteCorruptedStates() {
+    this._corruptedStates.forEach((corruptedState) =>
+      localStorage.removeItem(corruptedState),
+    );
+    this._corruptedStates.length = 0;
+  }
+
   private clearSavedStates() {
     this._savedStates.length = 0;
     this._corruptedStates.length = 0;

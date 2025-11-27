@@ -38,9 +38,8 @@ export default createGlobalStyle`
     outline-offset: var(--border-width);
   }
   
-  button.fade {
+  body .fade {
     visibility: hidden;
     opacity: 0;
   }
-  
 `;
