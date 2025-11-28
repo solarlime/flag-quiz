@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { Switch as RadixSwitch } from 'radix-ui';
-import { type ReactNode } from 'react';
-import { useStore } from '../../store/StoreProvider.tsx';
+import { type PropsWithChildren } from 'react';
 
 const StyledSwitchRoot = styled(RadixSwitch.Root)`
   display: flex;
@@ -49,23 +48,17 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb)`
   }
 `;
 
-const Switch = observer(
-  ({ testId, children }: { testId?: string; children?: ReactNode }) => {
-    const { themeStore } = useStore();
+const Root = observer(function Root({
+  children,
+  ...props
+}: PropsWithChildren<RadixSwitch.SwitchProps>) {
+  return <StyledSwitchRoot {...props}>{children}</StyledSwitchRoot>;
+});
 
-    return (
-      <StyledSwitchRoot
-        checked={themeStore.theme.name === 'dark'}
-        onCheckedChange={() => themeStore.toggleTheme()}
-        value={themeStore.theme.name}
-        data-value={themeStore.theme.name}
-        data-testid={testId}
-      >
-        <StyledSwitchThumb />
-        {children}
-      </StyledSwitchRoot>
-    );
-  },
-);
+const Thumb = observer(function Thumb(props: RadixSwitch.SwitchThumbProps) {
+  return <StyledSwitchThumb {...props} />;
+});
+
+const Switch = { Root, Thumb };
 
 export default Switch;
