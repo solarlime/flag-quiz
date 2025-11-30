@@ -1,10 +1,13 @@
 import { makeAutoObservable } from 'mobx';
 import { safeParse, union } from 'valibot';
 import {
+  type RawTProperties,
+  type RawTSavedState,
   type TProperties,
   TPropertiesSchema,
   TSavedStateSchema,
 } from '../types/save.ts';
+import migrateState from '../utils/migrateState.ts';
 
 type SavedStates =
   | {
@@ -70,18 +73,19 @@ class SaveStore {
       if (nextItemKey.startsWith('savedState')) {
         const savedStateString = localStorage.getItem(nextItemKey)!;
         try {
-          const parsed = JSON.parse(savedStateString);
+          const parsed: RawTProperties | RawTSavedState =
+            JSON.parse(savedStateString);
           const safeParsed = safeParse(
             union([TPropertiesSchema, TSavedStateSchema]),
             parsed,
           );
           if (safeParsed.success) {
-            const savedState = safeParsed.output;
-            if ('savedState' in savedState) {
-              this._savedStates.push(savedState.savedState);
-            } else {
-              this._savedStates.push(savedState);
-            }
+            const savedState = migrateState(
+              parsed,
+              safeParsed.output,
+              nextItemKey,
+            );
+            this._savedStates.push(savedState);
           } else {
             console.error(safeParsed.issues);
             this._corruptedStates.push(nextItemKey);

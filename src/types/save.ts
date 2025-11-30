@@ -6,7 +6,6 @@ import {
   literal,
   union,
   null_,
-  fallback,
   type InferOutput,
   optional,
   pipe,
@@ -31,16 +30,19 @@ const RawTPropertiesSchema = object({
   // Previously saved games used maxQuestions to store questionsQuantity
   questionsQuantity: optional(number()),
   maxQuestions: optional(number()),
-  timestamp: fallback(string(), 'some time ago'),
+  timestamp: optional(string()),
   id: optional(string()),
 });
 
+export type RawTProperties = InferOutput<typeof RawTPropertiesSchema>;
+
 export const TPropertiesSchema = pipe(
   RawTPropertiesSchema,
-  transform((data) => ({
-    ...data,
-    questionsQuantity: data.questionsQuantity ?? data.maxQuestions ?? 10,
-    id: data.id ?? uuidv4(),
+  transform(({ maxQuestions, ...rest }) => ({
+    ...rest,
+    questionsQuantity: rest.questionsQuantity ?? maxQuestions ?? 10,
+    timestamp: rest.timestamp ?? 'some time ago',
+    id: rest.id ?? uuidv4(),
   })),
 );
 
@@ -52,3 +54,9 @@ export const TSavedStateSchema = object({
 });
 
 export type TSavedState = InferOutput<typeof TSavedStateSchema>;
+
+const RawTSavedStateSchema = object({
+  savedState: RawTPropertiesSchema,
+});
+
+export type RawTSavedState = InferOutput<typeof RawTSavedStateSchema>;
