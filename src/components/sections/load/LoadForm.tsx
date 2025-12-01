@@ -32,25 +32,29 @@ const StickyDeleteButton = styled(DeleteButton)`
 
 const LoadForm = observer(() => {
   const { rootStore, saveStore } = useStore();
-  const { states, deleteModeEnabled } = saveStore;
+  const { deleteModeEnabled } = saveStore;
   const navigate = useNavigate();
 
-  if (states.areAvailableToLoad) {
+  if (saveStore.states.areAvailableToLoad) {
     const methods = useForm<ILoadForm>({
       mode: 'onSubmit',
       defaultValues: {
-        savedQuizId: states.saved[0].id,
+        savedQuizId: saveStore.states.saved[0].id,
       },
     });
 
-    const { handleSubmit, setValue } = methods;
+    const { handleSubmit, setValue, watch } = methods;
+    const watchedValue = watch('savedQuizId');
 
     const onSubmit: SubmitHandler<ILoadForm> = (data) => {
-      if (deleteModeEnabled) {
-        saveStore.deleteSavedState(data);
-      } else {
-        rootStore.initQuizStore(data);
-        navigate('/quiz');
+      if (saveStore.states.areAvailableToLoad) {
+        if (deleteModeEnabled) {
+          saveStore.deleteSavedState(data);
+          methods.reset({ savedQuizId: saveStore.states.saved[0].id });
+        } else {
+          rootStore.initQuizStore(data);
+          navigate('/quiz');
+        }
       }
     };
 
@@ -61,13 +65,13 @@ const LoadForm = observer(() => {
         data-testid="parameters-form"
       >
         <ChoiceGroup
-          defaultValue={states.saved[0].id}
+          value={watchedValue}
           onValueChange={(value) => {
             setValue('savedQuizId', value);
           }}
           aria-label="Choose a saved quiz"
         >
-          {states.saved.map((savedState) => (
+          {saveStore.states.saved.map((savedState) => (
             <SaveItem key={savedState.id} savedState={savedState} />
           ))}
         </ChoiceGroup>

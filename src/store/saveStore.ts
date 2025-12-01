@@ -66,9 +66,11 @@ class SaveStore {
   }
 
   deleteSavedState(arg: ILoadForm) {
-    this._savedStates = this._savedStates.filter(
-      (savedState) => savedState.id !== arg.savedQuizId,
-    );
+    this._savedStates = [
+      ...this._savedStates.filter(
+        (savedState) => savedState.id !== arg.savedQuizId,
+      ),
+    ];
     localStorage.removeItem(`savedState_${arg.savedQuizId}`);
   }
 
