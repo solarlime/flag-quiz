@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -8,6 +8,7 @@ import type { ILoadForm } from '../../../types/forms.ts';
 import { useStore } from '../../../store/StoreProvider.tsx';
 import SaveItem from './SaveItem.tsx';
 import { Form } from '../../generic/Block.tsx';
+import DeleteButton from '../../generic/DeleteButton.tsx';
 
 const ChoiceGroup = styled(RadioGroup.Root)`
   display: flex;
@@ -16,9 +17,22 @@ const ChoiceGroup = styled(RadioGroup.Root)`
   margin-bottom: var(--padding-l);
 `;
 
+const stickyStyles = css`
+  position: sticky;
+  bottom: var(--padding-l);
+`;
+
+const StickyCoreButton = styled(CoreButton)`
+  ${stickyStyles};
+`;
+
+const StickyDeleteButton = styled(DeleteButton)`
+  ${stickyStyles};
+`;
+
 const LoadForm = observer(() => {
   const { rootStore, saveStore } = useStore();
-  const { states } = saveStore;
+  const { states, deleteModeEnabled } = saveStore;
   const navigate = useNavigate();
 
   if (states.areAvailableToLoad) {
@@ -32,8 +46,12 @@ const LoadForm = observer(() => {
     const { handleSubmit, setValue } = methods;
 
     const onSubmit: SubmitHandler<ILoadForm> = (data) => {
-      rootStore.initQuizStore(data);
-      navigate('/quiz');
+      if (deleteModeEnabled) {
+        saveStore.deleteSavedState(data);
+      } else {
+        rootStore.initQuizStore(data);
+        navigate('/quiz');
+      }
     };
 
     return (
@@ -53,7 +71,15 @@ const LoadForm = observer(() => {
             <SaveItem key={savedState.id} savedState={savedState} />
           ))}
         </ChoiceGroup>
-        <CoreButton data-testid="quiz-start-button">Start quiz</CoreButton>
+        {deleteModeEnabled ? (
+          <StickyDeleteButton data-testid="quiz-delete-button">
+            Delete quiz
+          </StickyDeleteButton>
+        ) : (
+          <StickyCoreButton data-testid="quiz-start-button">
+            Start quiz
+          </StickyCoreButton>
+        )}
       </Form>
     );
   }

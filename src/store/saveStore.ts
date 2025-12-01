@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { safeParse, union } from 'valibot';
+import type { ILoadForm } from '../types/forms.ts';
 import {
   type RawTProperties,
   type RawTSavedState,
@@ -31,6 +32,16 @@ class SaveStore {
     return this._savedStates;
   }
 
+  private _deleteModeEnabled = false;
+
+  get deleteModeEnabled(): boolean {
+    return this._deleteModeEnabled;
+  }
+
+  toggleDeleteModeEnabled(): void {
+    this._deleteModeEnabled = !this._deleteModeEnabled;
+  }
+
   private _corruptedStates: Array<string> = [];
 
   updateNeeded = true;
@@ -52,6 +63,13 @@ class SaveStore {
     return {
       areAvailableToLoad: false,
     };
+  }
+
+  deleteSavedState(arg: ILoadForm) {
+    this._savedStates = this._savedStates.filter(
+      (savedState) => savedState.id !== arg.savedQuizId,
+    );
+    localStorage.removeItem(`savedState_${arg.savedQuizId}`);
   }
 
   deleteCorruptedStates() {
