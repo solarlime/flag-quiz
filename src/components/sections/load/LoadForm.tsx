@@ -8,7 +8,7 @@ import type { ILoadForm } from '../../../types/forms.ts';
 import { useStore } from '../../../store/StoreProvider.tsx';
 import SaveItem from './SaveItem.tsx';
 import { Form } from '../../generic/Block.tsx';
-import DeleteButton from '../../generic/DeleteButton.tsx';
+import { DelayedDeleteButton } from '../../generic/DeleteButton.tsx';
 
 const ChoiceGroup = styled(RadioGroup.Root)`
   display: flex;
@@ -26,7 +26,7 @@ const StickyCoreButton = styled(CoreButton)`
   ${stickyStyles};
 `;
 
-const StickyDeleteButton = styled(DeleteButton)`
+const StickyDelayedDeleteButton = styled(DelayedDeleteButton)`
   ${stickyStyles};
 `;
 
@@ -76,9 +76,9 @@ const LoadForm = observer(() => {
           ))}
         </ChoiceGroup>
         {deleteModeEnabled ? (
-          <StickyDeleteButton data-testid="quiz-delete-button">
+          <StickyDelayedDeleteButton data-testid="quiz-delete-button">
             Delete quiz
-          </StickyDeleteButton>
+          </StickyDelayedDeleteButton>
         ) : (
           <StickyCoreButton data-testid="quiz-start-button">
             Start quiz
