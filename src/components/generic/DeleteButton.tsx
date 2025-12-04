@@ -6,10 +6,22 @@ import {
   useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
-import createButton from './createButton.ts';
+import ButtonFactory from './ButtonFactory.tsx';
 import waitFor from '../../utils/waitFor.ts';
 
-const DeleteButton = createButton('tomato');
+const DeleteButton = observer(
+  ({
+    children,
+    filled = true,
+    ...props
+  }: ComponentProps<typeof ButtonFactory> & { filled: boolean }) => {
+    return (
+      <ButtonFactory {...props} $colorPrefix="tomato" $filled={filled}>
+        {children}
+      </ButtonFactory>
+    );
+  },
+);
 
 const DelayedDeleteButton = observer(
   ({ children, onClick, ...props }: ComponentProps<typeof DeleteButton>) => {
