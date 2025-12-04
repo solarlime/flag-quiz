@@ -2,10 +2,8 @@ import { observer } from 'mobx-react-lite';
 import { Check } from '@phosphor-icons/react';
 import { type RefObject, useTransition } from 'react';
 import { useStore } from '../../../store/StoreProvider.tsx';
-import {
-  DelayedDeleteButton,
-  DeleteButton,
-} from '../../generic/DeleteButton.tsx';
+import DeleteButton from '../../generic/DeleteButton.tsx';
+import DelayedDeleteButton from '../../generic/DelayedDeleteButton.tsx';
 import TextNode from '../../generic/TextNode.tsx';
 import waitFor from '../../../utils/waitFor.ts';
 
@@ -29,7 +27,7 @@ const DeleteCorrupted = observer(
     };
 
     return !isPending ? (
-      <DelayedDeleteButton onClick={handleClick}>
+      <DelayedDeleteButton onClick={handleClick} withCancel>
         Delete corrupted
       </DelayedDeleteButton>
     ) : (

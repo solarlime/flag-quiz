@@ -28,13 +28,15 @@ const StartMenu = observer(() => {
 
   const loadQuiz = () => {
     if (states.areAvailableToLoad) {
-      if (states.saved.length === 1) {
+      if (states.saved.length === 1 && states.corrupted.length === 0) {
         const savedState = states.saved[0];
         rootStore.initQuizStore(savedState);
         navigate('/quiz');
       } else {
         navigate('/load');
       }
+    } else if (states.corrupted) {
+      navigate('/load');
     }
   };
 
@@ -50,7 +52,7 @@ const StartMenu = observer(() => {
         <CoreButton
           onClick={loadQuiz}
           data-testid="quiz-load-button"
-          disabled={!states.areAvailableToLoad}
+          disabled={!states.areAvailableToLoad && !states.corrupted}
         >
           {states.corrupted && states.corrupted.length > 0 && (
             <StyledWarningDiamond weight="regular" />

@@ -19,7 +19,9 @@ const Load = observer(() => {
   return (
     <>
       <SectionTitle title={deleteModeEnabled ? 'Delete quiz' : 'Load quiz'}>
-        <DeleteModeSwitch testId="load-delete-switcher" />
+        {states.areAvailableToLoad && states.saved.length && (
+          <DeleteModeSwitch testId="load-delete-switcher" />
+        )}
       </SectionTitle>
       <SectionContent>
         {states.areAvailableToLoad && <LoadForm />}

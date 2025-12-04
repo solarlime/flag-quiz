@@ -8,9 +8,16 @@ import { useStore } from '../../../store/StoreProvider.tsx';
 const Choice = styled.div`
   display: flex;
   gap: var(--padding-s);
+
+  &:only-child :is(button, input) {
+    display: none;
+  }
 `;
 
-const RadioItem = styled(RadioGroup.Item)<{ $danger?: boolean }>`
+const RadioItem = styled(RadioGroup.Item)<{
+  $danger?: boolean;
+  $disabled: boolean;
+}>`
   align-self: flex-start;
   flex-shrink: 0;
   width: var(--font-size-bigger);
@@ -19,7 +26,7 @@ const RadioItem = styled(RadioGroup.Item)<{ $danger?: boolean }>`
   border-radius: var(--padding-s);
   background-color: ${(props) =>
     props.$danger ? props.theme.colors.tomato6 : props.theme.colors.grass6};
-  cursor: pointer;
+  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'pointer')};
 
   &:not(:disabled):hover {
     background-color: ${(props) =>
@@ -32,7 +39,10 @@ const RadioItem = styled(RadioGroup.Item)<{ $danger?: boolean }>`
   }
 `;
 
-const RadioIndicator = styled(RadioGroup.Indicator)<{ $danger?: boolean }>`
+const RadioIndicator = styled(RadioGroup.Indicator)<{
+  $danger?: boolean;
+  $disabled: boolean;
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,28 +56,46 @@ const RadioIndicator = styled(RadioGroup.Indicator)<{ $danger?: boolean }>`
     width: var(--font-size-normal);
     height: var(--font-size-normal);
     border-radius: var(--radius-xs);
-    background-color: ${(props) =>
-      props.$danger ? props.theme.colors.tomato12 : props.theme.colors.grass12};
-  }
+    background-color: ${(props) => {
+      if (!props.$disabled) {
+        return props.$danger
+          ? props.theme.colors.tomato12
+          : props.theme.colors.grass12;
+      } else {
+        return props.$danger
+          ? props.theme.colors.tomato8
+          : props.theme.colors.grass8;
+      }
+    }}
 `;
 
-const SaveItem = observer(({ savedState }: { savedState: TProperties }) => {
-  const {
-    saveStore: { deleteModeEnabled },
-  } = useStore();
+const SaveItem = observer(
+  ({
+    savedState,
+    isDisabled,
+  }: {
+    savedState: TProperties;
+    isDisabled: boolean;
+  }) => {
+    const {
+      saveStore: { deleteModeEnabled },
+    } = useStore();
 
-  return (
-    <Choice key={savedState.id}>
-      <RadioItem
-        value={savedState.id}
-        id={savedState.id}
-        $danger={deleteModeEnabled}
-      >
-        <RadioIndicator $danger={deleteModeEnabled} />
-      </RadioItem>
-      <SaveItemContent savedState={savedState} />
-    </Choice>
-  );
-});
+    return (
+      <Choice key={savedState.id}>
+        <RadioItem
+          value={savedState.id}
+          id={savedState.id}
+          $danger={deleteModeEnabled}
+          $disabled={isDisabled}
+          disabled={isDisabled}
+        >
+          <RadioIndicator $danger={deleteModeEnabled} $disabled={isDisabled} />
+        </RadioItem>
+        <SaveItemContent savedState={savedState} />
+      </Choice>
+    );
+  },
+);
 
 export default SaveItem;
