@@ -88,7 +88,11 @@ const DelayedDeleteButton = observer(
           {children} now
         </DeleteButton>
         {withCancel && (
-          <CoreButton filled={false} onClick={reset}>
+          <CoreButton
+            filled={false}
+            onClick={reset}
+            data-testid="delete-cancel-button"
+          >
             Cancel
           </CoreButton>
         )}

@@ -27,11 +27,15 @@ const DeleteCorrupted = observer(
     };
 
     return !isPending ? (
-      <DelayedDeleteButton onClick={handleClick} withCancel>
+      <DelayedDeleteButton
+        onClick={handleClick}
+        withCancel
+        data-testid="delete-corrupted-button"
+      >
         Delete corrupted
       </DelayedDeleteButton>
     ) : (
-      <DeleteButton disabled>
+      <DeleteButton disabled data-testid="delete-corrupted-button">
         <Check weight="regular" />
         <TextNode>Successfully deleted</TextNode>
       </DeleteButton>

@@ -55,7 +55,7 @@ const StartMenu = observer(() => {
           disabled={!states.areAvailableToLoad && !states.corrupted}
         >
           {states.corrupted && states.corrupted.length > 0 && (
-            <StyledWarningDiamond weight="regular" />
+            <StyledWarningDiamond weight="regular" data-testid="icon-warning" />
           )}
           <TextNode>Load quiz</TextNode>
         </CoreButton>
