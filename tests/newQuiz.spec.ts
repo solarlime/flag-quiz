@@ -1,43 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import type { TRawResult } from '../src/types/data';
+import setRequestResolvers from './helpers/setRequestResolvers';
 
 test('Should pass the quiz', async ({ page }) => {
   await page.goto('/');
 
-  await page.route(
-    'https://restcountries.com/v3.1/all?fields=name,cca2,flag,continents,independent',
-    (route) =>
-      route.fulfill({
-        status: 200,
-        headers: {},
-        contentType: 'application/json',
-        path: './tests/mocks/mock_countries.json',
-      }),
-  );
-
-  let answerCountryCode: string | undefined;
-
-  await page.route('https://flagcdn.com/w640/ad.png', (route) =>
-    route.fulfill({
-      status: 200,
-      headers: {},
-      contentType: 'application/json',
-      body: Buffer.from([]),
-    }),
-  );
-
-  await page.route('https://flagcdn.com/**/*.webp', (route, request) => {
-    const url = request.url();
-    const countryCodeFile = url.split('/').pop();
-    answerCountryCode = countryCodeFile!.split('.')[0];
-    return route.fulfill({
-      status: 200,
-      headers: {},
-      contentType: 'image/webp',
-      path: `./tests/mocks/${countryCodeFile}`,
-    });
-  });
+  const mutable = await setRequestResolvers(page);
 
   const quizNewButton = page.getByTestId('quiz-new-button');
   await expect(quizNewButton).toBeEnabled();
@@ -88,7 +57,7 @@ test('Should pass the quiz', async ({ page }) => {
   const flag = page.getByTestId('flag');
   await expect(flag).toHaveAttribute(
     'src',
-    new RegExp(`${answerCountryCode}[.]png`),
+    new RegExp(`${mutable.answerCountryCode}[.]png`),
   );
 
   const countries = JSON.parse(
@@ -96,7 +65,7 @@ test('Should pass the quiz', async ({ page }) => {
   );
 
   const country1 = countries.find(
-    (c: TRawResult) => c.cca2.toLowerCase() === answerCountryCode,
+    (c: TRawResult) => c.cca2.toLowerCase() === mutable.answerCountryCode,
   );
 
   const countryButton = page.getByText(country1.name.common);
@@ -120,7 +89,7 @@ test('Should pass the quiz', async ({ page }) => {
   await expect(question).toHaveText('2/2');
 
   const country2 = countries.find(
-    (c: TRawResult) => c.cca2.toLowerCase() === answerCountryCode,
+    (c: TRawResult) => c.cca2.toLowerCase() === mutable.answerCountryCode,
   );
 
   const wrongCountryButton = page
@@ -134,7 +103,7 @@ test('Should pass the quiz', async ({ page }) => {
   );
   await expect(flag).toHaveAttribute(
     'src',
-    new RegExp(`${answerCountryCode}[.]png`),
+    new RegExp(`${mutable.answerCountryCode}[.]png`),
   );
   const mistake = page.getByTestId('mistake');
   await expect(mistake).toContainText(
