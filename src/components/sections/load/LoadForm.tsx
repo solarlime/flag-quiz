@@ -14,6 +14,13 @@ import DelayedDeleteButton from '../../generic/DelayedDeleteButton.tsx';
 import waitFor from '../../../utils/waitFor.ts';
 import TextNode from '../../generic/TextNode.tsx';
 
+if (!window.ResizeObserver) {
+  console.info('Using the ResizeObserver polyfill');
+  window.ResizeObserver = await import('@juggle/resize-observer').then(
+    (module) => module.ResizeObserver,
+  );
+}
+
 const ChoiceGroup = styled(RadioGroup.Root)`
   display: flex;
   flex-direction: column;

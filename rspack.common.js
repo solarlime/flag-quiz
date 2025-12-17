@@ -51,7 +51,7 @@ const config = {
         // some developers don't transpile their code
         exclude: (modulePath) =>
           /node_modules/.test(modulePath) &&
-          !/(uuid|radix-ui|react-router)/.test(modulePath),
+          !/(uuid|radix-ui|react-router|valibot)/.test(modulePath),
         use: {
           loader: 'builtin:swc-loader',
           options: swcOptions,

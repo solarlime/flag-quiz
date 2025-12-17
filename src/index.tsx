@@ -108,7 +108,7 @@ const renderApp = () =>
 if ('any' in Promise) {
   renderApp();
 } else {
-  console.info('Using polyfills');
+  console.info('Using js polyfills');
   // @ts-ignore
   import('core-js/es/promise/any.js').then(() => renderApp());
 }
