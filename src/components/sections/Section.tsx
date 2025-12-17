@@ -35,7 +35,7 @@ export const SectionTitle = observer(
   ({ title, children }: { title: string; children?: ReactNode }) => {
     return (
       <StyledSectionTitle>
-        <StyledH2>{title}</StyledH2>
+        <StyledH2 data-testid="section-title">{title}</StyledH2>
         {children}
       </StyledSectionTitle>
     );

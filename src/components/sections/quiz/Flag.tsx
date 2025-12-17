@@ -108,6 +108,7 @@ const Flag = observer(
                   <img
                     src={`https://${source}/w640/${info.countryCodeAlpha2}.png`}
                     alt="Guess it!"
+                    data-emoji={info.flagSymbol}
                     data-testid="flag"
                   />
                 </picture>

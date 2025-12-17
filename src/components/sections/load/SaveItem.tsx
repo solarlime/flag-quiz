@@ -82,13 +82,14 @@ const SaveItem = observer(
     } = useStore();
 
     return (
-      <Choice key={savedState.id}>
+      <Choice key={savedState.id} data-testid="saved-state">
         <RadioItem
           value={savedState.id}
           id={savedState.id}
           $danger={deleteModeEnabled}
           $disabled={isDisabled}
           disabled={isDisabled}
+          data-testid="saved-state-radio"
         >
           <RadioIndicator $danger={deleteModeEnabled} $disabled={isDisabled} />
         </RadioItem>
