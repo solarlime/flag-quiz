@@ -6,7 +6,9 @@ import SaveItemContent from './SaveItemContent.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
 
 const Choice = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 1fr;
   gap: var(--padding-s);
 
   &:only-child :is(button, input) {

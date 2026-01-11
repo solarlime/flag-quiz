@@ -13,6 +13,13 @@ const Description = styled.div`
   flex-wrap: wrap;
   column-gap: var(--padding-s);
 
+  // aspect-ratio's support is quite similar to a gap property in flexbox
+  @supports not (aspect-ratio: 1) {
+    & > *:not(:last-child) {
+      margin-right: var(--padding-s);
+    }
+  }
+
   & > span {
     font-size: var(--font-size-small);
   }

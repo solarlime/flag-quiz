@@ -40,6 +40,7 @@ const ThemeSwitch = observer(({ testId }: { testId?: string }) => {
           <Moon weight="fill" />
         )}
       </SwitchIcon>
+      <span className="visually-hidden">{`${themeStore.theme.name} theme`}</span>
     </StyledSwitchRoot>
   );
 });

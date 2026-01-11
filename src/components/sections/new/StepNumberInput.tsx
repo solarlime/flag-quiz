@@ -46,6 +46,7 @@ const WithButtons = observer(
           data-testid="questions-quantity-decrement"
         >
           <Minus weight="regular" />
+          <span className="visually-hidden">Decrease quiz&#39;s length</span>
         </VariantButton>
         {children}
         <VariantButton
@@ -55,6 +56,7 @@ const WithButtons = observer(
           data-testid="questions-quantity-increment"
         >
           <Plus weight="regular" />
+          <span className="visually-hidden">Increase quiz&#39;s length</span>
         </VariantButton>
       </StyledWithButtons>
     );

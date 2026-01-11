@@ -16,14 +16,16 @@ const StyledBlock = styled(Block)`
 `;
 
 const Description = styled.div`
-  display: flex;
+  display: grid;
   align-items: center;
+  grid-template-columns: auto auto;
+  grid-template-rows: 1fr;
   gap: var(--padding-s);
   margin-bottom: var(--padding-l);
   color: ${(props) => props.theme.colors.tomato10};
 
   & > span {
-    padding: calc(var(--font-size-normal) - var(--font-size-small)) 0;
+    padding: calc((var(--font-size-normal) - var(--font-size-small)) / 2) 0;
   }
 
   & > svg {

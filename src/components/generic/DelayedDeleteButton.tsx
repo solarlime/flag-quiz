@@ -6,7 +6,8 @@ import DeleteButton from './DeleteButton.tsx';
 import CoreButton from './CoreButton.tsx';
 
 const ButtonGroup = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   gap: var(--padding-s);
 `;
 

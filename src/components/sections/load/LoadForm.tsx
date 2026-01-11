@@ -22,13 +22,13 @@ if (!window.ResizeObserver) {
 }
 
 const ChoiceGroup = styled(RadioGroup.Root)`
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: var(--padding-s);
   margin-bottom: var(--padding-l);
 `;
 
 const stickyStyles = css`
+  position: -webkit-sticky; /* For old Safari */
   position: sticky;
   bottom: var(--padding-l);
 `;

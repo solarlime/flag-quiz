@@ -4,10 +4,10 @@ import Title from './Title.tsx';
 import ThemeSwitch from './ThemeSwitch.tsx';
 
 const StyledHeader = styled.header`
+  position: -webkit-sticky; /* For old Safari */
   position: sticky;
-  position: -webkit-sticky; /* For Safari */
   top: 0;
-  z-index: 5;
+  z-index: 1;
   background-color: ${(props) => props.theme.colors.grass5};
   box-sizing: border-box;
 `;
