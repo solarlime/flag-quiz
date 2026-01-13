@@ -4,14 +4,18 @@ import type { TResult } from '../types/data.ts';
 const makeCachedCheckFunction = <T>(checkFn: () => Promise<T>) => {
   let cachedResult: T | null = null;
 
-  return async () => {
+  const check = async () => {
     if (cachedResult === null) {
-      const result = await checkFn();
-      cachedResult = result;
-      return result;
+      cachedResult = await checkFn();
     }
-    return Promise.resolve(cachedResult);
+    return cachedResult;
   };
+
+  const reset = () => {
+    cachedResult = null;
+  };
+
+  return { check, reset };
 };
 
 const checkWebpSupport = () => {
@@ -45,15 +49,16 @@ const checkFlagcdn = () => {
   ]);
 };
 
-const isWebpSupported = makeCachedCheckFunction(checkWebpSupport);
-const isFlagcdnAvailable = makeCachedCheckFunction(checkFlagcdn);
+const webpSupport = makeCachedCheckFunction(checkWebpSupport);
+const flagcdnAvailability = makeCachedCheckFunction(checkFlagcdn);
 
 const usePreloadImage = (trigger: TResult) => {
   const [state, setState] = useState('loading');
   const [source, setSource] = useState<string | null>(null);
+  const [fallback, setFallback] = useState<boolean>(false);
 
   useEffect(() => {
-    Promise.all([isWebpSupported(), isFlagcdnAvailable()])
+    Promise.all([webpSupport.check(), flagcdnAvailability.check()])
       .then(async (results) => {
         const source = results[1]
           ? 'flagcdn.com'
@@ -61,12 +66,12 @@ const usePreloadImage = (trigger: TResult) => {
         await preloadImage(results[0] ? 'webp' : 'png', source);
         return setSource(source);
       })
-      .then();
+      .catch(() => setState('error'));
 
     return () => {
       setState('loading');
     };
-  }, [trigger]);
+  }, [trigger, fallback]);
 
   const preloadImage = async (format: string, source: string) =>
     new Promise<void>((resolve, reject) => {
@@ -88,7 +93,10 @@ const usePreloadImage = (trigger: TResult) => {
         () => {
           console.error('Failed to preload an image');
           clearTimeout(timeout);
-          setState('error');
+
+          // flagcdn availability may have changed
+          flagcdnAvailability.reset();
+          setFallback(true);
           reject();
         },
         { once: true },
