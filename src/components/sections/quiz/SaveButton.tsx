@@ -11,7 +11,7 @@ const SaveButton = observer((props: ComponentProps<typeof CoreButton>) => {
   const handleClick = () => {
     if (quizStore) {
       quizStore.canBeSaved = false;
-      quizStore.saveQuiz();
+      quizStore.saveQuiz(saveStore.addSavedState);
       saveStore.updateNeeded = true;
     }
   };

@@ -199,7 +199,7 @@ class QuizStore {
     return this._isCurrentSaved;
   }
 
-  @action saveQuiz() {
+  @action saveQuiz(addSavedState: (newSavedState: TProperties) => void) {
     const date = new Date().toISOString();
 
     const id = uuidv4();
@@ -215,6 +215,7 @@ class QuizStore {
       timestamp: date,
       id,
     };
+    addSavedState(quiz);
     localStorage.setItem(`savedState_${id}`, JSON.stringify(quiz));
     this._isCurrentSaved = true;
   }

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 import { safeParse, union } from 'valibot';
 import type { ILoadForm } from '../types/forms.ts';
 import {
@@ -23,13 +23,19 @@ type SavedStates =
 
 class SaveStore {
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      addSavedState: action.bound,
+    });
   }
 
   private _savedStates = new Array<TProperties>();
 
   get savedStates() {
     return this._savedStates;
+  }
+
+  addSavedState(newSavedState: TProperties) {
+    this._savedStates.unshift(newSavedState);
   }
 
   private _deleteModeEnabled = false;
