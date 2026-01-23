@@ -28,6 +28,16 @@ class SaveStore {
     });
   }
 
+  private _maxSavedStates = 5;
+
+  get maxSavedStates() {
+    return this._maxSavedStates;
+  }
+
+  get allSavesQuantity() {
+    return this._savedStates.length;
+  }
+
   private _savedStates = new Array<TProperties>();
 
   get savedStates() {
@@ -44,8 +54,12 @@ class SaveStore {
     return this._deleteModeEnabled;
   }
 
-  toggleDeleteModeEnabled(): void {
-    this._deleteModeEnabled = !this._deleteModeEnabled;
+  changeDeleteModeEnabled(newState?: boolean): void {
+    if (newState !== undefined) {
+      this._deleteModeEnabled = newState;
+    } else {
+      this._deleteModeEnabled = !this._deleteModeEnabled;
+    }
   }
 
   private _corruptedStates: Array<string> = [];

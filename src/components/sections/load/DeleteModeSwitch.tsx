@@ -31,7 +31,7 @@ const DeleteModeSwitch = observer(({ testId }: { testId?: string }) => {
   return (
     <StyledSwitchRoot
       checked={saveStore.deleteModeEnabled}
-      onCheckedChange={() => saveStore.toggleDeleteModeEnabled()}
+      onCheckedChange={() => saveStore.changeDeleteModeEnabled()}
       value={saveStore.deleteModeEnabled.toString()}
       data-value={saveStore.deleteModeEnabled.toString()}
       data-testid={testId}

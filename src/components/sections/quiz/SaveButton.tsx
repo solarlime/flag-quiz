@@ -8,15 +8,13 @@ import { useStore } from '../../../store/StoreProvider.tsx';
 const SaveButton = observer((props: ComponentProps<typeof CoreButton>) => {
   const { quizStore, saveStore } = useStore();
 
-  const handleClick = () => {
-    if (quizStore) {
+  if (quizStore) {
+    const handleClick = () => {
       quizStore.canBeSaved = false;
       quizStore.saveQuiz(saveStore.addSavedState);
       saveStore.updateNeeded = true;
-    }
-  };
+    };
 
-  if (quizStore) {
     return quizStore.isCurrentSaved ? (
       <CoreButton {...props} disabled={!quizStore.canBeSaved}>
         <Check weight="regular" />

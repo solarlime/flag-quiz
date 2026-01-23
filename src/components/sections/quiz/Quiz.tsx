@@ -7,6 +7,7 @@ import Flag from './Flag.tsx';
 import { useStore } from '../../../store/StoreProvider.tsx';
 import SaveButton from './SaveButton.tsx';
 import { SectionTitle } from '../Section.tsx';
+import SaveModal from './SaveModal.tsx';
 
 const TopInformation = styled.div`
   display: flex;
@@ -65,7 +66,7 @@ const StyledCard = styled.div`
 `;
 
 const Quiz = observer(() => {
-  const { quizStore: qStore } = useStore();
+  const { quizStore: qStore, saveStore } = useStore();
   const quizStore = qStore!;
 
   useEffect(() => {
@@ -85,7 +86,11 @@ const Quiz = observer(() => {
           ) : (
             <>
               <SectionTitle title="Quiz">
-                <SaveButton data-testid="quiz-save-button" />
+                {saveStore.maxSavedStates > saveStore.allSavesQuantity ? (
+                  <SaveButton data-testid="quiz-save-button" />
+                ) : (
+                  <SaveModal />
+                )}
               </SectionTitle>
               <StyledCard>
                 <TopInformation>

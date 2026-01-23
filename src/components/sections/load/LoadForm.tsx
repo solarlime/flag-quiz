@@ -31,6 +31,10 @@ const stickyStyles = css`
   position: -webkit-sticky; /* For old Safari */
   position: sticky;
   bottom: var(--padding-l);
+
+  .modal-content & {
+    bottom: 0;
+  }
 `;
 
 const StickyCoreButton = styled(CoreButton)`
@@ -47,9 +51,13 @@ const StyledForm = styled(Form)`
   transition:
     opacity 0.5s ease-out 0.5s,
     visibility 0.5s ease-out 0.5s;
+
+  .modal-content & {
+    padding: 0;
+  }
 `;
 
-const LoadForm = observer(() => {
+const LoadForm = observer(({ callback }: { callback: () => void }) => {
   const ref = useRef<HTMLFormElement>(null);
   const { rootStore, saveStore } = useStore();
   const { deleteModeEnabled } = saveStore;
@@ -76,9 +84,10 @@ const LoadForm = observer(() => {
               if (saveStore.states.saved.length === 1) {
                 ref.current!.classList.add('fade');
                 await waitFor(1000);
-                saveStore.toggleDeleteModeEnabled();
+                saveStore.changeDeleteModeEnabled();
               }
               saveStore.deleteSavedState(data);
+              if (callback) callback();
               methods.reset({ savedQuizId: saveStore.states.saved?.[0].id });
             }
           });

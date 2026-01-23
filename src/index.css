@@ -32,8 +32,13 @@
 
   --card-max-width: 640px;
 
+  --modal-max-height: 90vh;
+
   --title-size: calc(
     var(--font-size-normal) + var(--padding-s) + var(--border-width) * 2
+  );
+  --block-title-size: calc(
+    var(--font-size-small) + var(--padding-xs) + var(--border-width) * 2
   );
 }
 

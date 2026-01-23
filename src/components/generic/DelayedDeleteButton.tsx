@@ -62,7 +62,7 @@ const DelayedDeleteButton = observer(
         {children}
       </DeleteButton>
     ) : countdown > 0 ? (
-      <ButtonGroup>
+      <ButtonGroup className={props.className}>
         <DeleteButton {...props} disabled>
           Confirm in {countdown}s
         </DeleteButton>
@@ -73,7 +73,7 @@ const DelayedDeleteButton = observer(
         )}
       </ButtonGroup>
     ) : (
-      <ButtonGroup>
+      <ButtonGroup className={props.className}>
         {/* setTimeout delays onClick execution to let the form's onSubmit run first */}
         <DeleteButton
           {...props}

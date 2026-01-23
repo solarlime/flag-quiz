@@ -20,6 +20,7 @@ autorun(() => {
 });
 
 const savedStatesLoader = () => {
+  store.saveStore.changeDeleteModeEnabled(false);
   return store.saveStore.updateNeeded && store.saveStore.loadSavedStates();
 };
 
