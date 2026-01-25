@@ -31,7 +31,11 @@ class SaveStore {
   private _maxSavedStates = 5;
 
   get maxSavedStates() {
-    return this._maxSavedStates;
+    try {
+      return +import.meta.env.MAX_SAVED_STATES;
+    } catch (e) {
+      return this._maxSavedStates;
+    }
   }
 
   get allSavesQuantity() {

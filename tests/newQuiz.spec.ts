@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import type { TRawResult } from '../src/types/data';
 import setRequestResolvers from './helpers/setRequestResolvers';
+import createSavedState from './helpers/createSavedState';
 
 test('Should pass the quiz', async ({ page }) => {
   await page.goto('/');
@@ -112,4 +113,39 @@ test('Should pass the quiz', async ({ page }) => {
   await expect(mistake).not.toContainText(
     `Your answer: ${country2.name.common}`,
   );
+});
+
+test('Should allow only one saved quiz', async ({ page }) => {
+  await page.goto('/');
+  await setRequestResolvers(page);
+
+  await createSavedState(page);
+  await createSavedState(page, false);
+
+  await page.getByTestId('answer-variant').nth(0).click();
+  const saveButton = page.getByTestId('quiz-save-button');
+  await expect(saveButton).toHaveText('Save');
+
+  const warningIcon = saveButton.getByTestId('icon-warning');
+  await expect(warningIcon).toBeAttached();
+
+  await saveButton.click();
+  const modalContent = page.getByTestId('modal-content');
+  await expect(modalContent).toBeAttached();
+
+  const modalCloseButton = page.getByTestId('modal-close-button');
+  await modalCloseButton.click();
+  await expect(modalContent).not.toBeAttached();
+
+  await saveButton.click();
+  await expect(modalContent).toContainText('No free save slots!');
+
+  const quizDeleteButton = page.getByTestId('quiz-delete-button');
+  await expect(quizDeleteButton).toBeAttached();
+
+  await quizDeleteButton.click();
+  await page.waitForTimeout(5000);
+  await quizDeleteButton.click();
+  await expect(modalContent).not.toBeAttached();
+  await expect(saveButton).toContainText('Saved');
 });
