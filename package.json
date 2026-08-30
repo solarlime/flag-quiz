@@ -55,7 +55,7 @@
     "lefthook": "^2.0.2",
     "prettier": "^3.5.3",
     "typescript": "~5.8.2",
-    "typescript-eslint": "^8.24.1",
+    "typescript-eslint": "^8.59.2",
     "webpack-merge": "^6.0.1"
   },
   "packageManager": "yarn@4.3.1"
